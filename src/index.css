@@ -7,3 +7,6 @@
   --color-gray : #646464; 
 }
 
+* {
+  @apply border border-red-500
+}
