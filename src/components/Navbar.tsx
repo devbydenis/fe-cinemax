@@ -5,7 +5,7 @@ import {GiHamburgerMenu} from "react-icons/gi";
 import {CgClose} from "react-icons/cg";
 
 function Navbar() {
-  const [isShowMenu, setIsShowMenu] = useState(false);
+  const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
 
   return (
     <nav className="shadow-lg">
