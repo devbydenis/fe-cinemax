@@ -1,54 +1,97 @@
-# React + TypeScript + Vite
+Tickitz-Prototype
+Version: 1.0.0
+Status: CI Status License
+Demo: Live Preview (Link demo bisa ditambahkan di sini)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+📌 Overview
+Tickitz-Prototype adalah sebuah aplikasi web berbasis React.js yang mensimulasikan sistem pemesanan tiket bioskop. Dibangun dengan teknologi modern seperti TailwindCSS untuk styling, React Router untuk navigasi, dan React Hook Form untuk manajemen form yang efisien.
 
-Currently, two official plugins are available:
+✨ Features
+🎬 Halaman utama menampilkan film yang sedang tayang
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🔍 Pencarian film berdasarkan judul/genre
 
-## Expanding the ESLint configuration
+🎟️ Sistem pemesanan tiket dengan pemilihan kursi
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+📱 Responsive design (mobile & desktop)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+📝 Form validasi menggunakan React Hook Form
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+🔄 Dynamic routing dengan React Router
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+🛠️ Tech Stack
+Frontend:
+React
+TailwindCSS
+React Router
+React Hook Form
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+🚀 Getting Started
+Prerequisites
+Node.js v16+
+
+npm atau yarn
+
+Installation
+Clone repository
+
+bash
+git clone https://github.com/your-username/Tickitz-Prototype.git
+cd Tickitz-Prototype
+Install dependencies
+
+bash
+npm install
+# atau
+yarn install
+Setup environment variables (jika ada)
+Buat file .env di root project dan isi dengan konfigurasi yang diperlukan:
+
+env
+REACT_APP_API_KEY=your_api_key_here
+Run the development server
+
+bash
+npm start
+# atau
+yarn start
+Buka di browser
+Aplikasi akan berjalan di http://localhost:3000
+
+📂 Project Structure
+bash
+src/
+├── assets/            # Gambar, font, dll
+├── components/        # Komponen reusable
+├── pages/             # Halaman aplikasi
+├── routes/            # Konfigurasi routing
+├── styles/            # File CSS/Tailwind custom
+├── utils/             # Helper functions
+├── App.js             # Main component
+└── index.js           # Entry point
+🧪 Testing
+Jalankan test dengan:
+
+bash
+npm test
+# atau
+yarn test
+🤝 How to Contribute
+Fork project ini
+
+Buat branch baru (git checkout -b feature/your-feature)
+
+Commit perubahan (git commit -m 'Add some feature')
+
+Push ke branch (git push origin feature/your-feature)
+
+Buat Pull Request
+
+📜 License
+Project ini dilisensikan di bawah MIT License - lihat file LICENSE untuk detail lebih lanjut.
+
+📞 Contact
+Email: your.email@example.com
+
+LinkedIn: Your Name
+
