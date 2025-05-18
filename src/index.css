@@ -4,7 +4,9 @@
   --font-display: "DM Sans", sans-serif;
 
   --color-black-primary : #0F100D;
+  --color-black-secondary : #333333;
   --color-white : #FFFFFF;
+  --color-white-secondary: #F3F3F3;
   --color-silver: #E0E0E0; 
   --color-orange : #E95102;
   --color-gray : #646464;
@@ -12,7 +14,7 @@
 }
 
 * {
-  /* @apply border border-red-500 */
+  @apply border border-red-500
 }
 
 .custom-scrollbar {
