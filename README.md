@@ -1,26 +1,20 @@
-Tickitz-Prototype
+#Tickitz-Prototype
 Version: 1.0.0
 Status: CI Status License
-Demo: Live Preview (Link demo bisa ditambahkan di sini)
+Demo: Live Preview (soon)
 
-📌 Overview
+## 📌 Overview
 Tickitz-Prototype adalah sebuah aplikasi web berbasis React.js yang mensimulasikan sistem pemesanan tiket bioskop. Dibangun dengan teknologi modern seperti TailwindCSS untuk styling, React Router untuk navigasi, dan React Hook Form untuk manajemen form yang efisien.
 
-✨ Features
+## ✨ Features
 🎬 Halaman utama menampilkan film yang sedang tayang
-
 🔍 Pencarian film berdasarkan judul/genre
-
 🎟️ Sistem pemesanan tiket dengan pemilihan kursi
-
 📱 Responsive design (mobile & desktop)
-
 📝 Form validasi menggunakan React Hook Form
-
 🔄 Dynamic routing dengan React Router
 
 🛠️ Tech Stack
-Frontend:
 React
 TailwindCSS
 React Router
@@ -32,34 +26,30 @@ Node.js v16+
 
 npm atau yarn
 
-Installation
-Clone repository
+## Installation
+# Clone repository
 
-bash
+```bash
 git clone https://github.com/your-username/Tickitz-Prototype.git
 cd Tickitz-Prototype
-Install dependencies
+```
+# Install dependencies
 
-bash
+```bash
 npm install
-# atau
-yarn install
-Setup environment variables (jika ada)
-Buat file .env di root project dan isi dengan konfigurasi yang diperlukan:
+```
 
-env
-REACT_APP_API_KEY=your_api_key_here
-Run the development server
+# Jalankan development 
 
-bash
-npm start
-# atau
-yarn start
+```bash
+npm run dev
+```
+
 Buka di browser
-Aplikasi akan berjalan di http://localhost:3000
+Aplikasi akan berjalan di `http://localhost:3000`
 
 📂 Project Structure
-bash
+```
 src/
 ├── assets/            # Gambar, font, dll
 ├── components/        # Komponen reusable
@@ -69,29 +59,34 @@ src/
 ├── utils/             # Helper functions
 ├── App.js             # Main component
 └── index.js           # Entry point
+```
+
 🧪 Testing
 Jalankan test dengan:
 
-bash
+<!-- 
+```bash
 npm test
 # atau
 yarn test
-🤝 How to Contribute
-Fork project ini
+-->
 
-Buat branch baru (git checkout -b feature/your-feature)
+## 🤝 How to Contribute
+- Fork project ini
 
-Commit perubahan (git commit -m 'Add some feature')
+- Buat branch baru (git checkout -b feature/your-feature)
 
-Push ke branch (git push origin feature/your-feature)
+- Commit perubahan (git commit -m 'Add some feature')
 
-Buat Pull Request
+- Push ke branch (git push origin feature/your-feature)
 
-📜 License
+- Buat Pull Request
+
+## 📜 License
 Project ini dilisensikan di bawah MIT License - lihat file LICENSE untuk detail lebih lanjut.
 
-📞 Contact
-Email: your.email@example.com
+## 📞 Contact
+Email: hello.denisrahmadi@example.com
 
-LinkedIn: Your Name
+LinkedIn: Denis Rahmadi
 
