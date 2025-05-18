@@ -5,10 +5,28 @@
 
   --color-black-primary : #0F100D;
   --color-white : #FFFFFF;
+  --color-silver: #E0E0E0; 
   --color-orange : #E95102;
-  --color-gray : #646464; 
+  --color-gray : #646464;
+  --color-gray-secondary: #878786;
 }
 
 * {
-  @apply border border-red-500
+  /* @apply border border-red-500 */
+}
+
+.custom-scrollbar {
+  @apply overflow-x-auto;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  @apply w-2 h-2;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-orange rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-silver rounded-full;
 }

@@ -6,6 +6,7 @@ import affordable from "../assets/affordable.svg";
 import customerService from "../assets/customerService.svg";
 import guaranted from "../assets/guaranted.svg";
 import Footer from "../components/Footer";
+import Card from "../components/Card";
 
 
 function HomePage() {
@@ -52,24 +53,24 @@ function Banner() {
 function NowPlaying() {
   return (
     <>
-      <section>
-        <h2>Now Showing in Cinemas</h2>
-        <div className="container-card ">
-          {/* looping card disini */}
-          <div>
-            <img src="" alt="" />
-            <Link to="">Judul Film</Link>
-            <ul>
-              <li>Genre 1</li> {/*- batesin genrenya 2-3 aja */}
-              <li>Genre 2</li>
-              <li>Genre 3</li>
-            </ul>
-          </div>
+      <section className="md:mx-20 md:mt-16 md:pb-20 mx-10">
+        <h2 className=" md:text-4xl font-semibold leading-11 text-center md:mb-9">Now Showing in Cinemas</h2>
+        <div className="container-card flex gap-5 overflow-x-scroll custom-scrollbar">
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
         </div>
-        <Link to="" className="flex justify-center items-center gap-2">
-          View All
-          <FaArrowRight />
-        </Link>
+        <span className="flex justify-center">
+          <Link to={"#"} className="flex justify-center items-center gap-2 text-sm md:text-lg uppercase font-normal md:font-medium px-3 py-1 md:px-6 md:py-3 bg-orange mt-5 text-white rounded-full hover:opacity-70 active:scale-95 active:transition-all">
+            View All
+            <FaArrowRight />
+          </Link>
+        </span>
       </section>
     </>
   );
