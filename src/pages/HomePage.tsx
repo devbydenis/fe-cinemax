@@ -56,20 +56,30 @@ function NowPlaying() {
         <h2 className="text-center leading-11 font-semibold md:mb-9 md:text-4xl">
           Now Showing in Cinemas
         </h2>
-        <div className="container-card custom-scrollbar flex gap-5 overflow-x-scroll">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </div>
+        <ul className="container-card custom-scrollbar flex gap-5 overflow-x-scroll">
+          <li>
+            <Card category="now playing" />
+          </li>
+          <li>
+            <Card category="now playing" />
+          </li>
+          <li>
+            <Card category="now playing" />
+          </li>
+          <li>
+            <Card category="now playing" />
+          </li>
+          <li>
+            <Card category="now playing" />
+          </li>
+          <li>
+            <Card category="now playing" />
+          </li>
+        </ul>
         <span className="flex justify-center">
           <Link
             to={"#"}
-            className="bg-orange mt-5 flex items-center justify-center gap-2 rounded-full px-3 py-1 text-sm font-normal text-white uppercase hover:opacity-70 active:scale-95 active:transition-all md:px-6 md:py-3 md:text-lg md:font-medium"
+            className="bg-orange mt-5 flex items-center justify-center gap-2 rounded-full px-3 py-1 text-sm font-medium text-white uppercase hover:opacity-70 active:scale-95 active:transition-all md:px-6 md:py-3 md:text-lg md:font-medium"
           >
             View All
             <FaArrowRight />
@@ -115,8 +125,53 @@ function WhyChooseUs() {
 function UpComingMovies() {
   return (
     <>
-      <section>
-        <div></div>
+      <section className="my-10">
+        <div className="mb-4 flex flex-col items-center justify-center gap-4">
+          <Chip value="UPCOMING MOVIES" />
+          <div className="flex flex-col items-center md:items-start justify-center gap-5 md:flex-row">
+            <h3 className="text-black-primary px-20 text-center text-3xl/9 font-extrabold flex-1">
+              Exciting Movie Coming Soon
+            </h3>
+            <ul className="mx-auto mb-3 flex w-fit gap-2 flex-2">
+              <li className="bg-orange rounded-3xl px-4 py-2 font-medium text-white uppercase">
+                Action
+              </li>
+              <li className="rounded-3xl px-4 py-2 font-medium text-black uppercase outline outline-black">
+                Adventure
+              </li>
+              <li className="rounded-3xl px-4 py-2 font-medium text-black uppercase outline outline-black">
+                Comedy
+              </li>
+              <li className="rounded-3xl px-4 py-2 font-medium text-black uppercase outline outline-black">
+                sci-fi
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <ul className="container-card custom-scrollbar mx-3 flex gap-5 overflow-x-scroll">
+          <li>
+            <Card category="coming soon" />
+          </li>
+          <li>
+            <Card category="coming soon" />
+          </li>
+          <li>
+            <Card category="coming soon" />
+          </li>
+          <li>
+            <Card category="coming soon" />
+          </li>
+        </ul>
+        <span className="flex justify-center">
+          <Link
+            to={"#"}
+            className="bg-orange mt-5 flex items-center justify-center gap-2 rounded-full px-3 py-1 text-sm font-medium text-white uppercase hover:opacity-70 active:scale-95 active:transition-all md:px-6 md:py-3 md:text-lg md:font-medium"
+          >
+            View All
+            <FaArrowRight />
+          </Link>
+        </span>
       </section>
     </>
   );
