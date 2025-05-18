@@ -3,6 +3,8 @@
 @theme {
   --font-display: "DM Sans", sans-serif;
 
+  --color-black-primary : #0F100D;
+  --color-white : #FFFFFF;
   --color-orange : #E95102;
   --color-gray : #646464; 
 }
