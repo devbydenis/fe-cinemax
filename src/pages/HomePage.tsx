@@ -109,7 +109,7 @@ function WhyChooseUs() {
           />
           <CardWhyChooseUs
             img={affordable}
-            title="affordable"
+            title="Affordable"
             desc="Lorem ipsum dolor sit amet, consectetur adipis elit. Sit enim nec, proin faucibus nibh et sagittis a."
           />
           <CardWhyChooseUs
@@ -133,7 +133,7 @@ function UpComingMovies() {
             <h3 className="text-black-primary px-20 text-center text-3xl/9 font-extrabold flex-1">
               Exciting Movie Coming Soon
             </h3>
-            <ul className="mx-auto mb-3 flex w-fit gap-2 flex-2">
+            <ul className="mx-auto mb-3 flex w-fit gap-2 flex-2 custom-scrollbar">
               <li className="bg-orange rounded-3xl px-4 py-2 font-medium text-white uppercase">
                 Action
               </li>
@@ -143,7 +143,7 @@ function UpComingMovies() {
               <li className="rounded-3xl px-4 py-2 font-medium text-black uppercase outline outline-black">
                 Comedy
               </li>
-              <li className="rounded-3xl px-4 py-2 font-medium text-black uppercase outline outline-black">
+              <li className="min-w-20 rounded-3xl px-4 py-2 font-medium text-black uppercase outline outline-black">
                 sci-fi
               </li>
             </ul>
