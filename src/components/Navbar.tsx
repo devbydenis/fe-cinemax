@@ -26,10 +26,22 @@ function Navbar() {
           >
             Home
           </NavLink>
-          <NavLink className="text-gray uppercase" to={"/movie"}>
+          <NavLink 
+            className={({isActive}) =>
+              isActive
+                ? "font-bold text-orange after:mt-0 after:block after:text-[#E95102] after:border-b-3 uppercase"
+                : "text-gray-400 uppercase"
+            } 
+            to={"/movies"}>
             Movie
           </NavLink>
-          <NavLink className="text-gray uppercase" to={"/buyticket"}>
+          <NavLink 
+            className={({isActive}) =>
+              isActive
+                ? "font-bold text-orange after:mt-0 after:block after:text-[#E95102] after:border-b-3 uppercase"
+                : "text-gray-400 uppercase"
+            } 
+            to={"/order"}>
             Buy Ticket
           </NavLink>
         </li>
