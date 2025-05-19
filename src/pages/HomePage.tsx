@@ -8,6 +8,7 @@ import guaranted from "../assets/guaranted.svg";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
 import Newslater from "../components/Newslater";
+import { useState } from "react";
 
 function HomePage() {
   return (
@@ -124,28 +125,21 @@ function WhyChooseUs() {
 }
 
 function UpComingMovies() {
+
   return (
     <>
       <section className="my-10">
         <div className="mb-4 flex flex-col items-center justify-center gap-4">
           <Chip value="UPCOMING MOVIES" />
-          <div className="flex flex-col items-center md:items-start justify-center gap-5 md:flex-row">
-            <h3 className="text-black-primary px-20 text-center text-3xl/9 font-extrabold flex-1">
+          <div className="flex flex-col items-center justify-center gap-5 md:flex-row md:items-start">
+            <h3 className="text-black-primary flex-1 px-20 text-center text-3xl/9 font-extrabold">
               Exciting Movie Coming Soon
             </h3>
-            <ul className="mx-auto mb-3 flex w-fit gap-2 flex-2 custom-scrollbar">
-              <li className="bg-orange rounded-3xl px-4 py-2 font-medium text-white uppercase">
-                Action
-              </li>
-              <li className="rounded-3xl px-4 py-2 font-medium text-black uppercase outline outline-black">
-                Adventure
-              </li>
-              <li className="rounded-3xl px-4 py-2 font-medium text-black uppercase outline outline-black">
-                Comedy
-              </li>
-              <li className="min-w-20 rounded-3xl px-4 py-2 font-medium text-black uppercase outline outline-black">
-                sci-fi
-              </li>
+            <ul className="custom-scrollbar mx-auto mb-3 flex w-fit flex-2 gap-2">
+              <Genre title="Action" />
+              <Genre title="Adventure" />
+              <Genre title="Comedy" />
+              <Genre title="Sci-Fi" />
             </ul>
           </div>
         </div>
@@ -174,6 +168,22 @@ function UpComingMovies() {
         </span>
       </section>
     </>
+  );
+}
+
+type GenreProps = {
+  title: string;
+};
+function Genre(props: GenreProps) {
+  const [isActive, setIsActive] = useState<boolean>(false);
+
+  return (
+    <li
+      className={`${isActive ? "bg-orange border-orange text-white" : ""} min-w-fit cursor-pointer rounded-3xl border border-black px-4 py-2 font-medium uppercase`}
+      onClick={() => setIsActive(!isActive)}
+    >
+      {props.title}
+    </li>
   );
 }
 
