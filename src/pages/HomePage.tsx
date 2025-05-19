@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import { FaArrowRight } from "react-icons/fa6";
 import Chip from "../components/Chip";
 import affordable from "../assets/affordable.svg";
 import customerService from "../assets/customerService.svg";
 import guaranted from "../assets/guaranted.svg";
-import Footer from "../components/Footer";
 import Card from "../components/Card";
 import Newslater from "../components/Newslater";
 import { useState } from "react";
@@ -13,16 +11,12 @@ import { useState } from "react";
 function HomePage() {
   return (
     <>
-      <header>
-        <Navbar />
-      </header>
       <main>
         <Banner />
         <NowPlaying />
         <WhyChooseUs />
         <UpComingMovies />
         <Newslater />
-        <Footer />
       </main>
     </>
   );
