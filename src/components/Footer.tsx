@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <>
-      <footer className="bg-black-primary rounded-[3rem] text-white py-10 px-5 flex flex-col gap-8 sm:p-10 md:p-10 md:gap-20 sm:flex-row">
+      <footer className="bg-black-primary rounded-t-[3rem] text-white py-10 px-5 flex flex-col gap-8 sm:p-10 md:p-10 md:gap-20 sm:flex-row">
         <section className="flex-1">
           <img src={logoTickitz} alt="logo-tickitz" />
           <p className="text-base">Stop waiting in line. Buy tickets conveniently, watch movies quietly.</p>
