@@ -15,7 +15,7 @@ function Card(props: CardPRops) {
         <div className="all invisible absolute top-0 right-0 left-0 h-56 md:h-[27.75rem] transition duration-300 group-hover:visible group-hover:bg-black group-hover:opacity-50 rounded-2xl"></div>
         <div className="invisible absolute top-0 right-0 left-0 z-10 flex h-56 md:h-[27.75rem] flex-col items-center justify-center gap-3 group-hover:visible">
           <Link
-            to={`/detail`}
+            to={`/order/ticket`}
             className="text-white outline-white hover:bg-orange w-36 rounded py-3 text-center outline hover:font-bold hover:outline-none"
           >
             Details

@@ -41,7 +41,7 @@ function Navbar() {
                 ? "font-bold text-orange after:mt-0 after:block after:text-[#E95102] after:border-b-3 uppercase"
                 : "text-gray-400 uppercase"
             } 
-            to={"/order"}>
+            to={"/order/ticket"}>
             Buy Ticket
           </NavLink>
         </li>
