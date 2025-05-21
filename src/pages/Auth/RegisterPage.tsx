@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import tickitzLogo from "../../assets/tickitz-logo.svg";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
 
-function LoginPage() {
+function RegisterPage() {
   return (
     <>
       <form className="relative z-10 flex flex-col gap-7 rounded-xl bg-white/10 px-16 text-white md:mx-auto md:w-xl">
@@ -12,9 +12,9 @@ function LoginPage() {
           alt="tickitz-logo"
         />
 
-        <h1 className="text-4xl font-bold">Welcome Back 👋</h1>
-        <p className="text-secondary font-normal">
-          Sign in with your data that you entered during your registration
+        <h1 className="text-4xl font-bold">Welcome 👋</h1>
+        <p className="text-gray-300 font-normal">
+          Entered your valid data. make sure your data is correct
         </p>
         <section className="mt-6">
           <label className="text-2xl font-semibold text-white" htmlFor="email">
@@ -54,15 +54,15 @@ function LoginPage() {
           className="bg-primary text-background bg-orange h-12 rounded-full font-bold active:scale-99 active:duration-100 cursor-pointer active:bg-transparent active:text-orange active:border-2 active:border-orange"
           type="submit"
         >
-          Login
+          Register
         </button>
         {/* <!-- Change to submit type later! --> */}
         <section className="or">
           <section className="flex justify-center">
             <p className="text-title-info-first">
-              Do not have an account?{" "}
-              <Link className="text-primary font-bold" to="/auth/register">
-                Register
+              Already have an account?{" "}
+              <Link className="text-primary font-bold" to="/auth/login">
+                Login
               </Link>
             </p>
           </section>
@@ -93,4 +93,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default RegisterPage;
