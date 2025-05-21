@@ -1,18 +1,20 @@
 import { useState } from "react";
 import testImage from "../../assets/test-image-card.png";
 import { useForm, type FieldValues } from "react-hook-form";
-
+import logo from "../../assets/cineone21-logo.svg";
 
 type SeatId = string;
 
 function OrderSeatPage() {
 
   return (
-    <div className="">
+    <>
+    <div className="absolute top-0 right-0 bottom-0 left-0 bg-black opacity-50 w-full 100vh"></div>
+
       <OrderInfo />
       <OrderSeatsSelector />
       <OrderModal />
-    </div>
+    </>
   );
 }
 
@@ -194,24 +196,29 @@ function OrderSeatsSelector() {
 }
 
 function OrderModal() {
-  const [isModal,] = useState(false)
+  const [isModal,] = useState(true)
+  const handleConfirmButton = () => {
+    console.log("confirm button");
+  }
 
   return (
+    <>
     <section
       className={`${
         isModal ? "block" : "hidden"
-      } absolute top-0 right-0 left-0 mx-6 my-10 flex flex-col items-center rounded-xl bg-white px-5 py-10 shadow-2xl`}
+      } absolute top-20 right-0 left-0 mx-6 my-10 flex flex-col items-center rounded-xl outline-4 -outline-offset-8 outline-orange bg-white px-5 py-10 shadow-2xl md:mx-20 lg:mx-50 lg:px-20`}
     >
-      <div className="mb-8 flex w-full flex-col items-center">
+      <div className="mb-8 flex w-80 h-30 flex-col items-center bg-orange outline-8 outline-orange outline-offset-8 rounded-full">
         <img
-          src="src/assets/cineone.svg"
+          className="w-full h-full px-10 py-5"
+          src={logo}
           alt="cinema"
           width={114}
           height={24}
         />
-        <p className="mt-3 text-2xl">CineOne21 Cinema</p>
       </div>
-      <div className="mb-10 flex w-full flex-col gap-8">
+        <h1 className="my-10 text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-wider">Confirmation Order</h1>
+      <div className="mb-10 flex w-full flex-col gap-4">
         <span className="flex justify-between">
           <p className="text-title-info-first tracking-wider">Movie selected</p>
           <p>Spider-Man: Homecoming</p>
@@ -233,17 +240,19 @@ function OrderModal() {
           <p>C4</p>
         </span>
         <span className="flex justify-between">
-          <p className="text-title-info-first tracking-wider">Total Payment</p>
-          <p>$30</p>
+          <p className="text-title-info-first tracking-wider font-bold text-xl">Total Payment</p>
+          <p className="font-bold text-xl">$30</p>
         </span>
       </div>
       <button
-        className="bg-primary w-full rounded border py-3 font-bold text-white transition-all hover:transform active:scale-95"
+        className="bg-primary w-full rounded border py-3 font-bold text-white bg-orange cursor-pointer transition-all hover:transform active:scale-99 active:bg-transparent active:text-orange"
         type="button"
+        onClick={() => handleConfirmButton()}
       >
         Confirm Button
       </button>
     </section>
+    </>
   );
 }
 
