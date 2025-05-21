@@ -2,12 +2,20 @@ import { Route, Routes } from "react-router-dom"
 import HomePage from "./pages/HomePage.tsx"
 import BuyTicket from "./pages/MoviesPage.tsx"
 import MainLayout from "./layout/MainLayout.tsx"
-import OrderTicketPage from "./pages/order/OrderTicketPage.tsx"
-import OrderSeatPage from "./pages/order/OrderSeatPage.tsx"
+import OrderTicketPage from "./pages/Order/OrderTicketPage.tsx"
+import OrderSeatPage from "./pages/Order/OrderSeatPage.tsx"
+import AuthLayout from "./layout/AuthLayout.tsx"
+import LoginPage from "./pages/Auth/LoginPage.tsx"
+import Register from "./pages/Auth/Register.tsx"
 
 function App() {
   return (
     <Routes>
+      <Route path="auth" element={<AuthLayout />}>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<Register />} />
+      </Route>
+
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="movies" element={<BuyTicket />} />
