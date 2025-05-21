@@ -11,7 +11,7 @@ function LoginPage() {
           src={tickitzLogo}
           alt="tickitz-logo"
         />
-
+        
         <h1 className="text-4xl font-bold">Welcome Back 👋</h1>
         <p className="text-secondary font-normal">
           Sign in with your data that you entered during your registration
