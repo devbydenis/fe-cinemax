@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { IoMdEye } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
+import ModalAuth from "../../components/ModalAuth";
 
 // type Storage = {
 //   (key: string): string | null
@@ -19,7 +20,7 @@ type RegisteredUser = {
 function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [modalAuth, setModalAuth] = useState(false);
+  const [showModalAuth, setShowModalAuth] = useState(false);
 
   const navigate = useNavigate();
   const {
@@ -52,7 +53,7 @@ function RegisterPage() {
     // kalo datanya duplikat
     if (filteredDuplicateData.length > 0) {
       // munculin modal
-      setModalAuth(true);
+      setShowModalAuth(true);
     } else {
       // simpen data ke local storage
       console.log("data ada, dan data ga duplikat")
@@ -89,6 +90,7 @@ function RegisterPage() {
               id="email"
               placeholder="example@gmail.com"
             />
+            {!errors.email && <small className="invisible">this is just invisible text</small>}
             {errors.email && (
               <small className="font-semibold text-red-600 transition-all duration-300">
                 {errors.email.message}
@@ -111,7 +113,7 @@ function RegisterPage() {
             {showPassword ? (
               <button
                 type="button"
-                className="absolute right-2 cursor-pointer"
+                className="absolute right-2 cursor-pointer text-xl"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 <IoMdEye />
@@ -119,13 +121,14 @@ function RegisterPage() {
             ) : (
               <button
                 type="button"
-                className="absolute right-2 cursor-pointer"
+                className="absolute right-2 cursor-pointer text-xl"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 <IoMdEye />
               </button>
             )}
           </div>
+          {!errors.password && <small className="invisible">this is just invisible text</small>}
           {errors.password && (
             <small className="font-semibold text-red-600 transition duration-300">
               {errors.password.message}
@@ -147,7 +150,7 @@ function RegisterPage() {
             {showConfirmPassword ? (
               <button
                 type="button"
-                className="absolute right-2 cursor-pointer"
+                className="absolute right-2 cursor-pointer text-xl"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 <IoMdEye />
@@ -155,13 +158,14 @@ function RegisterPage() {
             ) : (
               <button
                 type="button"
-                className="absolute right-2 cursor-pointer"
+                className="absolute right-2 cursor-pointer text-xl"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 <IoMdEye />
               </button>
             )}
           </div>
+          {!errors.confirmPassword && <small className="invisible">this is just invisible text</small>}
           {errors.confirmPassword && (
             <small className="font-semibold text-red-600 transition duration-300">
               {errors.confirmPassword.message}
@@ -183,31 +187,11 @@ function RegisterPage() {
           Register
         </button>
       </form>
-      {modalAuth && <ModalAuth message={"Email is already exist"} />}
+      {showModalAuth && <ModalAuth setShowModalAuth={() => setShowModalAuth(false)} message={"Email is already exist"} />}
     </>
   );
 
-  type ModalAuthProps = {
-    message: string;
-  };
-  function ModalAuth(props: ModalAuthProps) {
-    return (
-      <>
-        <div className="absolute top-0 right-0 bottom-0 left-0 z-10 bg-black/50"></div>
-        <div className=" w-1/4 outline-orange absolute top-50 z-20 mx-6 my-10 flex flex-col gap-3 items-center rounded-xl bg-white px-5 py-10 shadow-2xl outline-4 -outline-offset-8 md:mx-20 lg:mx-50 lg:px-20">
-          <h1 className="bg-yellow-400 px-5 rounded uppercase text-3xl font-semibold">info</h1>
-          <p>{props.message}</p>
-          <button
-            type="button"
-            onClick={() => setModalAuth(false)}
-            className="bg-orange text-white font-medium cursor-pointer rounded-xl px-6 py-1 uppercase active:scale-99"
-          >
-            ok
-          </button>
-        </div>
-      </>
-    );
-  }
+  
 }
 
 export default RegisterPage;

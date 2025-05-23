@@ -1,26 +1,56 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import tickitzLogo from "../../assets/tickitz-logo.svg";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldValues } from "react-hook-form";
 import { schemaLogin } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import Loader from "../../components/Loader";
+import ModalAuth from "../../components/ModalAuth";
+
+type RegisteredUser = {
+  id: number;
+  email: string;
+  password: string;
+};
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [loaderAuth, setLoaderAuth] = useState(false);
+  const [showModalAuth, setShowModalAuth] = useState(false);
   const storedUsers = localStorage.getItem('users')
+  const navigate = useNavigate()
   const getData: Storage = storedUsers ? JSON.parse(storedUsers) : null
   const { register, handleSubmit, formState: { errors }} = useForm({
     resolver: yupResolver(schemaLogin),
   });
 
-  console.log(getData);
+  // console.log("data registered", getData);
+
+  const onSubmit = (data: FieldValues) => {
+    // console.log("login", data);
+    const matchedData = getData.filter((user: RegisteredUser) => {
+      return user.email === data.email && user.password === data.password
+    })
+
+    if (matchedData.length > 0) {
+      console.log("berhasil login");
+      localStorage.setItem('userData', JSON.stringify(matchedData))
+      setLoaderAuth(true)
+      setTimeout(() => {
+        return navigate("/")  
+      }, 2000)
+    } else {
+      setShowModalAuth(true)
+    }
+
+  };
 
   return (
     <>
       <form
-        onSubmit={handleSubmit((data) => console.log(data))}
+        onSubmit={handleSubmit(onSubmit)}
         className="relative z-10 flex flex-col gap-7 rounded-xl bg-white/10 px-16 text-white md:mx-auto md:w-xl"
       >
         <img
@@ -44,6 +74,7 @@ function LoginPage() {
               id="email"
               placeholder="example@gmail.com"
             />
+            {!errors.email && <small className="invisible">this is just invisible text</small>}
             {errors.email && (
               <small className="font-semibold text-red-600 transition-all duration-300">
                 Email ga valid
@@ -65,9 +96,10 @@ function LoginPage() {
             />
             {
               showPassword 
-                ? <button type="button" className="absolute right-2 cursor-pointer" onClick={() => setShowPassword(!showPassword)}><IoMdEyeOff /></button>
-                : <button type="button" className="absolute right-2 cursor-pointer" onClick={() => setShowPassword(!showPassword)}><IoMdEye /></button>
+                ? <button type="button" className="absolute right-2 cursor-pointer text-xl" onClick={() => setShowPassword(!showPassword)}><IoMdEyeOff /></button>
+                : <button type="button" className="absolute right-2 cursor-pointer text-xl" onClick={() => setShowPassword(!showPassword)}><IoMdEye /></button>
             }
+            {!errors.password && <small className="invisible">this is just invisible text</small>}
             {errors.password && (
               <small className="font-semibold text-red-600 transition duration-300">
                 {errors.password?.message}
@@ -114,6 +146,8 @@ function LoginPage() {
           </section>
         </section>
       </form>
+      { showModalAuth && <ModalAuth setShowModalAuth={() => setShowModalAuth(false)} message={"Login Failed. Please recheck your email or password. make sure it's correct"} /> }
+      { loaderAuth && <Loader /> }
     </>
   );
 }
