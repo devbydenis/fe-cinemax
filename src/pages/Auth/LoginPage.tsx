@@ -4,6 +4,8 @@ import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import { schemaLogin } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +15,7 @@ function LoginPage() {
     resolver: yupResolver(schemaLogin),
   });
 
+  console.log(getData);
 
   return (
     <>
@@ -52,14 +55,19 @@ function LoginPage() {
           <label className="text-2xl font-semibold text-white" htmlFor="email">
             Password
           </label>
-          <div className="mt-4">
+          <div className="mt-4 relative">
             <input
               className="focus:border-orange w-full border-b-2 duration-300 focus:border-b-2 focus:transition-colors focus:duration-300 focus:outline-none"
-              type="password"
+              type={showPassword ? "text" : "password"}
               {...register("password")}
               id="password"
               placeholder="Enter Your Password"
             />
+            {
+              showPassword 
+                ? <button type="button" className="absolute right-2 cursor-pointer" onClick={() => setShowPassword(!showPassword)}><IoMdEyeOff /></button>
+                : <button type="button" className="absolute right-2 cursor-pointer" onClick={() => setShowPassword(!showPassword)}><IoMdEye /></button>
+            }
             {errors.password && (
               <small className="font-semibold text-red-600 transition duration-300">
                 {errors.password?.message}
