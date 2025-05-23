@@ -49,13 +49,13 @@ function Navbar() {
           {/* Login Register */}
           <Link
             className="font-bold text-orange outline-2 outline-orange px-6 py-3 rounded-4xl hover:opacity-70"
-            to={"/login"}
+            to={"/auth/login"}
           >
             Login
           </Link>
           <Link
             className="font-bold text-white bg-orange px-6 py-3 rounded-4xl hover:opacity-70"
-            to={"/register"}
+            to={"/auth/register"}
           >
             Register
           </Link>
@@ -97,13 +97,13 @@ function Navbar() {
                 {/* Login Register */}
                 <Link
                   className="font-bold text-orange outline-2 outline-orange px-6 py-3 rounded-4xl hover:opacity-70"
-                  to={"/login"}
+                  to={"/auth/login"}
                 >
                   Login
                 </Link>
                 <Link
                   className="font-bold text-white bg-orange px-6 py-3 rounded-4xl hover:opacity-70"
-                  to={"/register"}
+                  to={"/auth/register"}
                 >
                   Register
                 </Link>

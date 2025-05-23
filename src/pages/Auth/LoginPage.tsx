@@ -1,17 +1,30 @@
 import { Link } from "react-router-dom";
 import tickitzLogo from "../../assets/tickitz-logo.svg";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
+import { useForm } from "react-hook-form";
+import { schemaLogin } from "./schema";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 function LoginPage() {
+  const [showPassword, setShowPassword] = useState(false);
+  const storedUsers = localStorage.getItem('users')
+  const getData: Storage = storedUsers ? JSON.parse(storedUsers) : null
+  const { register, handleSubmit, formState: { errors }} = useForm({
+    resolver: yupResolver(schemaLogin),
+  });
+
+
   return (
     <>
-      <form className="relative z-10 flex flex-col gap-7 rounded-xl bg-white/10 px-16 text-white md:mx-auto md:w-xl">
+      <form
+        onSubmit={handleSubmit((data) => console.log(data))}
+        className="relative z-10 flex flex-col gap-7 rounded-xl bg-white/10 px-16 text-white md:mx-auto md:w-xl"
+      >
         <img
           className="tickitz relative z-10 mx-auto w-32 md:w-60"
           src={tickitzLogo}
           alt="tickitz-logo"
         />
-        
         <h1 className="text-4xl font-bold">Welcome Back 👋</h1>
         <p className="text-secondary font-normal">
           Sign in with your data that you entered during your registration
@@ -24,13 +37,15 @@ function LoginPage() {
             <input
               className="focus:border-orange w-full border-b-2 duration-300 focus:border-b-2 focus:transition-colors focus:duration-300 focus:outline-none"
               type="email"
-              name="email"
+              {...register("email")}
               id="email"
               placeholder="example@gmail.com"
             />
-            <small className="font-semibold text-red-600 transition-all duration-300">
-              Email ga valid
-            </small>
+            {errors.email && (
+              <small className="font-semibold text-red-600 transition-all duration-300">
+                Email ga valid
+              </small>
+            )}
           </div>
         </section>
         <section className="mt-6">
@@ -41,17 +56,19 @@ function LoginPage() {
             <input
               className="focus:border-orange w-full border-b-2 duration-300 focus:border-b-2 focus:transition-colors focus:duration-300 focus:outline-none"
               type="password"
-              name="password"
+              {...register("password")}
               id="password"
               placeholder="Enter Your Password"
             />
-            <small className="font-semibold text-red-600 transition duration-300">
-              password ga valid
-            </small>
+            {errors.password && (
+              <small className="font-semibold text-red-600 transition duration-300">
+                {errors.password?.message}
+              </small>
+            )}
           </div>
         </section>
         <button
-          className="bg-primary text-background bg-orange h-12 rounded-full font-bold active:scale-99 active:duration-100 cursor-pointer active:bg-transparent active:text-orange active:border-2 active:border-orange"
+          className="bg-primary text-background bg-orange active:text-orange active:border-orange h-12 cursor-pointer rounded-full font-bold active:scale-99 active:border-2 active:bg-transparent active:duration-100"
           type="submit"
         >
           Login
