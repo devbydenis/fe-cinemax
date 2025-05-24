@@ -21,7 +21,7 @@ function Card(props: CardPRops) {
             Details
           </Link>
           <Link
-            to="/buyticket"
+            to={`/order/ticket`}
             className="text-white outline-white hover:bg-orange w-36 rounded py-3 text-center outline hover:font-bold hover:outline-none"
           >
             Buy Tickets

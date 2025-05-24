@@ -3,11 +3,16 @@ import background_img from "../assets/background_img.png";
 import Chip from "../components/Chip";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import Card from "../components/Card";
 
-function BuyTicket() {
+function Movies() {
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  })
+  
   return (
     <>
       <section>
@@ -140,4 +145,4 @@ function Genre(props: GenreProps) {
   );
 }
 
-export default BuyTicket;
+export default Movies;

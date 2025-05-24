@@ -55,7 +55,7 @@ function Navbar() {
                 ? "text-orange font-bold uppercase after:mt-0 after:block after:border-b-3 after:text-[#E95102]"
                 : "text-gray-400 uppercase"
             }
-            to={"/order/ticket"}
+            to={"/buy-ticket"}
           >
             Buy Ticket
           </NavLink>
@@ -122,7 +122,7 @@ function Navbar() {
                 <NavLink className="text-gray uppercase" to={"/movie"}>
                   Movie
                 </NavLink>
-                <NavLink className="text-gray uppercase" to={"/buyticket"}>
+                <NavLink className="text-gray uppercase" to={"/movie"}>
                   Buy Ticket
                 </NavLink>
               </div>

@@ -18,6 +18,10 @@
   /* @apply border border-red-500  */
 }
 
+button {
+  @apply cursor-pointer
+}
+
 .custom-scrollbar {
   @apply overflow-x-auto;
 }

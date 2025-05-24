@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 import HomePage from "./pages/HomePage.tsx"
-import BuyTicket from "./pages/MoviesPage.tsx"
+import MoviesPage from "./pages/MoviesPage.tsx"
 import MainLayout from "./layout/MainLayout.tsx"
 import OrderTicketPage from "./pages/Order/OrderTicketPage.tsx"
 import OrderSeatPage from "./pages/Order/OrderSeatPage.tsx"
@@ -19,12 +19,13 @@ function App() {
 
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="movies" element={<BuyTicket />} />
+        <Route path="movies" element={<MoviesPage />} />
+        <Route path="buy-ticket" element={<MoviesPage />} />
         
         <Route path="order">
-          <Route path="ticket" element={<OrderTicketPage />} />
           <Route path="seat" element={<OrderSeatPage />} />
           <Route path="payment" element={<OrderPaymentPage />} />
+          <Route path="ticket" element={<OrderTicketPage />} />
         </Route>
       </Route>
     </Routes>
