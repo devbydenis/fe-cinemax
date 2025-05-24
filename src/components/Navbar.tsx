@@ -1,85 +1,118 @@
-import {useState} from "react";
+import { useEffect, useState } from "react";
 import logoTickitz from "../assets/tickitz-logo.svg";
-import {Link, NavLink} from "react-router-dom";
-import {GiHamburgerMenu} from "react-icons/gi";
-import {CgClose} from "react-icons/cg";
+import { Link, NavLink } from "react-router-dom";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { CgClose } from "react-icons/cg";
+import avatarDefault from "../assets/avatar_default.png";
 
 function Navbar() {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [profileName, SetProfileName] = useState<string>("");
+  const storedData = localStorage.getItem("userData");
+  const getData: Storage = storedData ? JSON.parse(storedData) : null;
 
+  useEffect(() => {
+    console.log("ini storedData", storedData);
+    console.log("ini getData", getData);
+    if (getData.length > 0) {
+      setIsLogin(true);
+      SetProfileName(getData[0].email);
+    }
+  }, []);
   return (
     <nav className="shadow-lg">
-      <ul className="flex justify-between items-center py-6 px-10 lg:px-20 ">
+      <ul className="flex items-center justify-between px-10 py-6 lg:px-20">
         <li>
           {/* logo */}
           <img src={logoTickitz} alt="logo-tickitz" />
         </li>
-        <li className="hidden md:flex gap-14 px-12">
+        <li className="hidden gap-14 px-12 md:flex">
           {/* menu desktop */}
           <NavLink
-            className={({isActive}) =>
+            className={({ isActive }) =>
               isActive
-                ? "font-bold text-orange after:mt-0 after:block after:text-[#E95102] after:border-b-3 uppercase"
+                ? "text-orange font-bold uppercase after:mt-0 after:block after:border-b-3 after:text-[#E95102]"
                 : "text-gray-400 uppercase"
             }
             to={"/"}
           >
             Home
           </NavLink>
-          <NavLink 
-            className={({isActive}) =>
+          <NavLink
+            className={({ isActive }) =>
               isActive
-                ? "font-bold text-orange after:mt-0 after:block after:text-[#E95102] after:border-b-3 uppercase"
+                ? "text-orange font-bold uppercase after:mt-0 after:block after:border-b-3 after:text-[#E95102]"
                 : "text-gray-400 uppercase"
-            } 
-            to={"/movies"}>
+            }
+            to={"/movies"}
+          >
             Movie
           </NavLink>
-          <NavLink 
-            className={({isActive}) =>
+          <NavLink
+            className={({ isActive }) =>
               isActive
-                ? "font-bold text-orange after:mt-0 after:block after:text-[#E95102] after:border-b-3 uppercase"
+                ? "text-orange font-bold uppercase after:mt-0 after:block after:border-b-3 after:text-[#E95102]"
                 : "text-gray-400 uppercase"
-            } 
-            to={"/order/ticket"}>
+            }
+            to={"/order/ticket"}
+          >
             Buy Ticket
           </NavLink>
         </li>
-        <li className="hidden md:flex gap-4">
-          {/* Login Register */}
-          <Link
-            className="font-bold text-orange outline-2 outline-orange px-6 py-3 rounded-4xl hover:opacity-70"
-            to={"/auth/login"}
-          >
-            Login
-          </Link>
-          <Link
-            className="font-bold text-white bg-orange px-6 py-3 rounded-4xl hover:opacity-70"
-            to={"/auth/register"}
-          >
-            Register
-          </Link>
+        <li className="hidden gap-4 md:flex">
+          {isLogin ? (
+            <div className="flex items-center gap-4">
+              <Link
+                className={`h-10 w-10 cursor-pointer rounded-full bg-cover bg-center`}
+                style={{ backgroundImage: `url(${avatarDefault})` }}
+                to={"/profile"}
+              ></Link>
+              <Link
+                className="cursor-pointer text-gray-800 uppercase"
+                to={"/profile"}
+              >
+                {profileName}
+              </Link>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4">
+              {/* Login Register */}
+              <Link
+                className="text-orange outline-orange rounded-4xl px-6 py-3 font-bold outline-2 hover:opacity-70"
+                to={"/auth/login"}
+              >
+                Login
+              </Link>
+              <Link
+                className="bg-orange rounded-4xl px-6 py-3 font-bold text-white hover:opacity-70"
+                to={"/auth/register"}
+              >
+                Register
+              </Link>
+            </div>
+          )}
         </li>
         <li className="md:hidden">
           {isShowMenu ? (
             <CgClose
-              className="md:hidden text-3xl cursor-pointer"
+              className="cursor-pointer text-3xl md:hidden"
               onClick={() => setIsShowMenu(!isShowMenu)}
             />
           ) : (
             <GiHamburgerMenu
-              className="md:hidden text-3xl cursor-pointer"
+              className="cursor-pointer text-3xl md:hidden"
               onClick={() => setIsShowMenu(!isShowMenu)}
             />
           )}
           {isShowMenu && (
-            <div className=" flex flex-col gap-8 py-5 items-center w-full h-56 absolute top-20 right-0 left-0 bg-white shadow-lg">
-              <div className="flex flex-col items-center gap-4 px-12  w-1/2">
+            <div className="absolute top-20 right-0 left-0 flex w-full flex-col items-center gap-8 bg-white py-5 shadow-lg">
+              <div className="flex w-1/2 flex-col items-center gap-4 px-12">
                 {/* menu desktop */}
                 <NavLink
-                  className={({isActive}) =>
+                  className={({ isActive }) =>
                     isActive
-                      ? "font-bold text-orange after:mt-0 after:block after:text-[#E95102] after:border-b-3 uppercase"
+                      ? "text-orange font-bold uppercase after:mt-0 after:block after:border-b-3 after:text-[#E95102]"
                       : "text-gray-400 uppercase"
                   }
                   to={"/"}
@@ -93,21 +126,37 @@ function Navbar() {
                   Buy Ticket
                 </NavLink>
               </div>
-              <div className="flex gap-4">
-                {/* Login Register */}
-                <Link
-                  className="font-bold text-orange outline-2 outline-orange px-6 py-3 rounded-4xl hover:opacity-70"
-                  to={"/auth/login"}
-                >
-                  Login
-                </Link>
-                <Link
-                  className="font-bold text-white bg-orange px-6 py-3 rounded-4xl hover:opacity-70"
-                  to={"/auth/register"}
-                >
-                  Register
-                </Link>
-              </div>
+              {isLogin ? (
+                <div className="flex items-center gap-4">
+                  <Link
+                    className={`h-10 w-10 cursor-pointer rounded-full bg-cover bg-center`}
+                    style={{ backgroundImage: `url(${avatarDefault})` }}
+                    to={"/profile"}
+                  ></Link>
+                  <Link
+                    className="cursor-pointer text-gray-800 uppercase"
+                    to={"/profile"}
+                  >
+                    {profileName}
+                  </Link>
+                </div>
+              ) : (
+                <div className="flex gap-4">
+                  {/* BeforeLogin Register */}
+                  <Link
+                    className="text-orange outline-orange rounded-4xl px-6 py-3 font-bold outline-2 hover:opacity-70"
+                    to={"/auth/login"}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    className="bg-orange rounded-4xl px-6 py-3 font-bold text-white hover:opacity-70"
+                    to={"/auth/register"}
+                  >
+                    Register
+                  </Link>
+                </div>
+              )}
             </div>
           )}
         </li>
