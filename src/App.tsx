@@ -7,6 +7,7 @@ import OrderSeatPage from "./pages/Order/OrderSeatPage.tsx"
 import AuthLayout from "./layout/AuthLayout.tsx"
 import LoginPage from "./pages/Auth/LoginPage.tsx"
 import RegisterPage from "./pages/Auth/RegisterPage.tsx"
+import OrderPaymentPage from "./pages/Order/OrderPaymentPage.tsx"
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="order">
           <Route path="ticket" element={<OrderTicketPage />} />
           <Route path="seat" element={<OrderSeatPage />} />
+          <Route path="payment" element={<OrderPaymentPage />} />
         </Route>
       </Route>
     </Routes>

@@ -1,12 +1,14 @@
-#Tickitz-Prototype
+## Tickitz-Prototype
 Version: 1.0.0
 Status: CI Status License
 Demo: Live Preview (soon)
 
-# 📌 Overview
+
+
+## 📌 Overview
 Tickitz-Prototype adalah sebuah aplikasi web berbasis React.js yang mensimulasikan sistem pemesanan tiket bioskop. Dibangun dengan teknologi modern seperti TailwindCSS untuk styling, React Router untuk navigasi, dan React Hook Form untuk manajemen form yang efisien.
 
-# ✨ Features
+## ✨ Features
 🎬 Halaman utama menampilkan film yang sedang tayang
 🔍 Pencarian film berdasarkan judul/genre
 🎟️ Sistem pemesanan tiket dengan pemilihan kursi
@@ -14,31 +16,31 @@ Tickitz-Prototype adalah sebuah aplikasi web berbasis React.js yang mensimulasik
 📝 Form validasi menggunakan React Hook Form
 🔄 Dynamic routing dengan React Router
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 React
 TailwindCSS
 React Router
 React Hook Form
 
-# 🚀 Getting Started
+## 🚀 Getting Started
 Prerequisites:
  - Node.js v16+
  - npm atau yarn
 
-# Installation
-## Clone repository
+## Installation
+### Clone repository
 
 ```bash
 git clone https://github.com/your-username/Tickitz-Prototype.git
 cd Tickitz-Prototype
 ```
-## Install dependencies
+### Install dependencies
 
 ```bash
 npm install
 ```
 
-## Jalankan development 
+### Jalankan development 
 
 ```bash
 npm run dev
@@ -47,7 +49,7 @@ npm run dev
 Buka di browser
 Aplikasi akan berjalan di `http://localhost:3000`
 
-# 📂 Project Structure
+## 📂 Project Structure
 ```
 src/
 ├── assets/            # Gambar, font, dll
@@ -70,7 +72,7 @@ npm test
 yarn test
 -->
 
-# 🤝 How to Contribute
+## 🤝 How to Contribute
 - Fork project ini
 
 - Buat branch baru (git checkout -b feature/your-feature)
@@ -81,10 +83,10 @@ yarn test
 
 - Buat Pull Request
 
-# 📜 License
+## 📜 License
 Project ini dilisensikan di bawah MIT License - lihat file LICENSE untuk detail lebih lanjut.
 
-# 📞 Contact
+## 📞 Contact
 Email: hello.denisrahmadi@example.com
 
 LinkedIn: Denis Rahmadi
