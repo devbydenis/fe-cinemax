@@ -19,7 +19,7 @@ function Navbar() {
       setIsLogin(true);
       SetProfileName(getData[0].email);
     }
-  }, []);
+  }, [getData, storedData]);
   return (
     <nav className="shadow-lg relative z-50">
       <ul className="flex items-center justify-between px-10 py-6 lg:px-20">
