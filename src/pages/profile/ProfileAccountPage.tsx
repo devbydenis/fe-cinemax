@@ -11,7 +11,7 @@ function ProfileAccountPage() {
         <NavProfile />
       </div>
       <AccountInfo />
-      <div className="hidden md:block col-span-2">
+      <div className="col-span-2 hidden md:block">
         <NavProfile />
       </div>
       <AccountSettingsMobile />
@@ -26,9 +26,9 @@ function AccountInfo() {
 
   return (
     <>
-      <section className="bg-white rounded-3xl m-10 flex flex-col row-span-2 h-fit">
+      <section className="border-orange/70 row-span-2 m-10 flex h-fit flex-col rounded-3xl border-3 bg-white">
         <div className="info p-10">
-          <h1 className="text-start text-title-info-first">INFO</h1>
+          <h1 className="text-start text-2xl font-bold">INFO</h1>
           <img
             className="mx-auto my-8"
             src={avatar}
@@ -36,44 +36,44 @@ function AccountInfo() {
             width={132}
             height={132}
           />
-          <p className="text-center mb-3 text-xl font-bold tracking-wider">
+          <p className="mb-3 text-center text-xl font-semibold tracking-wider">
             user name
           </p>
-          <p className="text-center text-title-info-second">Moviegoers</p>
+          <p className="text-center text-gray-600">Moviegoers</p>
         </div>
-        <div className="border-b-2 border-gray-300"></div>
-        <div className="loyalty p-10 relative">
-          <h1 className="text-start text-title-info-first font-semibold mb-5">
+        <div className="border-b-2 border-orange-300"></div>
+        <div className="loyalty relative p-10">
+          <h1 className="text-title-info-first mb-5 text-start font-semibold">
             Loyalty Poin
           </h1>
-          <div className="w-full bg-orange rounded-xl p-4 text-white">
+          <div className="bg-orange w-full rounded-xl p-4 text-white">
             <p className="mb-5 text-lg font-bold">Moviegoers</p>
             <p className="text-2xl">
               320 <small className="text-[10px]">points</small>
             </p>
-            <div className="w-20 h-20 absolute rounded-full top-12 right-5 bg-white opacity-30"></div>
-            <div className="w-20 h-20 absolute rounded-full top-18 right-3 bg-white opacity-30"></div>
+            <div className="absolute top-12 right-5 h-20 w-20 rounded-full bg-white opacity-30"></div>
+            <div className="absolute top-18 right-3 h-20 w-20 rounded-full bg-white opacity-30"></div>
             <img
-              className="absolute top-20 right-10 w-12 h-12"
+              className="absolute top-20 right-10 h-12 w-12"
               src={star}
               alt=""
             />
           </div>
           <div>
-            <p className="text-center text-title-info-second mt-5 mb-1.5">
+            <p className="text-title-info-second mt-5 mb-1.5 text-center">
               180 points become a master
             </p>
-            <div className="mb-6 h-4 w-full bg-neutral-200 rounded-2xl">
-              <div className="h-4 bg-orange w-1/4  rounded-2xl"></div>
+            <div className="mb-6 h-4 w-full rounded-2xl bg-neutral-200">
+              <div className="bg-orange h-4 w-1/4 rounded-2xl"></div>
             </div>
           </div>
         </div>
         <button
-          className="border-1 font-bold py-3 mx-10 mb-6 active:scale-95 active:opacity-50 rounded-lg border-orange sm:hidden"
+          className="border-orange mx-10 text-orange mb-6 rounded-lg border-1 py-3 font-bold active:scale-99 active:opacity-50 sm:hidden"
           type="button"
           onClick={() => {
             window.scrollTo(0, 0);
-            setShowEditProfile(!showEditProfile)
+            setShowEditProfile(!showEditProfile);
           }}
         >
           Edit Profile
@@ -90,15 +90,15 @@ function AccountSettingsMobile() {
   return (
     <div className={`${showEditProfile ? "block" : "hidden"} block`}>
       <div className="absolute inset-0 bg-black opacity-50"></div>
-      <form className="bg-white mx-10 p-10 rounded-2xl absolute top-20 right-0 left-0">
+      <form className="absolute top-20 right-0 left-0 mx-10 rounded-2xl bg-white p-10">
         <button
-          className="absolute top-5 right-5 text-black font-bold"
+          className="absolute top-5 right-5 font-bold text-black"
           type="button"
           onClick={() => setShowEditProfile(false)}
         >
           X
         </button>
-        <h1 className="text-2xl font-bold tracking-wider mb-9">
+        <h1 className="mb-9 text-2xl font-bold tracking-wider">
           Account Settings
         </h1>
         <p className="border-b-2 border-gray-300 pb-2 text-base font-normal tracking-wider">
@@ -106,13 +106,13 @@ function AccountSettingsMobile() {
         </p>
         <div>
           <label
-            className="text-base font-normal text-title-info-first block pt-6 pb-3"
+            className="text-title-info-first block pt-6 pb-3 text-base font-normal"
             htmlFor="fullname"
           >
             Full Name
           </label>
           <input
-            className="border-1 border-secondary rounded py-3 px-6 w-full focus:outline-none"
+            className="border-secondary w-full rounded border-1 px-6 py-3 focus:outline-none"
             type="text"
             name="fullname"
             id="fullname"
@@ -120,13 +120,13 @@ function AccountSettingsMobile() {
         </div>
         <div>
           <label
-            className="text-base font-normal text-title-info-first block pt-6 pb-3"
+            className="text-title-info-first block pt-6 pb-3 text-base font-normal"
             htmlFor="email"
           >
             Email
           </label>
           <input
-            className="border-1 border-secondary rounded py-3 px-6 w-full focus:outline-none"
+            className="border-secondary w-full rounded border-1 px-6 py-3 focus:outline-none"
             type="text"
             name="email"
             id="email"
@@ -135,35 +135,35 @@ function AccountSettingsMobile() {
         </div>
         <div>
           <label
-            className="text-base font-normal text-title-info-first block pt-6 pb-3"
+            className="text-title-info-first block pt-6 pb-3 text-base font-normal"
             htmlFor="phone"
           >
             Phone Number
           </label>
-          <span className="flex border-1 border-secondary rounded py-3 px-6 w-full">
-            <p className="border-r-2 border-gray-300 pr-3 text-secondary">
+          <span className="border-secondary flex w-full rounded border-1 px-6 py-3">
+            <p className="text-secondary border-r-2 border-gray-300 pr-3">
               +62
             </p>
             <input
-              className="pl-3 w-full focus:outline-none"
+              className="w-full pl-3 focus:outline-none"
               type="text"
               name="phone"
               id="phone"
             />
           </span>
         </div>
-        <p className="border-b-2 border-gray-300 pb-2 mt-10 text-base font-normal tracking-wider">
+        <p className="mt-10 border-b-2 border-gray-300 pb-2 text-base font-normal tracking-wider">
           Account and Privacy
         </p>
         <div>
           <label
-            className="text-base font-normal text-title-info-first block pt-6 pb-3"
+            className="text-title-info-first block pt-6 pb-3 text-base font-normal"
             htmlFor="password"
           >
             Password
           </label>
           <input
-            className="border-1 border-secondary rounded py-3 px-6 w-full focus:outline-none"
+            className="border-secondary w-full rounded border-1 px-6 py-3 focus:outline-none"
             type="password"
             name="password"
             id="password"
@@ -171,20 +171,20 @@ function AccountSettingsMobile() {
         </div>
         <div>
           <label
-            className="text-base font-normal text-title-info-first block pt-6 pb-3"
+            className="text-title-info-first block pt-6 pb-3 text-base font-normal"
             htmlFor="confirm-password"
           >
             Confirm Password
           </label>
           <input
-            className="border-1 border-secondary rounded py-3 px-6 w-full focus:outline-none"
+            className="border-secondary w-full rounded border-1 px-6 py-3 focus:outline-none"
             type="password"
             name="confirm-password"
             id="confirm-password"
           />
         </div>
         <button
-          className="w-full font-bold bg-orange text-white py-3 px-6 rounded-lg mt-10"
+          className="bg-orange mt-10 w-full rounded-lg px-6 py-3 font-bold text-white"
           type="button"
         >
           Update Change
@@ -194,26 +194,25 @@ function AccountSettingsMobile() {
   );
 }
 function AccountSettingsDesktop() {
-
   return (
     <div className="col-span-2 hidden md:block">
-      <form className="bg-white mr-10 p-10 rounded-2xl">
-        <h1 className="text-2xl font-bold tracking-wider mb-9">
+      <form className="mr-10 rounded-2xl bg-white p-10">
+        <h1 className="mb-9 text-2xl font-bold tracking-wider">
           Account Settings
         </h1>
         <p className="border-b-2 border-gray-300 pb-2 text-base font-normal tracking-wider">
           Detail Information
         </p>
-        <section className="md:grid md:grid-cols-2 gap-5">
+        <section className="gap-5 md:grid md:grid-cols-2">
           <div>
             <label
-              className="text-base font-normal text-title-info-first block pt-6 pb-3"
+              className="text-title-info-first block pt-6 pb-3 text-base font-normal"
               htmlFor="fullname"
             >
               First Name
             </label>
             <input
-              className="border-1 border-secondary rounded py-3 px-6 w-full focus:outline-none"
+              className="border-secondary w-full rounded border-1 px-6 py-3 focus:outline-none"
               type="text"
               name="firstName"
               id="firstName"
@@ -221,13 +220,13 @@ function AccountSettingsDesktop() {
           </div>
           <div>
             <label
-              className="text-base font-normal text-title-info-first block pt-6 pb-3"
+              className="text-title-info-first block pt-6 pb-3 text-base font-normal"
               htmlFor="fullname"
             >
               Last Name
             </label>
             <input
-              className="border-1 border-secondary rounded py-3 px-6 w-full focus:outline-none"
+              className="border-secondary w-full rounded border-1 px-6 py-3 focus:outline-none"
               type="text"
               name="lastName"
               id="lastName"
@@ -235,13 +234,13 @@ function AccountSettingsDesktop() {
           </div>
           <div>
             <label
-              className="text-base font-normal text-title-info-first block pt-6 pb-3"
+              className="text-title-info-first block pt-6 pb-3 text-base font-normal"
               htmlFor="email"
             >
               Email
             </label>
             <input
-              className="border-1 border-secondary rounded py-3 px-6 w-full focus:outline-none"
+              className="border-secondary w-full rounded border-1 px-6 py-3 focus:outline-none"
               type="text"
               name="email"
               id="email"
@@ -250,17 +249,17 @@ function AccountSettingsDesktop() {
           </div>
           <div>
             <label
-              className="text-base font-normal text-title-info-first block pt-6 pb-3"
+              className="text-title-info-first block pt-6 pb-3 text-base font-normal"
               htmlFor="phone"
             >
               Phone Number
             </label>
-            <span className="flex border-1 border-secondary rounded py-3 px-6 w-full">
-              <p className="border-r-2 border-gray-300 pr-3 text-secondary">
+            <span className="border-secondary flex w-full rounded border-1 px-6 py-3">
+              <p className="text-secondary border-r-2 border-gray-300 pr-3">
                 +62
               </p>
               <input
-                className="pl-3 w-full focus:outline-none"
+                className="w-full pl-3 focus:outline-none"
                 type="text"
                 name="phone"
                 id="phone"
@@ -268,19 +267,19 @@ function AccountSettingsDesktop() {
             </span>
           </div>
         </section>
-        <p className="border-b-2 border-gray-300 pb-2 mt-10 text-base font-normal tracking-wider">
+        <p className="mt-10 border-b-2 border-gray-300 pb-2 text-base font-normal tracking-wider">
           Account and Privacy
         </p>
         <section className="grid grid-cols-2 gap-5">
           <div>
             <label
-              className="text-base font-normal text-title-info-first block pt-6 pb-3"
+              className="text-title-info-first block pt-6 pb-3 text-base font-normal"
               htmlFor="password"
             >
               Password
             </label>
             <input
-              className="border-1 border-secondary rounded py-3 px-6 w-full focus:outline-none"
+              className="border-secondary w-full rounded border-1 px-6 py-3 focus:outline-none"
               type="password"
               name="password"
               id="password"
@@ -288,13 +287,13 @@ function AccountSettingsDesktop() {
           </div>
           <div>
             <label
-              className="text-base font-normal text-title-info-first block pt-6 pb-3"
+              className="text-title-info-first block pt-6 pb-3 text-base font-normal"
               htmlFor="confirm-password"
             >
               Confirm Password
             </label>
             <input
-              className="border-1 border-secondary rounded py-3 px-6 w-full focus:outline-none"
+              className="border-secondary w-full rounded border-1 px-6 py-3 focus:outline-none"
               type="password"
               name="confirm-password"
               id="confirm-password"
@@ -302,7 +301,7 @@ function AccountSettingsDesktop() {
           </div>
         </section>
         <button
-          className="w-full font-bold bg-orange text-white py-3 px-6 rounded-lg mt-10"
+          className="bg-orange mt-10 w-full rounded-lg px-6 py-3 font-bold text-white"
           type="button"
         >
           Update Change
