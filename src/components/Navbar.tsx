@@ -25,7 +25,9 @@ function Navbar() {
       <ul className="flex items-center justify-between px-10 py-6 lg:px-20">
         <li>
           {/* logo */}
-          <img src={logoTickitz} alt="logo-tickitz" />
+          <Link to={'/'}>
+            <img src={logoTickitz} alt="logo-tickitz" />
+          </Link>
         </li>
         <li className="hidden gap-14 px-12 md:flex">
           {/* menu desktop */}

@@ -1,15 +1,18 @@
 import cineone from "../../assets/cineone21-logo.svg";
 import qrcode from "../../assets/qrcode.svg";
 import { useState } from "react";
-import avatar from "../../assets/avatar_default.png";
-import star from "../../assets/star.svg";
 import NavProfile from "../../components/profile/NavProfile";
+import InfoAccountProfile from "../../components/profile/InfoAccountProfile";
+import { MdArrowDropDown } from "react-icons/md";
 function ProfileHistoryPage() {
   return (
     <>
-      <AccountInfo />
-      <NavProfile />
+      <NavProfile display="block md:hidden" />
+      <InfoAccountProfile display="hidden md:flex" />
+      <NavProfile display="hidden md:flex" />
+
       <section className="col-span-2">
+        {/* looping history card disini soon */}
         <CardHistory
           cinema={cineone}
           date="Tuesday, 07 July 2020 - 04:30pm"
@@ -22,65 +25,6 @@ function ProfileHistoryPage() {
           title="Spider-Man: Homecoming"
           isTicketPaid={true}
         />
-      </section>
-    </>
-  );
-}
-
-function AccountInfo() {
-  const [showEditProfile, setShowEditProfile] = useState(false)
-  
-  return (
-    <>
-      <section className="hidden bg-white rounded-3xl m-10 md:flex flex-col row-span-2 h-fit">
-        <div className="info p-10">
-          <h1 className="text-start text-title-info-first">INFO</h1>
-          <img
-            className="mx-auto my-8"
-            src={avatar}
-            alt="profile avatar"
-            width={132}
-            height={132}
-          />
-          <p className="text-center mb-3 text-xl font-bold tracking-wider">
-            Jonas Rodriguez
-          </p>
-          <p className="text-center text-title-info-second">Moviegoers</p>
-        </div>
-        <div className="border-b-2 border-gray-300"></div>
-        <div className="loyalty p-10 relative">
-          <h1 className="text-start text-title-info-first font-semibold mb-5">
-            Loyalty Poin
-          </h1>
-          <div className="w-full bg-primary rounded-xl p-4 text-white">
-            <p className="mb-5 text-lg font-bold">Moviegoers</p>
-            <p className="text-2xl">
-              320 <small className="text-[10px]">points</small>
-            </p>
-            <div className="w-20 h-20 absolute rounded-full top-12 right-5 bg-white opacity-30"></div>
-            <div className="w-20 h-20 absolute rounded-full top-18 right-3 bg-white opacity-30"></div>
-            <img
-              className="absolute top-20 right-10 w-12 h-12"
-              src={star}
-              alt=""
-            />
-          </div>
-          <div>
-            <p className="text-center text-title-info-second mt-5 mb-1.5">
-              180 points become a master
-            </p>
-            <div className="mb-6 h-4 w-full bg-neutral-200 rounded-2xl">
-              <div className="h-4 bg-primary w-1/4  rounded-2xl"></div>
-            </div>
-          </div>
-        </div>
-        <button
-          className="border-1 font-bold py-3 mx-4 mb-6 active:scale-95 active:opacity-50 rounded-lg border-primary sm:hidden"
-          type="button"
-          onClick={() => setShowEditProfile(!showEditProfile)}
-        >
-          Edit Profile
-        </button>
       </section>
     </>
   );
@@ -112,7 +56,7 @@ function CardHistory(props: CardHistoryProps) {
             <span
               className={`${
                 isTicketPaid
-                  ? "bg-[#6E719133] text-title-info-first"
+                  ? "bg-gray/30 text-gray/50"
                   : "bg-[#00BA8833] text-[#00BA88]"
               } w-full py-3 text-center font-bold tracking-wider rounded-lg`}
             >
@@ -121,7 +65,7 @@ function CardHistory(props: CardHistoryProps) {
             <span
               className={`${
                 isTicketPaid
-                  ? "bg-[#6E719133] text-title-info-first"
+                  ? "bg-gray/30 text-gray/50"
                   : "bg-[#E82C2C33] text-[#E82C2C]"
               } w-full py-3 text-center font-bold tracking-wider rounded-lg`}
             >
@@ -133,11 +77,7 @@ function CardHistory(props: CardHistoryProps) {
             onClick={() => setShowModal(!showModal)}
           >
             <p>Show Detail</p>
-            <img
-              className={`${showModal ? "rotate-180" : ""} transition-all`}
-              src={""}
-              alt="dropdown arrow"
-            />
+            <MdArrowDropDown />
           </span>
         </div>
         <div
