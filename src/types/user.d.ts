@@ -3,6 +3,7 @@ interface User {
   email: string;
   password: string;
   createdAt?: string;
+  isLogin?: boolean
 }
 interface Users {
   users: {

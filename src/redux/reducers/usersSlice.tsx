@@ -1,17 +1,9 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-interface User {
-  id: string,
-  email: string,
-  password: string
-  createdAt?: string
-}
-interface Users {
-  users: User[]
-}
-
 const initialState: Users = {
-  users: []
+  users: {
+    users: []
+  }
 }
 
 const userSlice = createSlice({
@@ -19,7 +11,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     addRegisteredUsersAction: (state, action: PayloadAction<User>) => {
-      state.users.push(action.payload)
+      state.users.users.push(action.payload)
     }
   }
 })
