@@ -1,24 +1,45 @@
-import { useState } from "react";
-import testImage from "../../assets/test-image-card.png";
+import { useEffect, useState } from "react";
 import { useForm, type FieldValues } from "react-hook-form";
 import logo from "../../assets/cineone21-logo.svg";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addSeatsAction } from "../../redux/reducers/orderSlice";
 
 type SeatId = string;
 
 function OrderSeatPage() {
-
+  const [showModal, setShowModal] = useState(false);
   return (
     <>
-    <div className="absolute top-0 right-0 bottom-0 left-0 bg-black opacity-50 w-full 100vh"></div>
-
       <OrderInfo />
-      <OrderSeatsSelector />
-      <OrderModal />
+      <OrderSeatsSelector setShowModal={setShowModal}/>
+      <OrderModal showModal={showModal} setShowModal={setShowModal}/>
     </>
   );
 }
 
 function OrderInfo() {
+  const [movieDetail, setMovieDetail] = useState<MovieDetail>();
+  const order = useSelector((state:{order: StateMovies}) => state.order.order);
+  const { id } = useParams();
+
+  useEffect(() => {
+      const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+      const options = {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
+        },
+      };
+  
+      fetch(url, options)
+        .then((res) => res.json())
+        .then((json) => setMovieDetail(json))
+        .catch((err) => console.error(err));
+    }, [id]);
+
   return (
     <>
       <section className="m-4 gap-5 rounded-lg border border-gray-300 bg-white p-4 md:flex lg:justify-center">
@@ -26,33 +47,29 @@ function OrderInfo() {
           className="h-54 rounded-lg bg-cover md:h-56 md:flex-1/2 lg:h-72 lg:flex-5"
           style={{
             // backgroundImage: `url(https://image.tmdb.org/t/p/w500${image})`,
-            backgroundImage: `url(${testImage})`,
+            backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieDetail?.backdrop_path})`,
           }}
         ></div>
         <div className="lg:flex-5">
           <h1 className="mt-4 text-4xl font-bold md:mt-1 md:text-2xl">
-            Movie Title
+            {movieDetail?.title}
           </h1>
           <ul className="mt-4 flex flex-wrap gap-3">
-            <li
-              className={`focus:border-orange min-w-fit rounded-3xl border-2 border-gray-400 px-3 py-1.5 font-medium text-gray-400 uppercase`}
-            >
-              Action
-            </li>
-            <li
-              className={`focus:border-orange min-w-fit rounded-3xl border-2 border-gray-400 px-3 py-1.5 font-medium text-gray-400 uppercase`}
-            >
-              Comedy
-            </li>
-            <li
-              className={`focus:border-orange min-w-fit rounded-3xl border-2 border-gray-400 px-3 py-1.5 font-medium text-gray-400 uppercase`}
-            >
-              Drama
-            </li>
+            {
+              movieDetail?.genres.map((genre) => (
+                <li
+                  key={`genre-id: ${genre.id}`}
+                  className={`focus:border-orange min-w-fit rounded-3xl border-2 border-gray-400 px-3 py-1.5 font-medium text-gray-400 uppercase`}
+                >
+                  {genre.name}
+                </li>
+              ))
+            }
+            
           </ul>
           <div className="mt-4 flex flex-col items-start gap-5">
             <p className="text-lg font-medium text-gray-500 md:mt-1">
-              Regular - 10.00-12.00
+              Regular - {order.time}
             </p>
             <button
               type="button"
@@ -67,12 +84,13 @@ function OrderInfo() {
   );
 }
 
-function OrderSeatsSelector() {
+function OrderSeatsSelector({setShowModal}) {
   const { register, handleSubmit } = useForm();
+  const dispatch = useDispatch();
   const [selectedSeats, setSelectedSeats] = useState<SeatId[]>([]);
+  
   const rows: number = 10;
   const cols: number = 10;
-
   const rowLabels: string[] = Array.from({ length: rows }, (_, i) =>
     String.fromCharCode(65 + i),
   );
@@ -89,10 +107,15 @@ function OrderSeatsSelector() {
   };
 
   const handleSeatsChoosed = (data: FieldValues) => {
-    console.log(data);
-    // Object.values(data).forEach((value) => {
-      
-    // })        
+    Object.values(data).forEach((value) => {
+      if (value) {
+        setSelectedSeats(value);
+      }
+    })        
+
+    dispatch(addSeatsAction(selectedSeats));
+    setShowModal(true);
+    
   };
 
   const isSeatSelected = (seatId: SeatId): boolean => {
@@ -178,6 +201,7 @@ function OrderSeatsSelector() {
                         <input 
                           onClick={() => handleSeatClick(seatId)} 
                           type="checkbox" 
+                          {...register(`${seatId}`)}
                           className="hidden" 
                           value={seatId} 
                         />
@@ -189,23 +213,34 @@ function OrderSeatsSelector() {
               })}
           </div>
         ))}
-      <button onClick={() => console.log("test")} type="button" className="bg-orange w-full mt-5 cursor-pointer px-3 py-5 rounded-full font-semibold uppercase text-white">Submit ({selectedSeats.length} Seats)</button>
+      <button type="submit" className="bg-orange w-full mt-5 cursor-pointer px-3 py-5 rounded-full font-semibold uppercase text-white">Submit ({selectedSeats.length} Seats)</button>
       </div>
     </form>
   );
 }
 
-function OrderModal() {
-  const [isModal,] = useState(true)
+function OrderModal({showModal, setShowModal}) {
+  const {id} = useParams();
+  const navigate = useNavigate();
+  const order = useSelector((state) => state.order.order)
   const handleConfirmButton = () => {
     console.log("confirm button");
+    setShowModal(false)
+    navigate(`/order/payment/${id}`)
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [showModal])
 
   return (
     <>
+    <div className={`${
+        showModal ? "block" : "hidden"
+      } absolute inset-0 bg-black h-screen opacity-50 w-full 100vh`}></div>
     <section
       className={`${
-        isModal ? "block" : "hidden"
+        showModal ? "block" : "hidden"
       } absolute top-20 right-0 left-0 mx-6 my-10 flex flex-col items-center rounded-xl outline-4 -outline-offset-8 outline-orange bg-white px-5 py-10 shadow-2xl md:mx-20 lg:mx-50 lg:px-20`}
     >
       <div className="mb-8 flex w-80 h-30 flex-col items-center bg-orange outline-8 outline-orange outline-offset-8 rounded-full">
@@ -221,13 +256,13 @@ function OrderModal() {
       <div className="mb-10 flex w-full flex-col gap-4">
         <span className="flex justify-between">
           <p className="text-title-info-first tracking-wider">Movie selected</p>
-          <p>Spider-Man: Homecoming</p>
+          <p>{order.title}</p>
         </span>
         <span className="flex justify-between">
           <p className="text-title-info-first tracking-wider">
-            Tuesday, 07 July 2020
+            {order.date}
           </p>
-          <p>13.00 PM</p>
+          <p>{order.time}</p>
         </span>
         <span className="flex justify-between">
           <p className="text-title-info-first tracking-wider">
@@ -237,11 +272,11 @@ function OrderModal() {
         </span>
         <span className="flex justify-between">
           <p className="text-title-info-first tracking-wider">Seat Choosed</p>
-          <p>C4</p>
+          <p>{order.seat.join(", ")}</p>
         </span>
         <span className="flex justify-between">
           <p className="text-title-info-first tracking-wider font-bold text-xl">Total Payment</p>
-          <p className="font-bold text-xl">$30</p>
+          <p className="font-bold text-xl">{`$${order.seat.length * 10}`}</p>
         </span>
       </div>
       <button
