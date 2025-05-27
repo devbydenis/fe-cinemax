@@ -12,6 +12,7 @@ import ProfileLayout from "./layout/ProfileLayout.tsx"
 import ProfileAccountPage from "./pages/profile/ProfileAccountPage.tsx"
 import ProfileHistoryPage from "./pages/profile/ProfileHistoryPage.tsx"
 import DetailPage from "./pages/DetailPage.tsx"
+import NotFoundPage from "./pages/NotFoundPage.tsx"
 
 function App() {
   return (
@@ -30,16 +31,23 @@ function App() {
         <Route path="buy-ticket" element={<MoviesPage />} />
         
         <Route path="order">
-          <Route path="seat" element={<OrderSeatPage />} />
-          <Route path="payment" element={<OrderPaymentPage />} />
+          <Route path="seat">
+            <Route path=":id" element={<OrderSeatPage />} />
+          </Route>
+          <Route path="payment">
+            <Route path=":id" element={<OrderPaymentPage />} />
+          </Route>
           <Route path="ticket" element={<OrderTicketPage />} />
         </Route>
       </Route>
 
       <Route path="profile" element={<ProfileLayout />}>
+        <Route index element={<ProfileAccountPage />} />
         <Route path="account" element={<ProfileAccountPage />} />
         <Route path="history" element={<ProfileHistoryPage />} />
       </Route>
+      
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
 }

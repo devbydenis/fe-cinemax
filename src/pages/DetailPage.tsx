@@ -9,15 +9,34 @@ import { useDispatch } from "react-redux";
 import { addOrderAction } from "../redux/reducers/orderSlice";
 
 function DetailPage() {
+  const [movieDetail, setMovieDetail] = useState<MovieDetail>();
+  const { id } = useParams();
+
+    useEffect(() => {
+    const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
+      },
+    };
+
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((json) => setMovieDetail(json))
+      .catch((err) => console.error(err));
+  }, [id]);
   return (
     <>
-      <Banner />
-      <SetOrder />
+      <Banner movieDetail={movieDetail} />
+      <SetOrder movieDetail={movieDetail} />
     </>
   );
 }
-function Banner() {
-  const [movieDetail, setMovieDetail] = useState<MovieDetail>();
+function Banner({movieDetail}) {
+  // const [movieDetail, setMovieDetail] = useState<MovieDetail>();
   const [movieCredits, setMovieCredits] = useState<MovieCredits[]>([]);
   const { id } = useParams();
 
@@ -39,24 +58,23 @@ function Banner() {
     return result
   };
 
-  useEffect(() => {
-    const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
-      },
-    };
+  // useEffect(() => {
+  //   const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+  //   const options = {
+  //     method: "GET",
+  //     headers: {
+  //       accept: "application/json",
+  //       Authorization:
+  //         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
+  //     },
+  //   };
 
-    fetch(url, options)
-      .then((res) => res.json())
-      .then((json) => setMovieDetail(json))
-      .catch((err) => console.error(err));
-  }, [id]);
+  //   fetch(url, options)
+  //     .then((res) => res.json())
+  //     .then((json) => setMovieDetail(json))
+  //     .catch((err) => console.error(err));
+  // }, [id]);
 
-  console.log(movieDetail);
 
   useEffect(() => {
     const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
@@ -145,14 +163,15 @@ function Banner() {
   );
 }
 
-function SetOrder() {
+function SetOrder({movieDetail}) {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const param = useParams();
   const onSubmit = (data: FieldValues) => {
     console.log(data);
-    dispatch(addOrderAction(data));
-    navigate("/order/seat");
+    dispatch(addOrderAction({title: movieDetail.title, ...data}));
+    navigate(`/order/seat/${param.id}`);
 
   }
   return (
@@ -186,11 +205,11 @@ function SetOrder() {
           <div className="flex items-center gap-4 rounded-full border-2 px-5 py-3">
             <FiSearch />
             <select className="outline-none" {...register("time")} id="time">
-              <option value="10.00">10.00</option>
-              <option value="12.00">12.00</option>
-              <option value="14.00">14.00</option>
-              <option value="16.00">16.00</option>
-              <option value="18.00">18.00</option>
+              <option value="10.00">10.00-11.00</option>
+              <option value="12.00">12.00-13.00</option>
+              <option value="14.00">14.00-15.00</option>
+              <option value="16.00">16.00-17.00</option>
+              <option value="18.00">18.00-19.00</option>
             </select>
           </div>
         </div>
