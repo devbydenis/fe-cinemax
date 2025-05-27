@@ -18,3 +18,23 @@ interface StateMovies {
   isError: boolean;
   error: string | null;
 }
+
+type Genre = {
+  id: number;
+  name: string;
+}
+type MovieDetail = {
+  backdrop_path: string;
+  id: number;
+  original_title: string;
+  overview: string;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  genres: Genre[];
+  runtime: number ;
+}
+type MovieCredits = {
+  director: string;
+  casts: string[];
+}

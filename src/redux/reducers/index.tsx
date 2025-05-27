@@ -1,9 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import storage from 'redux-persist/lib/storage'
 import usersReducer from "./usersSlice";
 import userReducer from "./userSlice";
 import moviesReducer from "./moviesSlice";
-import { persistReducer } from "redux-persist";
-import storage from 'redux-persist/lib/storage'
+import orderReducer from "./orderSlice";
 
 const usersPersistConfig = {
   key: "usersRegistered",
@@ -15,9 +16,15 @@ const userPersistConfig = {
   storage
 }
 
+const orderPersistConfig = {
+  key: "order",
+  storage
+}
+
 const reducers = combineReducers({
   users: persistReducer(usersPersistConfig, usersReducer),
   user: persistReducer(userPersistConfig, userReducer),
+  order: persistReducer(orderPersistConfig, orderReducer),
   movies: moviesReducer
 })
 

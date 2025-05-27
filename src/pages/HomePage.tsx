@@ -69,9 +69,9 @@ function NowPlaying() {
         <h2 className="text-center leading-11 font-semibold md:mb-9 md:text-4xl">
           Now Showing in Cinemas
         </h2>
-        <ul className="container-card custom-scrollbar flex gap-5 overflow-x-scroll">
+        <ul className="relative container-card custom-scrollbar flex gap-5 overflow-x-scroll">
           {
-            isLoading && <Loader />
+            isLoading && <div className="absolute top-50 left-1/2"><Loader overlay={false} /></div>
           }
           {
             nowPlayingMovies && nowPlayingMovies.map((movie:movies) => {
@@ -146,10 +146,10 @@ function UpComingMovies() {
         <div className="mb-4 flex flex-col items-center justify-center gap-4">
           <Chip value="UPCOMING MOVIES" />
           <div className="flex flex-col items-center justify-center gap-5 md:flex-row md:items-start">
-            <h3 className="text-black-primary flex-1 px-20 text-center text-3xl/9 font-extrabold">
+            <h3 className="text-black-primary flex-1 px-20 text-center text-3xl/9 lg:text-5xl lg:flex-4 font-extrabold">
               Exciting Movie Coming Soon
             </h3>
-            <ul className="custom-scrollbar mx-auto mb-3 flex w-fit flex-2 gap-2">
+            <ul className="pb-5 custom-scrollbar mx-auto mb-3 flex w-fit flex-2 gap-2">
               <Genre title="Action" />
               <Genre title="Adventure" />
               <Genre title="Comedy" />
