@@ -20,18 +20,7 @@ function Movies() {
         <Menu />
         <section className="px-5 md:px-10">
           <ul className="flex flex-wrap justify-center gap-5 sm:gap-10">
-            <Card category="now playing" />
-            <Card category="now playing" />
-            <Card category="now playing" />
-            <Card category="now playing" />
-            <Card category="now playing" />
-            <Card category="now playing" />
-            <Card category="now playing" />
-            <Card category="now playing" />
-            <Card category="now playing" />
-            <Card category="now playing" />
-            <Card category="now playing" />
-            <Card category="now playing" />
+            
           </ul>
           <div className="flex justify-center items-center gap-5 my-20">
             <button className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">

@@ -6,9 +6,14 @@ import customerService from "../assets/customerService.svg";
 import guaranted from "../assets/guaranted.svg";
 import Card from "../components/Card";
 import Newslater from "../components/Newslater";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { moviesActions } from "../redux/reducers/moviesSlice";
+import type { AppDispatch } from "../redux/store";
+
 
 function HomePage() {
+  // console.log(import.meta.env.VITE_API_KEY);
   return (
     <>
       <main>
@@ -44,8 +49,19 @@ function Banner() {
     </>
   );
 }
-
 function NowPlaying() {
+  const { nowPlayingMovies, genres, isLoading, isError } = useSelector((state: {movies: StateMovies}) => state.movies);
+  const { 
+    getNowPlayingMoviesThunk,
+    getGenresMovieThunk
+  } = moviesActions;
+  const dispatch:AppDispatch = useDispatch();
+
+  console.log(useSelector((state:{movies: StateMovies}) => state.movies));
+  useEffect(() => {
+    dispatch(getNowPlayingMoviesThunk());
+    dispatch(getGenresMovieThunk());
+  }, []);
   return (
     <>
       <section className="mx-10 md:mx-20 md:mt-16 md:pb-20">
@@ -53,28 +69,19 @@ function NowPlaying() {
           Now Showing in Cinemas
         </h2>
         <ul className="container-card custom-scrollbar flex gap-5 overflow-x-scroll">
-          <li>
-            <Card category="now playing" />
-          </li>
-          <li>
-            <Card category="now playing" />
-          </li>
-          <li>
-            <Card category="now playing" />
-          </li>
-          <li>
-            <Card category="now playing" />
-          </li>
-          <li>
-            <Card category="now playing" />
-          </li>
-          <li>
-            <Card category="now playing" />
-          </li>
+          {
+            nowPlayingMovies && nowPlayingMovies.map((movie:movies) => {
+              return (
+                <li key={`movie-id-${movie.id}`}>
+                  <Card category="now playing" movie={movie} genres={genres} />
+                </li>
+              );
+            })
+          }
         </ul>
         <span className="flex justify-center">
           <Link
-            to={"#"}
+            to={"movies"}
             className="bg-orange mt-5 flex items-center justify-center gap-2 rounded-full px-3 py-1 text-sm font-medium text-white uppercase hover:opacity-70 active:scale-95 active:transition-all md:px-6 md:py-3 md:text-lg md:font-medium"
           >
             View All
@@ -119,7 +126,6 @@ function WhyChooseUs() {
 }
 
 function UpComingMovies() {
-
   return (
     <>
       <section className="my-10">
@@ -138,18 +144,7 @@ function UpComingMovies() {
           </div>
         </div>
         <ul className="container-card custom-scrollbar mx-3 flex gap-5 overflow-x-scroll">
-          <li>
-            <Card category="coming soon" />
-          </li>
-          <li>
-            <Card category="coming soon" />
-          </li>
-          <li>
-            <Card category="coming soon" />
-          </li>
-          <li>
-            <Card category="coming soon" />
-          </li>
+          
         </ul>
         <span className="flex justify-center">
           <Link

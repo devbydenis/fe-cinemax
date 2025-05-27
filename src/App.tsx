@@ -11,6 +11,7 @@ import OrderPaymentPage from "./pages/order/OrderPaymentPage.tsx"
 import ProfileLayout from "./layout/ProfileLayout.tsx"
 import ProfileAccountPage from "./pages/profile/ProfileAccountPage.tsx"
 import ProfileHistoryPage from "./pages/profile/ProfileHistoryPage.tsx"
+import DetailPage from "./pages/DetailPage.tsx"
 
 function App() {
   return (
@@ -22,7 +23,10 @@ function App() {
 
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="movies" element={<MoviesPage />} />
+        <Route path="movies">
+          <Route index element={<MoviesPage />} />
+          <Route path=":id" element={<DetailPage />} />
+        </Route>
         <Route path="buy-ticket" element={<MoviesPage />} />
         
         <Route path="order">
