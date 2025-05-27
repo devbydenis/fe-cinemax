@@ -1,11 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getGenres, getNowPlayingMovie } from "../../service";
+import { getGenres, getNowPlayingMovie, getUpComingMovies } from "../../service";
 
 const getNowPlayingMoviesThunk = createAsyncThunk(
   "movies/nowPlayingMovies",
   async (_, { rejectWithValue }) => {
     try {
       const response = await getNowPlayingMovie();
+      if (!response.ok) throw new Error(response.statusText);
+
+      const json = await response.json()
+      const data = json.results
+      return data
+
+    } catch (error) {
+      if (error instanceof Error) rejectWithValue(error);
+    }
+  },
+);
+
+const getUpComingMoviesThunk = createAsyncThunk(
+  "movies/upComingMovies",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await getUpComingMovies();
       if (!response.ok) throw new Error(response.statusText);
 
       const json = await response.json()
@@ -39,6 +56,7 @@ const moviesSlice = createSlice({
   name: "movies",
   initialState: {
     nowPlayingMovies: [],
+    upComingMovies: [],
     genres: [],
     isLoading: false,
     isSuccess: false,
@@ -65,6 +83,9 @@ const moviesSlice = createSlice({
       .addCase(getGenresMovieThunk.fulfilled, (state, action) => {
         state.genres = action.payload
       })
+      .addCase(getUpComingMoviesThunk.fulfilled, (state, action) => {
+        state.upComingMovies = action.payload
+      })
   },
 });
 
@@ -72,6 +93,7 @@ const moviesSlice = createSlice({
 export const moviesActions = {
   ...moviesSlice.actions,
   getNowPlayingMoviesThunk,
-  getGenresMovieThunk
+  getGenresMovieThunk,
+  getUpComingMoviesThunk
 }
 export default moviesSlice.reducer;

@@ -9,7 +9,7 @@ type Genre = {
 type CardPRops = {
   category?: string;
   movie: movies;
-  genres: Genre[]
+  genres?: Genre[]
 };
 
 function Card(props: CardPRops) {
@@ -70,7 +70,7 @@ function Card(props: CardPRops) {
             }
           </ul>
         )}
-        {category === "coming soon" && (
+        {category === "upcoming" && (
           <div className="mt-1 flex justify-center">
             <p className="bg-orange-secondary text-orange w-fit rounded px-2 py-1 text-[10px] md:px-4 md:py-2 md:text-base">
               {props.movie?.release_date}

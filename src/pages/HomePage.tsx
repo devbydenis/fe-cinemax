@@ -6,10 +6,11 @@ import customerService from "../assets/customerService.svg";
 import guaranted from "../assets/guaranted.svg";
 import Card from "../components/Card";
 import Newslater from "../components/Newslater";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { moviesActions } from "../redux/reducers/moviesSlice";
 import type { AppDispatch } from "../redux/store";
+import Loader from "../components/Loader";
 
 
 function HomePage() {
@@ -70,6 +71,9 @@ function NowPlaying() {
         </h2>
         <ul className="container-card custom-scrollbar flex gap-5 overflow-x-scroll">
           {
+            isLoading && <Loader />
+          }
+          {
             nowPlayingMovies && nowPlayingMovies.map((movie:movies) => {
               return (
                 <li key={`movie-id-${movie.id}`}>
@@ -77,6 +81,9 @@ function NowPlaying() {
                 </li>
               );
             })
+          }
+          {
+            isError && <p className="text-center text-2xl text-red-500">Error</p>
           }
         </ul>
         <span className="flex justify-center">
@@ -126,6 +133,13 @@ function WhyChooseUs() {
 }
 
 function UpComingMovies() {
+  const dispatch:AppDispatch = useDispatch();
+  const { getUpComingMoviesThunk } = moviesActions;
+  const { upComingMovies } = useSelector((state: {movies: StateMovies}) => state.movies);
+  
+  useEffect(() => {
+    dispatch(getUpComingMoviesThunk());
+  }, [])
   return (
     <>
       <section className="my-10">
@@ -144,11 +158,19 @@ function UpComingMovies() {
           </div>
         </div>
         <ul className="container-card custom-scrollbar mx-3 flex gap-5 overflow-x-scroll">
-          
+          {
+            upComingMovies && upComingMovies.map((movie:movies) => {
+              return (
+                <li key={`movie-id-${movie.id}`}>
+                  <Card category="upcoming" movie={movie}  />
+                </li>
+              );
+            })
+          }
         </ul>
         <span className="flex justify-center">
           <Link
-            to={"#"}
+            to={"movies"}
             className="bg-orange mt-5 flex items-center justify-center gap-2 rounded-full px-3 py-1 text-sm font-medium text-white uppercase hover:opacity-70 active:scale-95 active:transition-all md:px-6 md:py-3 md:text-lg md:font-medium"
           >
             View All

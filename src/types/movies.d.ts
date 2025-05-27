@@ -11,6 +11,7 @@ interface movies {
 
 interface StateMovies {
   nowPlayingMovies: movies[];
+  upComingMovies: movies[];
   genres: Genre[];
   isLoading: boolean;
   isSuccess: boolean;
