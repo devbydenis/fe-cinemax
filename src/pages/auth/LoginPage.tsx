@@ -8,43 +8,48 @@ import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import Loader from "../../components/Loader";
 import ModalAuth from "../../components/ModalAuth";
-
-type RegisteredUser = {
-  id: number;
-  email: string;
-  password: string;
-};
+import { nanoid } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+import { addInfoLoginAction } from "../../redux/reducers/userSlice";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loaderAuth, setLoaderAuth] = useState(false);
   const [showModalAuth, setShowModalAuth] = useState(false);
-  const storedUsers = localStorage.getItem('users')
-  const navigate = useNavigate()
-  const getData: Storage = storedUsers ? JSON.parse(storedUsers) : null
   const { register, handleSubmit, formState: { errors }} = useForm({
     resolver: yupResolver(schemaLogin),
   });
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const registeredUsers = useSelector((state: Users) => state.users.users);
+  
+  const isDataMatched = (email: string, password: string): boolean => {
+    const result = registeredUsers.filter((user: User) => {
+      return user.email === email && user.password === password
+    })
+    return result.length > 0
+  }
 
-  // console.log("data registered", getData);
 
   const onSubmit = (data: FieldValues) => {
-    // console.log("login", data);
-    const matchedData = getData.filter((user: RegisteredUser) => {
-      return user.email === data.email && user.password === data.password
-    })
+    const { email, password } = data
 
-    if (matchedData.length > 0) {
-      console.log("berhasil login");
-      localStorage.setItem('userData', JSON.stringify(matchedData))
+    const userData = {
+      id: nanoid(),
+      email: email,
+      password: password
+    }
+
+    if (isDataMatched(email, password)) {
+      dispatch(addInfoLoginAction(userData))
       setLoaderAuth(true)
       setTimeout(() => {
         return navigate("/")  
       }, 2000)
-    } else {
-      setShowModalAuth(true)
+      return 
     }
 
+    setShowModalAuth(true)
   };
 
   return (

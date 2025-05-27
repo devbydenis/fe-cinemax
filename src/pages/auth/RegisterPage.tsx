@@ -6,60 +6,47 @@ import { useState } from "react";
 import { IoMdEye } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import ModalAuth from "../../components/ModalAuth";
-
-// type Storage = {
-//   (key: string): string | null
-// }
-
-type RegisteredUser = {
-  id: number;
-  email: string;
-  password: string;
-};
+import { useDispatch, useSelector } from "react-redux";
+import { addRegisteredUsersAction } from "../../redux/reducers/usersSlice";
+import { nanoid } from "@reduxjs/toolkit";
 
 function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showModalAuth, setShowModalAuth] = useState(false);
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const date = new Date()
+  const selector = useSelector((state: Users) => state.users);
+  const {users} = selector
+  console.log("selector", users);
+  
+  
+  const {register, handleSubmit, formState: { errors }} = useForm({
     resolver: yupResolver(schemaRegister),
     mode: "onChange",
   });
-
+  
   const onSubmit = (data: FieldValues) => {
-    console.log("data:", data);
-    console.log(localStorage.getItem("users"));
-    const storedUsers = localStorage.getItem("users");
-    const getData = storedUsers ? JSON.parse(storedUsers) : [];
-    const filteredDuplicateData = getData.filter((user: RegisteredUser) => {  // kalo data di local storage sudah ada
-      return user.email === data.email;
-    });
-
-    delete data.confirmPassword;
-
-    // cek apakah data di local storage masih kosong
-    if (getData.length === 0) {
-      console.log("kalo data ga ada")
-      localStorage.setItem("users", JSON.stringify([{ id: new Date().getTime(),...data }]));
-      return navigate("/auth/login");
-    } 
-
-    // kalo datanya duplikat
-    if (filteredDuplicateData.length > 0) {
-      // munculin modal
-      setShowModalAuth(true);
-    } else {
-      // simpen data ke local storage
-      console.log("data ada, dan data ga duplikat")
-      localStorage.setItem("users", JSON.stringify([...getData, { id: new Date().getTime(),...data }]));
-      return navigate("/auth/login");
+    const isEmailExists = users.filter((user: User) => user.email === data.email);
+    
+    if (isEmailExists.length > 0) {
+      setShowModalAuth(true)
+      return
     }
+    
+    dispatch(
+      addRegisteredUsersAction({
+        id: nanoid(),
+        email: data.email,
+        password: data.password,  
+        createdAt: date.toLocaleString(),
+      }),
+    );
+
+    setTimeout(() => {
+      navigate("/auth/login");
+    }, 2000);
   };
 
   return (
@@ -90,7 +77,9 @@ function RegisterPage() {
               id="email"
               placeholder="example@gmail.com"
             />
-            {!errors.email && <small className="invisible">this is just invisible text</small>}
+            {!errors.email && (
+              <small className="invisible">this is just invisible text</small>
+            )}
             {errors.email && (
               <small className="font-semibold text-red-600 transition-all duration-300">
                 {errors.email.message}
@@ -128,7 +117,9 @@ function RegisterPage() {
               </button>
             )}
           </div>
-          {!errors.password && <small className="invisible">this is just invisible text</small>}
+          {!errors.password && (
+            <small className="invisible">this is just invisible text</small>
+          )}
           {errors.password && (
             <small className="font-semibold text-red-600 transition duration-300">
               {errors.password.message}
@@ -165,7 +156,9 @@ function RegisterPage() {
               </button>
             )}
           </div>
-          {!errors.confirmPassword && <small className="invisible">this is just invisible text</small>}
+          {!errors.confirmPassword && (
+            <small className="invisible">this is just invisible text</small>
+          )}
           {errors.confirmPassword && (
             <small className="font-semibold text-red-600 transition duration-300">
               {errors.confirmPassword.message}
@@ -187,11 +180,14 @@ function RegisterPage() {
           Register
         </button>
       </form>
-      {showModalAuth && <ModalAuth setShowModalAuth={() => setShowModalAuth(false)} message={"Email is already exist"} />}
+      {showModalAuth && (
+        <ModalAuth
+          setShowModalAuth={() => setShowModalAuth(false)}
+          message={"Email is already exist"}
+        />
+      )}
     </>
   );
-
-  
 }
 
 export default RegisterPage;
