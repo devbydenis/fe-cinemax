@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import logoTickitz from "../assets/tickitz-logo.svg";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgClose } from "react-icons/cg";
 import avatarDefault from "../assets/avatar_default.png";
@@ -11,15 +11,22 @@ function Navbar() {
   const [profileName, SetProfileName] = useState<string>("");
   const storedData = localStorage.getItem("userData");
   const getData: Storage = storedData ? JSON.parse(storedData) : null;
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("ini storedData", storedData);
     console.log("ini getData", getData);
+    
+    if (!getData) {
+      navigate("/");
+      return
+    }
     if (getData.length > 0) {
       setIsLogin(true);
       SetProfileName(getData[0].email);
-    }
-  }, [getData, storedData]);
+    } 
+
+  }, [getData, storedData, navigate]);
   return (
     <nav className="shadow-lg relative z-50">
       <ul className="flex items-center justify-between px-10 py-6 lg:px-20">
@@ -68,13 +75,13 @@ function Navbar() {
               <Link
                 className={`h-10 w-10 cursor-pointer rounded-full bg-cover bg-center`}
                 style={{ backgroundImage: `url(${avatarDefault})` }}
-                to={"/profile"}
+                to={"/profile/account"}
               ></Link>
               <Link
                 className="cursor-pointer text-gray-800 uppercase"
-                to={"/profile"}
+                to={"/profile/account"}
               >
-                {profileName}
+                {"Hi, " + profileName.split("@")[0]}
               </Link>
             </div>
           ) : (
@@ -139,7 +146,7 @@ function Navbar() {
                     className="cursor-pointer text-gray-800 uppercase"
                     to={"/profile"}
                   >
-                    {profileName}
+                    {profileName.split("@")[0]}
                   </Link>
                 </div>
               ) : (
