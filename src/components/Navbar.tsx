@@ -4,29 +4,26 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgClose } from "react-icons/cg";
 import avatarDefault from "../assets/avatar_default.png";
+import { useSelector } from "react-redux";
 
 function Navbar() {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
-  const [isLogin, setIsLogin] = useState<boolean>(false);
   const [profileName, SetProfileName] = useState<string>("");
-  const storedData = localStorage.getItem("userData");
-  const getData: Storage = storedData ? JSON.parse(storedData) : null;
   const navigate = useNavigate();
 
+  const {isLogin, email} = useSelector((state: User) => state.user.user)
+
   useEffect(() => {
-    console.log("ini storedData", storedData);
-    console.log("ini getData", getData);
     
-    if (!getData) {
+    if (!isLogin) {
       navigate("/");
       return
     }
-    if (getData.length > 0) {
-      setIsLogin(true);
-      SetProfileName(getData[0].email);
+    if (isLogin) {
+      SetProfileName(email.split("@")[0]);
     } 
 
-  }, [getData, storedData, navigate]);
+  }, [isLogin, email]);
   return (
     <nav className="shadow-lg relative z-50">
       <ul className="flex items-center justify-between px-10 py-6 lg:px-20">

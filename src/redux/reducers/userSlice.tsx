@@ -1,11 +1,12 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: {user: User} = {
-  user : {
+  user: {
     id: "",
     email: "",
     password: "",
-    createdAt: ""
+    createdAt: "",
+    isLogin: false
   }
 }
 
