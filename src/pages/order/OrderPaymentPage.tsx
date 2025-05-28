@@ -7,7 +7,7 @@ import bri from "../../assets/bri.svg";
 import ovo from "../../assets/ovo.svg";
 import paypal from "../../assets/paypal.svg";
 import gopay from "../../assets/gopay.svg";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import TimelineProcess from "../../components/TimelineProcess";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, type FieldValues } from "react-hook-form";
@@ -217,7 +217,9 @@ type PaymentModalProps = {
   isModalShow: boolean;
 };
 const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
+  const { id } = useParams()
   const order = useSelector((state) => state.order.order);
+
   console.log("order di payment modal", order);
   return (
     <section
@@ -249,7 +251,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
         </p>
         <div className="flex flex-col gap-3">
           <Link
-            to={"/order/ticket"}
+            to={`/order/ticket/${id}`}
             className="bg-primary text-orange active:bg-orange rounded py-2 text-center font-bold outline-2 transition-all active:scale-99 active:text-white"
           >
             Check Payment
