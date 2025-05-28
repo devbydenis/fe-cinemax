@@ -6,12 +6,20 @@ import { FaArrowRight } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import Card from "../components/Card";
+import { moviesActions } from "../redux/reducers/moviesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch } from "../redux/store";
 
 function Movies() {
-  
+  const { nowPlayingMovies, genres, isLoading, isError } = useSelector((state: {movies: StateMovies}) => state.movies);
+  const { getNowPlayingMoviesThunk, getGenresMovieThunk} = moviesActions;
+  const dispatch:AppDispatch = useDispatch();
+
   useEffect(() => {
+    dispatch(getNowPlayingMoviesThunk());
+    dispatch(getGenresMovieThunk());
     window.scrollTo(0, 0);
-  })
+  }, [])
   
   return (
     <>
@@ -20,7 +28,15 @@ function Movies() {
         <Menu />
         <section className="px-5 md:px-10">
           <ul className="flex flex-wrap justify-center gap-5 sm:gap-10">
-            
+            {
+              nowPlayingMovies && nowPlayingMovies.map((movie:movies) => {
+                return (
+                  <li key={`movie-id-${movie.id}`}>
+                    <Card category="now playing" movie={movie} genres={genres} />
+                  </li>
+                );
+              })
+            }
           </ul>
           <div className="flex justify-center items-center gap-5 my-20">
             <button className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
