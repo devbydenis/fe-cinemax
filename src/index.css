@@ -37,3 +37,19 @@ button {
 .custom-scrollbar::-webkit-scrollbar-track {
   @apply bg-silver rounded-full;
 }
+
+.custom-scrollbar-second {
+  @apply overflow-x-auto
+}
+
+.custom-scrollbar-second::-webkit-scrollbar {
+  @apply w-1 h-1;
+}
+
+.custom-scrollbar-second::-webkit-scrollbar-thumb {
+  @apply bg-gray-200 rounded-full;
+}
+
+.custom-scrollbar-second::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded-full;
+}

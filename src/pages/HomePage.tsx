@@ -31,12 +31,12 @@ function HomePage() {
 function Banner() {
   return (
     <>
-      <section className="mt-7 flex flex-col items-center justify-center gap-4 md:mx-16 lg:mx-56">
+      <section className="my-7 flex flex-col items-center justify-center gap-4 md:mx-16 ">
         <Chip value="MOVIE TICKET PURCHASES #1 IN INDONESIA" />
         <div className="px-7">
-          <p className="text-center text-5xl/14 font-normal">
+          <p className="text-center text-5xl xl:text-6xl xl:leading-23 2xl:text-7xl/14 2xl:leading-25 font-medium">
             Experience the Magic of Cinema:{" "}
-            <span className="text-orange font-bold">
+            <span className="block text-orange font-bold">
               Book Your Tickets Today
             </span>
           </p>
@@ -66,11 +66,11 @@ function NowPlaying() {
   return (
     <>
       <section className="mx-10 md:mx-20 md:mt-16 md:pb-20">
-        <h2 className="text-center leading-11 font-semibold md:mb-9 md:text-4xl">
+        <h2 className="text-center text-2xl leading-11 font-semibold md:mb-9 md:text-4xl">
           Now Showing in Cinemas
         </h2>
         <ul className="relative container-card custom-scrollbar flex gap-5 overflow-x-scroll">
-          {
+          { 
             isLoading && <div className="absolute top-50 left-1/2"><Loader overlay={false} /></div>
           }
           {
@@ -104,13 +104,13 @@ function WhyChooseUs() {
   return (
     <>
       <section className="bg-black-primary mt-10 rounded-[2.5rem] py-10">
-        <div className="flex flex-col items-center justify-center gap-4">
+        <div className="flex flex-col items-center justify-center gap-4 md:gap-7">
           <Chip value="WHY CHOOSE US" />
-          <h3 className="px-10 text-center text-3xl/9 font-extrabold text-white">
+          <h3 className="px-10 text-center text-5xl/9 font-extrabold text-white">
             Unleashing the Ultimate Movie Experience
           </h3>
         </div>
-        <div className="custom-scrollbar mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row sm:items-start sm:justify-start lg:overflow-hidden">
+        <div className="custom-scrollbar mt-10 flex flex-col md:flex-row flex-wrap items-center justify-center gap-5 sm:flex-row sm:items-start sm:justify-center lg:overflow-hidden">
           <CardWhyChooseUs
             img={guaranted}
             title="Guaranteed"
@@ -142,7 +142,7 @@ function UpComingMovies() {
   }, [])
   return (
     <>
-      <section className="my-10">
+      <section className="my-10 md:mx-20">
         <div className="mb-4 flex flex-col items-center justify-center gap-4">
           <Chip value="UPCOMING MOVIES" />
           <div className="flex flex-col items-center justify-center gap-5 md:flex-row md:items-start">
@@ -205,7 +205,7 @@ type CardWhyChooseUsProps = {
 };
 function CardWhyChooseUs(props: CardWhyChooseUsProps) {
   return (
-    <div className="bg-white-secondary mx-5 rounded-xl p-6">
+    <div className="bg-white-secondary mx-5 rounded-xl p-6 max-w-[25.5rem]">
       <img src={props.img} alt="logo-why-choose-us" />
       <h4 className="mt-[2.125rem] mb-16 text-[1.75rem] leading-9 font-semibold">
         {props.title}
