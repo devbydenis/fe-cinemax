@@ -1,15 +1,17 @@
 export const API_KEY = import.meta.env.VITE_API_KEY
-export const BASE_URL = import.meta.env.BASE_URL
-// const url = `${BASE_URL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`;
-const urlNowPlayingMovie = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1`
-const urlUpComingMovies = `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`
-const urlGenre = `https://api.themoviedb.org/3/genre/movie/list?language=en`
-const urlPopularMovies = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
+export const BASE_URL = import.meta.env.VITE_BASE_URL
+export const BASE_URL_IMG = import.meta.env.VITE_BASE_URL_IMG
+
+const urlNowPlayingMovie = `${BASE_URL}movie/top_rated?language=en-US&page=1`
+const urlUpComingMovies = `${BASE_URL}movie/upcoming?language=en-US&page=2`
+const urlGenre = `${BASE_URL}genre/movie/list?language=en`
+const urlPopularMovies = `${BASE_URL}movie/popular?language=en-US&page=1`;
+
 const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: `Bearer ${API_KEY}`
+    Authorization: `${API_KEY}`
   }
 };
 
