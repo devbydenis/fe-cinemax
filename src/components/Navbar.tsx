@@ -4,13 +4,14 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgClose } from "react-icons/cg";
 import avatarDefault from "../assets/avatar_default.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUserAction } from "../redux/reducers/userSlice";
 
 function Navbar() {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const [profileName, SetProfileName] = useState<string>("");
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const {isLogin, email} = useSelector((state: User) => state.user.user)
 
   useEffect(() => {
@@ -66,7 +67,7 @@ function Navbar() {
             Buy Ticket
           </NavLink>
         </li>
-        <li className="hidden gap-4 md:flex">
+        <li className="relative hidden gap-4 md:flex">
           {isLogin ? (
             <div className="flex items-center gap-4">
               <Link
@@ -74,12 +75,22 @@ function Navbar() {
                 style={{ backgroundImage: `url(${avatarDefault})` }}
                 to={"/profile/account"}
               ></Link>
-              <Link
+              <button
                 className="cursor-pointer text-gray-800 uppercase"
-                to={"/profile/account"}
               >
                 {"Hi, " + profileName.split("@")[0]}
-              </Link>
+              </button>
+              <div>
+                <button
+                  className="cursor-pointer text-red-500 uppercase border-2 border-red-500 rounded-xl px-4 py-2"
+                  onClick={() => {
+                    navigate("/")
+                    dispatch(logoutUserAction())
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
             </div>
           ) : (
             <div className="flex items-center gap-4">
