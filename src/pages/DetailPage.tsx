@@ -12,7 +12,11 @@ function DetailPage() {
   const [movieDetail, setMovieDetail] = useState<MovieDetail>();
   const { id } = useParams();
 
-    useEffect(() => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  },[])
+
+  useEffect(() => {
     const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
     const options = {
       method: "GET",
@@ -35,7 +39,7 @@ function DetailPage() {
     </>
   );
 }
-function Banner({movieDetail}) {
+function Banner({ movieDetail }) {
   // const [movieDetail, setMovieDetail] = useState<MovieDetail>();
   const [movieCredits, setMovieCredits] = useState<MovieCredits[]>([]);
   const { id } = useParams();
@@ -48,14 +52,19 @@ function Banner({movieDetail}) {
 
   console.log("movie credits", movieCredits);
   const getDirectors = (movieCredits) => {
-    const result = movieCredits.crew && movieCredits.crew.filter((credit) => credit.job == "Director")[0].name
-    return result
+    const result =
+      movieCredits.crew &&
+      movieCredits.crew.filter((credit) => credit.job == "Director")[0].name;
+    return result;
   };
 
   const getCasts = (movieCredits) => {
-    const result = movieCredits.cast?.map((credit) => credit.name).slice(0, 5).join(", ")
+    const result = movieCredits.cast
+      ?.map((credit) => credit.name)
+      .slice(0, 5)
+      .join(", ");
     console.log("casts", result);
-    return result
+    return result;
   };
 
   // useEffect(() => {
@@ -74,7 +83,6 @@ function Banner({movieDetail}) {
   //     .then((json) => setMovieDetail(json))
   //     .catch((err) => console.error(err));
   // }, [id]);
-
 
   useEffect(() => {
     const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
@@ -141,7 +149,9 @@ function Banner({movieDetail}) {
                 Directed By
               </h2>
               {/* <p className="text-xl leading-7 font-semibold">{"yanto"}</p> */}
-              <p className="text-xl leading-7 font-semibold">{getDirectors(movieCredits)}</p>
+              <p className="text-xl leading-7 font-semibold">
+                {getDirectors(movieCredits)}
+              </p>
             </li>
             <li className="col-span-4">
               <h2 className="text-black-primary text-lg font-light">
@@ -153,7 +163,9 @@ function Banner({movieDetail}) {
             </li>
             <li className="col-span-4">
               <h2 className="text-black-primary text-lg font-light">Cast</h2>
-              <p className="text-xl leading-7 font-semibold">{getCasts(movieCredits)}</p>
+              <p className="text-xl leading-7 font-semibold">
+                {getCasts(movieCredits)}
+              </p>
               {/* <p className="text-xl leading-7 font-semibold">{["yanti", "yanto"]}</p> */}
             </li>
           </ul>
@@ -163,20 +175,22 @@ function Banner({movieDetail}) {
   );
 }
 
-function SetOrder({movieDetail}) {
+function SetOrder({ movieDetail }) {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const param = useParams();
   const onSubmit = (data: FieldValues) => {
     console.log(data);
-    dispatch(addOrderAction({title: movieDetail.title, ...data}));
+    dispatch(addOrderAction({ title: movieDetail.title, ...data }));
     navigate(`/order/seat/${param.id}`);
-
-  }
+  };
   return (
     <section className="my-[10rem] mt-[50rem] h-screen px-5 py-10 sm:mt-[45rem] md:mt-[20rem] md:mb-[-15rem]">
-      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3"
+      >
         <h2 className="col-span-3 text-2xl leading-7 font-semibold">
           Book Tickets
         </h2>
@@ -190,7 +204,7 @@ function SetOrder({movieDetail}) {
           <div className="flex items-center gap-4 rounded-full border-2 px-5 py-3">
             <FiSearch />
             <input
-              className="outline-none w-full"
+              className="w-full outline-none"
               {...register("date")}
               type="date"
               id="date"
@@ -204,7 +218,11 @@ function SetOrder({movieDetail}) {
           </h2>
           <div className="flex items-center gap-4 rounded-full border-2 px-5 py-3">
             <FiSearch />
-            <select className="outline-none w-full" {...register("time")} id="time">
+            <select
+              className="w-full outline-none"
+              {...register("time")}
+              id="time"
+            >
               <option value="10.00">10.00-11.00</option>
               <option value="12.00">12.00-13.00</option>
               <option value="14.00">14.00-15.00</option>
@@ -219,7 +237,11 @@ function SetOrder({movieDetail}) {
           </h2>
           <div className="flex items-center gap-4 rounded-full border-2 px-5 py-3">
             <FiSearch />
-            <select className="outline-none w-full" {...register("location")} id="location">
+            <select
+              className="w-full outline-none"
+              {...register("location")}
+              id="location"
+            >
               <option value="Jakarta">Jakarta</option>
               <option value="Bogor">Bogor</option>
               <option value="Depok">Depok</option>
