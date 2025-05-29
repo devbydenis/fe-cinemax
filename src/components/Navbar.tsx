@@ -136,10 +136,10 @@ function Navbar() {
                 >
                   Home
                 </NavLink>
-                <NavLink className="text-gray uppercase" to={"/movie"}>
+                <NavLink className="text-gray uppercase" to={"/movies"}>
                   Movie
                 </NavLink>
-                <NavLink className="text-gray uppercase" to={"/movie"}>
+                <NavLink className="text-gray uppercase" to={"/movies"}>
                   Buy Ticket
                 </NavLink>
               </div>

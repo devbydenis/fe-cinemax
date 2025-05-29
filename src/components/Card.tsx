@@ -1,13 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Card(props: CardPRops) {
   const { category } = props;
   const genres = props.genres || [];
   const genreNames = new Map();
 
+  const location = useLocation();
+  console.log("location", location)
+
   genres.forEach((genre) => {
     genreNames.set(genre.id, genre.name);
   });
+
+
 
   return (
     <>
@@ -16,8 +21,9 @@ function Card(props: CardPRops) {
         <div className="all invisible absolute top-0 right-0 left-0 h-56 rounded-2xl transition duration-300 group-hover:visible group-hover:bg-black  group-hover:opacity-50 md:h-[27.75rem]"></div>
         <div className="invisible absolute top-0 right-0 left-0 z-10 flex h-56 flex-col items-center justify-center gap-3 group-hover:visible md:h-[27.75rem]">
           <Link
-            to={`movies/${props.movie?.id}`}
+            to={location.pathname === '/' ? `/movies/${props.movie?.id}` : location.pathname + `/${props.movie?.id}`}
             className="hover:bg-orange w-36 rounded py-3 text-center text-white outline outline-white hover:font-bold hover:outline-none"
+            onClick={() => console.log("clicked")}
           >
             Details
           </Link>
@@ -42,7 +48,7 @@ function Card(props: CardPRops) {
           }}
         ></div>
         <Link
-          className="md:text-lg leading-4 font-semibold md:text-xl md:leading-7"
+          className="text-lg leading-4 font-semibold md:text-xl md:leading-7"
           to={`movies/${props.movie?.id}`}
         >
           {props.movie?.title.length <= 25
