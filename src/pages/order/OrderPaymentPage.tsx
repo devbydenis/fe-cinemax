@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import gpay from "../../assets/gpay.svg";
 import visa from "../../assets/visa.svg";
 import dana from "../../assets/dana.svg";
@@ -14,7 +14,11 @@ import { useForm, type FieldValues } from "react-hook-form";
 import { addOrderAction } from "../../redux/reducers/orderSlice";
 
 function OrderPaymentPage() {
-  const [isModalShow] = useState(true);
+  const [isModalShow, setIsModalShow] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [isModalShow]);
 
   return (
     <>
@@ -26,7 +30,7 @@ function OrderPaymentPage() {
         ></div>
         <TimelineProcess />
         <PaymentInfo />
-        <PaymentMethod />
+        <PaymentMethod setIsModalShow={setIsModalShow} />
         <PaymentModal isModalShow={isModalShow} />
       </section>
     </>
@@ -74,12 +78,13 @@ function PaymentInfo() {
   );
 }
 
-function PaymentMethod() {
+function PaymentMethod({setIsModalShow}) {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const onSubmit = (data: FieldValues) => {
     console.log(data);
     dispatch(addOrderAction(data));
+    setIsModalShow(() => setIsModalShow(true));
   };
   return (
     <form

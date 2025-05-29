@@ -1,18 +1,16 @@
 import cineone from "../../assets/cineone21-logo.svg";
 import qrcode from "../../assets/qrcode.svg";
 import { useState } from "react";
-import NavProfile from "../../components/profile/NavProfile";
-import InfoAccountProfile from "../../components/profile/InfoAccountProfile";
 import { MdArrowDropDown } from "react-icons/md";
 function ProfileHistoryPage() {
+  
   return (
     <>
-      <NavProfile display="block md:hidden" />
-      <InfoAccountProfile display="hidden md:flex" />
-      <NavProfile display="hidden md:flex" />
-
-      <section className="col-span-2">
+      <section className="col-span-2 md:block">
         {/* looping history card disini soon */}
+        {
+          
+        }
         <CardHistory
           cinema={cineone}
           date="Tuesday, 07 July 2020 - 04:30pm"
@@ -42,25 +40,25 @@ function CardHistory(props: CardHistoryProps) {
 
   return (
     <>
-      <section className="my-8 md:my-6 mx-6 md:ml-0 bg-white rounded-lg">
+      <section className="my-8 md:my-6 mx-6 md:ml-0 bg-white rounded-lg shadow-md shadow-orange-300">
         <div className=" p-6 md:flex md:justify-between md:flex-row-reverse">
-          <img className="mb-5" src={cinema} alt="cineone-logo" />
+          <img className="mb-5 bg-orange rounded px-2 py-2" src={cinema} alt="cineone-logo" />
           <div>
             <p className="text-[13px] text-secondary tracking-widest">{date}</p>
             <p className="text-lg font-semibold tracking-wider mt-2">{title}</p>
           </div>
         </div>
         <div className="border-b-2 border-gray-300"></div>
-        <div className="status p-6 flex flex-col md:flex-row gap-4 ">
+        <div className="status p-6 flex flex-col md:flex-row gap-4">
           <div className="flex flex-col md:flex-row gap-5 md:grow">
             <span
               className={`${
                 isTicketPaid
-                  ? "bg-gray/30 text-gray/50"
-                  : "bg-[#00BA8833] text-[#00BA88]"
+                  ? "bg-[#00BA8833] text-[#00BA88]"
+                  : "bg-gray/30 text-gray/50"
               } w-full py-3 text-center font-bold tracking-wider rounded-lg`}
             >
-              {isTicketPaid ? "Ticket used" : "Ticket in active"}
+              {isTicketPaid ? "Ticket active" : "Ticket inactive"}
             </span>
             <span
               className={`${
@@ -88,7 +86,9 @@ function CardHistory(props: CardHistoryProps) {
           <h2 className="font-semibold text-2xl mb-8 mt-3">
             Ticket Information
           </h2>
-          {isTicketPaid ? <TicketPaid /> : <TicketNotPaid />}
+          {isTicketPaid 
+            ? <TicketPaid /> 
+            : <TicketNotPaid />}
         </div>
       </section>
     </>

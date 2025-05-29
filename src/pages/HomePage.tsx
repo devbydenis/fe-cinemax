@@ -14,7 +14,6 @@ import Loader from "../components/Loader";
 
 
 function HomePage() {
-  // console.log(import.meta.env.VITE_API_KEY);
   return (
     <>
       <main>
@@ -58,7 +57,6 @@ function NowPlaying() {
   } = moviesActions;
   const dispatch:AppDispatch = useDispatch();
 
-  console.log(useSelector((state:{movies: StateMovies}) => state.movies));
   useEffect(() => {
     dispatch(getNowPlayingMoviesThunk());
     dispatch(getGenresMovieThunk());

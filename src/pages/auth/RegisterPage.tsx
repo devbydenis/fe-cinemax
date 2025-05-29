@@ -1,5 +1,5 @@
 import { useForm, type FieldValues } from "react-hook-form";
-import tickitzLogo from "../../assets/tickitz-logo.svg";
+import tickitzLogo from "../../assets/tickitz-revert-logo.svg";
 import { schemaRegister } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
@@ -9,16 +9,18 @@ import ModalAuth from "../../components/ModalAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { addRegisteredUsersAction } from "../../redux/reducers/usersSlice";
 import { nanoid } from "@reduxjs/toolkit";
+import Loader from "../../components/Loader";
 
 function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showModalAuth, setShowModalAuth] = useState(false);
+  const [loaderAuth, setLoaderAuth] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const date = new Date()
   const selector = useSelector((state: Users) => state.users);
-  const {users} = selector
+  const {users} = selector.users
   console.log("selector", users);
   
   
@@ -28,7 +30,27 @@ function RegisterPage() {
   });
   
   const onSubmit = (data: FieldValues) => {
+    console.log(data);
+
+    if (users.length === 0) {
+      dispatch(
+        addRegisteredUsersAction({
+          id: nanoid(),
+          email: data.email,
+          password: data.password,  
+          createdAt: date.toLocaleString(),
+        }),
+      );
+      console.log("register berhasil");
+      setLoaderAuth(true)
+      setTimeout(() => {
+        navigate("/auth/login");
+      }, 2000);
+      return
+    }
+    
     const isEmailExists = users.filter((user: User) => user.email === data.email);
+    console.log("ISEMAIL", isEmailExists);
     
     if (isEmailExists.length > 0) {
       setShowModalAuth(true)
@@ -43,7 +65,7 @@ function RegisterPage() {
         createdAt: date.toLocaleString(),
       }),
     );
-
+    setLoaderAuth(true)
     setTimeout(() => {
       navigate("/auth/login");
     }, 2000);
@@ -180,6 +202,11 @@ function RegisterPage() {
           Register
         </button>
       </form>
+      {
+        loaderAuth && (
+          <Loader overlay={true} />
+        )
+      }
       {showModalAuth && (
         <ModalAuth
           setShowModalAuth={() => setShowModalAuth(false)}

@@ -190,7 +190,7 @@ function SetOrder({movieDetail}) {
           <div className="flex items-center gap-4 rounded-full border-2 px-5 py-3">
             <FiSearch />
             <input
-              className="outline-none"
+              className="outline-none w-full"
               {...register("date")}
               type="date"
               id="date"
@@ -204,7 +204,7 @@ function SetOrder({movieDetail}) {
           </h2>
           <div className="flex items-center gap-4 rounded-full border-2 px-5 py-3">
             <FiSearch />
-            <select className="outline-none" {...register("time")} id="time">
+            <select className="outline-none w-full" {...register("time")} id="time">
               <option value="10.00">10.00-11.00</option>
               <option value="12.00">12.00-13.00</option>
               <option value="14.00">14.00-15.00</option>
@@ -219,7 +219,7 @@ function SetOrder({movieDetail}) {
           </h2>
           <div className="flex items-center gap-4 rounded-full border-2 px-5 py-3">
             <FiSearch />
-            <select className="outline-none" {...register("location")} id="location">
+            <select className="outline-none w-full" {...register("location")} id="location">
               <option value="Jakarta">Jakarta</option>
               <option value="Bogor">Bogor</option>
               <option value="Depok">Depok</option>
