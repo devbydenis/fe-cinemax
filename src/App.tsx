@@ -48,7 +48,7 @@ function App() {
         <Route path="account" element={<ProfileAccountPage />} />
         <Route path="history" element={<ProfileHistoryPage />} />
       </Route>
-      
+
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )

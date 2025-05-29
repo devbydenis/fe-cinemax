@@ -38,3 +38,9 @@ type MovieCredits = {
   director: string;
   casts: string[];
 }
+
+type CardPRops = {
+  category?: string;
+  movie: movies;
+  genres?: Genre[];
+};

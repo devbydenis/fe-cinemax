@@ -1,16 +1,15 @@
+import { useContext } from "react";
 import avatar from "../../assets/avatar_default.png";
 import star from "../../assets/star.svg";
+import ThemeContext from "../../context/EditProfileContext";
 
-type InfoAccountProfileProps = {
-  display: string;
-  onSendData?: (key: boolean) => void
-}
-function InfoAccountProfile(props: InfoAccountProfileProps) {
 
-  
+function InfoAccountProfile() {
+    const {showEditProfile, setShowEditProfile, display} = useContext(ThemeContext)  
   return (
     <>
-      <section className={`${props.display} shadow-lg shadow-orange row-span-2 m-10 h-fit flex-col rounded-3xl bg-white`}>
+      <section className={` shadow-lg shadow-orange row-span-2 m-10 h-fit flex-col rounded-3xl bg-white`}>
+      <div className={`${showEditProfile ? 'block' : 'hidden'} absolute top-0 right-0 bottom-0  h-screen left-0 z-20 bg-black/50`}></div>
         <div className="info p-10">
           <h1 className="text-start text-2xl font-bold">INFO</h1>
           <img
@@ -53,9 +52,11 @@ function InfoAccountProfile(props: InfoAccountProfileProps) {
           </div>
         </div>
         <button
-          className="border-orange mx-10 text-orange mb-6 rounded-lg border-1 py-3 font-bold active:scale-99 active:opacity-50 sm:hidden"
+          className="flex justify-center border-orange w-3/4 mx-auto cursor-pointer text-orange mb-6 rounded-lg border-1 py-3 font-bold active:scale-99 active:opacity-50 md:hidden"
           type="button"
-          onClick={() => props.onSendData?.(true)}
+          onClick={() => {
+            setShowEditProfile(true)
+          }}
         >
           Edit Profile
         </button>
@@ -64,4 +65,4 @@ function InfoAccountProfile(props: InfoAccountProfileProps) {
   );
 }
 
-export default InfoAccountProfile;
+export default InfoAccountProfile
