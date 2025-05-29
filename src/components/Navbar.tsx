@@ -15,11 +15,10 @@ function Navbar() {
   const {isLogin, email} = useSelector((state: User) => state.user.user)
 
   useEffect(() => {
-    
-    if (!isLogin) {
-      navigate("/");
-      return
-    }
+    // if (!isLogin) {
+    //   navigate("/");
+    //   return
+    // }
     if (isLogin) {
       SetProfileName(email.split("@")[0]);
     } 
