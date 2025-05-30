@@ -3,9 +3,7 @@ import { useForm, type FieldValues } from "react-hook-form";
 import logo from "../../assets/cineone21-logo.svg";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addSeatsAction } from "../../redux/reducers/orderSlice";
-
-type SeatId = string;
+import { addOrderAction, addSeatsAction } from "../../redux/reducers/orderSlice";
 
 function OrderSeatPage() {
   const [showModal, setShowModal] = useState(false);
@@ -20,7 +18,7 @@ function OrderSeatPage() {
 
 function OrderInfo() {
   const [movieDetail, setMovieDetail] = useState<MovieDetail>();
-  const order = useSelector((state:{order: StateMovies}) => state.order.order);
+  const order = useSelector((state:{order: StateMovies}) => state.order);
   const { id } = useParams();
 
   useEffect(() => {
@@ -84,17 +82,20 @@ function OrderInfo() {
   );
 }
 
-function OrderSeatsSelector({setShowModal}) {
+function OrderSeatsSelector({setShowModal}: ShowModal) {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
+  const order = useSelector((state: {order: StateMovies}) => state.order.order);
   const [selectedSeats, setSelectedSeats] = useState<SeatId[]>([]);
+  // console.log("order in seat", order);
+  // console.log("selectedSeats", selectedSeats);
   
   const rows: number = 10;
   const cols: number = 10;
+  const colLabels: number[] = Array.from({ length: cols }, (_, i) => i + 1);
   const rowLabels: string[] = Array.from({ length: rows }, (_, i) =>
     String.fromCharCode(65 + i),
   );
-  const colLabels: number[] = Array.from({ length: cols }, (_, i) => i + 1);
 
   const handleSeatClick = (seatId: SeatId): void => {
     setSelectedSeats((prevSelectedSeats) => {
@@ -104,6 +105,10 @@ function OrderSeatsSelector({setShowModal}) {
         return [...prevSelectedSeats, seatId];
       }
     });
+  };
+  
+  const isSeatSelected = (seatId: SeatId): boolean => {
+    return selectedSeats.includes(seatId);
   };
 
   const handleSeatsChoosed = (data: FieldValues) => {
@@ -118,9 +123,6 @@ function OrderSeatsSelector({setShowModal}) {
     
   };
 
-  const isSeatSelected = (seatId: SeatId): boolean => {
-    return selectedSeats.includes(seatId);
-  };
 
   return (
     <form
@@ -219,12 +221,15 @@ function OrderSeatsSelector({setShowModal}) {
   );
 }
 
-function OrderModal({showModal, setShowModal}) {
+function OrderModal({showModal, setShowModal}: ShowModal) {
   const {id} = useParams();
   const navigate = useNavigate();
   const order = useSelector((state) => state.order.order)
+  const dispatch = useDispatch();
+  // console.log("order modal", order.seat);
+
   const handleConfirmButton = () => {
-    console.log("confirm button");
+    dispatch(addOrderAction({ totalPrice: order.seat.length * 10}));
     setShowModal(false)
     navigate(`/order/payment/${id}`)
   }

@@ -4,10 +4,8 @@ function Card(props: CardPRops) {
   const { category } = props;
   const genres = props.genres || [];
   const genreNames = new Map();
-
   const location = useLocation();
-  console.log("location", location)
-
+  
   genres.forEach((genre) => {
     genreNames.set(genre.id, genre.name);
   });
@@ -23,7 +21,6 @@ function Card(props: CardPRops) {
           <Link
             to={location.pathname === '/' ? `/movies/${props.movie?.id}` : location.pathname + `/${props.movie?.id}`}
             className="hover:bg-orange w-36 rounded py-3 text-center text-white outline outline-white hover:font-bold hover:outline-none"
-            onClick={() => console.log("clicked")}
           >
             Details
           </Link>

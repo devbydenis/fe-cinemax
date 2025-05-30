@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState= {
+const initialState = {
     order: {
+      orderId: "",
+      userId: "",
       title: "",
       date: "",
       time: "",
@@ -9,7 +11,8 @@ const initialState= {
       cinema: "",
       seat: [],
       totalPrice: 0
-    }
+    },
+    orders: []
   }
 
 const order = createSlice({
@@ -24,6 +27,8 @@ const order = createSlice({
     },
     resetOrder: (state) => {
       state.order = {
+        orderId: "",
+        userId: "",
         title: "",
         date: "",
         time: "",

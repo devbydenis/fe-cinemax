@@ -5,8 +5,9 @@ import { FiSearch } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, type FieldValues } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addOrderAction } from "../redux/reducers/orderSlice";
+import { nanoid } from "@reduxjs/toolkit";
 
 function DetailPage() {
   const [movieDetail, setMovieDetail] = useState<MovieDetail>();
@@ -14,7 +15,7 @@ function DetailPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  },[])
+  }, []);
 
   useEffect(() => {
     const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
@@ -39,10 +40,12 @@ function DetailPage() {
     </>
   );
 }
-function Banner({ movieDetail }) {
+
+function Banner({ movieDetail }: { movieDetail?: MovieDetail }) {
   // const [movieDetail, setMovieDetail] = useState<MovieDetail>();
   const [movieCredits, setMovieCredits] = useState<MovieCredits[]>([]);
   const { id } = useParams();
+  // console.log("movie detail", movieDetail);
 
   const getDuration = (duration: number) => {
     const hours = Math.floor(duration / 60);
@@ -50,20 +53,20 @@ function Banner({ movieDetail }) {
     return `${hours}h ${minutes}m`;
   };
 
-  console.log("movie credits", movieCredits);
-  const getDirectors = (movieCredits) => {
+  // console.log("movie credits", movieCredits);
+  const getDirectors = (movieCredits: MovieCredits) => {
     const result =
       movieCredits.crew &&
       movieCredits.crew.filter((credit) => credit.job == "Director")[0].name;
     return result;
   };
 
-  const getCasts = (movieCredits) => {
+  const getCasts = (movieCredits: MovieCredits) => {
     const result = movieCredits.cast
       ?.map((credit) => credit.name)
       .slice(0, 5)
       .join(", ");
-    console.log("casts", result);
+    // console.log("casts", result);
     return result;
   };
 
@@ -127,6 +130,7 @@ function Banner({ movieDetail }) {
             {movieDetail &&
               movieDetail.genres.map((genre) => (
                 <li
+                  key={"genre" + genre.id}
                   className={`focus:border-orange min-w-fit cursor-pointer rounded-3xl border border-black px-4 py-2 font-medium text-white uppercase`}
                 >
                   {genre.name}
@@ -175,14 +179,23 @@ function Banner({ movieDetail }) {
   );
 }
 
-function SetOrder({ movieDetail }) {
+function SetOrder({ movieDetail }: { movieDetail: MovieDetail }) {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const param = useParams();
+  const user = useSelector((state) => state.user);
+  // console.log("user id", user.user.id);
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
-    dispatch(addOrderAction({ title: movieDetail.title, ...data }));
+    // console.log(data);
+    dispatch(
+      addOrderAction({
+        userId: user.user.id,
+        orderId: nanoid(),
+        title: movieDetail.title,
+        ...data,
+      }),
+    );
     navigate(`/order/seat/${param.id}`);
   };
   return (
@@ -191,7 +204,7 @@ function SetOrder({ movieDetail }) {
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3"
       >
-        <h2 className="col-span-3 text-2xl leading-7 font-semibold">
+        <h2 className="col-span-3 text-4xl leading-7 font-bold">
           Book Tickets
         </h2>
         <div className="choose-date col-span-2 flex flex-col md:col-span-1">
@@ -204,7 +217,7 @@ function SetOrder({ movieDetail }) {
           <div className="flex items-center gap-4 rounded-full border-2 px-5 py-3">
             <FiSearch />
             <input
-              className="w-full outline-none"
+              className="datepicker-input w-full outline-none"
               {...register("date")}
               type="date"
               id="date"

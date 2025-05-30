@@ -22,8 +22,9 @@ function App() {
         <Route path="register" element={<RegisterPage />} />
       </Route>
 
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<HomePage />} />
+      <Route  element={<MainLayout />}>
+        <Route path="/" element={<HomePage />} />
+
         <Route path="movies">
           <Route index element={<MoviesPage />} />
           <Route path=":id" element={<DetailPage />} />
@@ -43,10 +44,11 @@ function App() {
         </Route>
       </Route>
 
-      <Route path="profile" element={<ProfileLayout />}>
-        <Route index element={<ProfileAccountPage />} />
-        <Route path="account" element={<ProfileAccountPage />} />
-        <Route path="history" element={<ProfileHistoryPage />} />
+      <Route element={<ProfileLayout />}>
+        <Route path="profile" element={<ProfileAccountPage />}>
+          <Route path="account" element={<ProfileAccountPage />} />
+          <Route path="history" element={<ProfileHistoryPage />} />
+        </Route>
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />

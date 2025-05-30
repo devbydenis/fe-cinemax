@@ -34,9 +34,16 @@ type MovieDetail = {
   genres: Genre[];
   runtime: number ;
 }
+
+type Credit = {
+  id: number;
+  name: string;
+  job: string;
+}
 type MovieCredits = {
   director: string;
-  casts: string[];
+  cast: Credit[];
+  crew: Credit[];
 }
 
 type CardPRops = {
@@ -44,3 +51,9 @@ type CardPRops = {
   movie: movies;
   genres?: Genre[];
 };
+
+type SeatId = string;
+type ShowModal = {
+  showModal: boolean
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
+}

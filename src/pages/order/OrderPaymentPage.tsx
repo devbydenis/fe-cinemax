@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm, type FieldValues } from "react-hook-form";
 import { addOrderAction } from "../../redux/reducers/orderSlice";
 
+
 function OrderPaymentPage() {
   const [isModalShow, setIsModalShow] = useState(false);
 
@@ -83,6 +84,7 @@ function PaymentMethod({setIsModalShow}) {
   const dispatch = useDispatch();
   const onSubmit = (data: FieldValues) => {
     console.log(data);
+    
     dispatch(addOrderAction(data));
     setIsModalShow(() => setIsModalShow(true));
   };
@@ -224,8 +226,8 @@ type PaymentModalProps = {
 const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
   const { id } = useParams()
   const order = useSelector((state) => state.order.order);
-
-  console.log("order di payment modal", order);
+  console.log("order after submit payment", order)
+  
   return (
     <section
       className={`payment-modal ${
