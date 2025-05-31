@@ -5,6 +5,7 @@ import { BiDownload } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetOrder } from "../../redux/reducers/orderSlice";
+import { addHistoryAction } from "../../redux/reducers/history";
 
 function OrderTicketPage() {
   return (
@@ -111,6 +112,7 @@ function TicketResult() {
   );
 }
 function TicketButton() {
+  const order = useSelector((state) => state.order.order);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
@@ -125,6 +127,8 @@ function TicketButton() {
         className="outline-orange text-orange rounded py-3 font-bold outline-2 transition-all active:scale-99"
         type="button"
         onClick={() => {
+          dispatch(resetOrder());
+          dispatch(addHistoryAction(order));
           navigate("/profile/history");
         }}
       >

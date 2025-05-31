@@ -22,20 +22,19 @@ function LoginPage() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const registeredUsers = useSelector((state: Users) => state.users.users.users);
-  console.log("registeredUsers", registeredUsers);
+  const user = useSelector((state: {user: {user: User}}) => state.user.user);
+  console.log("user di login", user);
   
   const isDataMatched = (email: string, password: string): boolean => {
     const result = registeredUsers.filter((user: User) => {
       return user.email === email && user.password === password
     })
-    console.log("result match", result);
     return result.length > 0
   }
 
 
   const onSubmit = (data: FieldValues) => {
     const { email, password } = data
-    console.log("data submit", data);
 
     const userData = {
       id: nanoid(),
@@ -44,7 +43,7 @@ function LoginPage() {
     }
 
     if (isDataMatched(email, password)) {
-      dispatch(addInfoLoginAction(userData))
+      dispatch(addInfoLoginAction({...userData, history: []}))
       setLoaderAuth(true)
       setTimeout(() => {
         return navigate("/")  

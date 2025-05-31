@@ -10,7 +10,8 @@ const initialState = {
       location: "",
       cinema: "",
       seat: [],
-      totalPrice: 0
+      totalPrice: 0,
+      payment: '',
     },
     orders: []
   }
@@ -35,7 +36,8 @@ const order = createSlice({
         location: "",
         cinema: "",
         seat: [],
-        totalPrice: 0
+        totalPrice: 0,
+        payment: '',
       }
     }
   },

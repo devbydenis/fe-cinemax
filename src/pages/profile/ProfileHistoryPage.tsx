@@ -1,28 +1,27 @@
+import { useSelector } from "react-redux";
 import cineone from "../../assets/cineone21-logo.svg";
+import hiflix from "../../assets/hiflix-logo.svg";
+import ebvid from "../../assets/ebvid-logo.svg";
 import qrcode from "../../assets/qrcode.svg";
 import { useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 function ProfileHistoryPage() {
-  
+  const userHistories = useSelector((state) => state.user.user.history);
+  console.log("user di history", userHistories);
   return (
     <>
       <section className="col-span-2 md:block">
-        {/* looping history card disini soon */}
-        {
-          
-        }
-        <CardHistory
-          cinema={cineone}
-          date="Tuesday, 07 July 2020 - 04:30pm"
-          title="Spider-Man: Homecoming"
-          isTicketPaid={false}
-        />
-        <CardHistory
-          cinema={cineone}
-          date="Tuesday, 07 July 2020 - 04:30pm"
-          title="Spider-Man: Homecoming"
-          isTicketPaid={true}
-        />
+        {userHistories &&
+          userHistories.map((history) => {
+            return (
+              <CardHistory
+                cinema={history.cinema}
+                date={history.date}
+                title={history.title}
+                isTicketPaid={history.statusPayment}
+              />
+            );
+          })}
       </section>
     </>
   );
@@ -35,28 +34,33 @@ interface CardHistoryProps {
   isTicketPaid: boolean;
 }
 function CardHistory(props: CardHistoryProps) {
-  const {cinema, date, title, isTicketPaid} = props;
+  const { cinema, date, title, isTicketPaid, time, seat, totalPrice } = props;
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-      <section className="my-8 md:my-6 mx-6 md:ml-0 bg-white rounded-lg shadow-md shadow-orange-300">
-        <div className=" p-6 md:flex md:justify-between md:flex-row-reverse">
-          <img className="mb-5 bg-orange rounded px-2 py-2" src={cinema} alt="cineone-logo" />
+      <section className="mx-6 my-8 rounded-lg bg-white shadow-md shadow-orange-300 md:my-6 md:ml-0">
+        <div className="p-6 md:flex md:flex-row-reverse md:justify-between">
+          <img
+            className="bg-orange mb-5 rounded px-2 py-2"
+            // src={`${cinema}`}
+            src={cinema === "cineone" ? cineone : cinema === "hiflix" ? hiflix : ebvid}
+            alt="cineone-logo"
+          />
           <div>
-            <p className="text-[13px] text-secondary tracking-widest">{date}</p>
-            <p className="text-lg font-semibold tracking-wider mt-2">{title}</p>
+            <p className="text-secondary text-[13px] tracking-widest">{date}</p>
+            <p className="mt-2 text-lg font-semibold tracking-wider">{title}</p>
           </div>
         </div>
         <div className="border-b-2 border-gray-300"></div>
-        <div className="status p-6 flex flex-col md:flex-row gap-4">
-          <div className="flex flex-col md:flex-row gap-5 md:grow">
+        <div className="status flex flex-col gap-4 p-6 md:flex-row">
+          <div className="flex flex-col gap-5 md:grow md:flex-row">
             <span
               className={`${
                 isTicketPaid
                   ? "bg-[#00BA8833] text-[#00BA88]"
                   : "bg-gray/30 text-gray/50"
-              } w-full py-3 text-center font-bold tracking-wider rounded-lg`}
+              } w-full rounded-lg py-3 text-center font-bold tracking-wider`}
             >
               {isTicketPaid ? "Ticket active" : "Ticket inactive"}
             </span>
@@ -65,13 +69,13 @@ function CardHistory(props: CardHistoryProps) {
                 isTicketPaid
                   ? "bg-gray/30 text-gray/50"
                   : "bg-[#E82C2C33] text-[#E82C2C]"
-              } w-full py-3 text-center font-bold tracking-wider rounded-lg`}
+              } w-full rounded-lg py-3 text-center font-bold tracking-wider`}
             >
               {isTicketPaid ? "Paid" : "Not Paid"}
             </span>
           </div>
           <span
-            className="text-center flex justify-center gap-3 md:w-40 mt-6 text-lg text-secondary font-normal cursor-pointer"
+            className="text-secondary mt-6 flex cursor-pointer justify-center gap-3 text-center text-lg font-normal md:w-40"
             onClick={() => setShowModal(!showModal)}
           >
             <p>Show Detail</p>
@@ -83,20 +87,21 @@ function CardHistory(props: CardHistoryProps) {
             showModal ? "block" : "hidden"
           }`}
         >
-          <h2 className="font-semibold text-2xl mb-8 mt-3">
+          <h2 className="mt-3 mb-8 text-2xl font-semibold">
             Ticket Information
           </h2>
-          {isTicketPaid 
-            ? <TicketPaid /> 
-            : <TicketNotPaid />}
+          {
+            isTicketPaid 
+              ? <TicketPaid date={date} time={time} title={title} seat={seat} totalPrice={totalPrice} /> 
+              : <TicketNotPaid />}
         </div>
       </section>
     </>
   );
 }
 
-function TicketPaid() {
-  const subStrTitle = (str:string) => {
+function TicketPaid({ date, time, title, seat, totalPrice }) {
+  const subStrTitle = (str: string) => {
     return str.substring(0, 12) + "...";
   };
 
@@ -104,49 +109,49 @@ function TicketPaid() {
     <>
       <section className="bg-white">
         <img src={qrcode} alt="qrcode" />
-        <div className="grid grid-cols-3 gap-y-3 w-full mt-5">
+        <div className="mt-5 grid w-full grid-cols-3 gap-y-3">
           <div>
             <p className="text-xs text-[#AAAAAA]">Category</p>
-            <p className="tracking-wider text-sm font-semibold text-[#14142B] mt-1">
+            <p className="mt-1 text-sm font-semibold tracking-wider text-[#14142B]">
               PG-13
             </p>
           </div>
           <div>
             <p className="text-xs text-[#AAAAAA]">Time</p>
-            <p className="tracking-wider text-sm font-semibold text-[#14142B] mt-1">
-              2.00pm
+            <p className="mt-1 text-sm font-semibold tracking-wider text-[#14142B]">
+              {time}
             </p>
           </div>
           <div>
             <p className="text-xs text-[#AAAAAA]">Seats</p>
-            <p className="tracking-wider text-sm font-semibold text-[#14142B] mt-1">
-              C4, C5, C6
+            <p className="mt-1 text-sm font-semibold tracking-wider text-[#14142B]">
+              {seat && seat.join(", ")}
             </p>
           </div>
           <div>
             <p className="text-xs text-[#AAAAAA]">Movie</p>
-            <p className="tracking-wider text-sm font-semibold text-[#14142B]">
-              {"spiderman: home coming".length >= 12
-                ? subStrTitle("spiderman: home coming")
-                : "spiderman: home coming"}
+            <p className="text-sm font-semibold tracking-wider text-[#14142B]">
+              {title.length >= 12
+                ? subStrTitle(title)
+                : title}
             </p>
           </div>
           <div>
             <p className="text-xs text-[#AAAAAA]">Date</p>
-            <p className="tracking-wider text-sm font-semibold text-[#14142B] mt-1">
-              07 Jul
+            <p className="mt-1 text-sm font-semibold tracking-wider text-[#14142B]">
+              {date}
             </p>
           </div>
           <div>
             <p className="text-xs text-[#AAAAAA]">Count</p>
-            <p className="tracking-wider text-sm font-semibold text-[#14142B] mt-1">
-              3 pcs
+            <p className="mt-1 text-sm font-semibold tracking-wider text-[#14142B]">
+              {seat && seat.length + "pcs"}
             </p>
           </div>
           <div className="mt-5 flex flex-col justify-between rounded-lg">
-            <p className="text-title-info-first font-semibold text-lg">Total</p>
-            <p className="text-2xl tracking-widest text-[#14142B] mt-3 font-bold">
-              $30
+            <p className="text-title-info-first text-lg font-semibold">Total</p>
+            <p className="mt-3 text-2xl font-bold tracking-widest text-[#14142B]">
+              {totalPrice}
             </p>
           </div>
         </div>
@@ -158,21 +163,21 @@ function TicketNotPaid() {
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <p className="font-normal text-sm text-secondary">
+        <p className="text-secondary text-sm font-normal">
           No. Rekening Virtual :
         </p>
-        <span className="flex justify-between items-center">
-          <p className="font-bold text-lg">12321328913829724</p>
-          <button className="outline outline-primary rounded px-4 py-2 active:scale-95">
+        <span className="flex items-center justify-between">
+          <p className="text-lg font-bold">12321328913829724</p>
+          <button className="outline-primary rounded px-4 py-2 outline active:scale-95">
             Copy
           </button>
         </span>
       </div>
       <div>
-        <p className="font-normal text-sm text-secondary">Total Payment</p>
-        <p className="mt-2 font-bold text-primary">$30</p>
+        <p className="text-secondary text-sm font-normal">Total Payment</p>
+        <p className="text-primary mt-2 font-bold">$30</p>
       </div>
-      <p className="font-normal text-sm text-secondary leading-8 tracking-[.75px]">
+      <p className="text-secondary text-sm leading-8 font-normal tracking-[.75px]">
         Pay this payment bill before it is due, on{" "}
         <span className="text-red-500">June 23, 2023</span>. If the bill has not
         been paid by the specified time, it will be forfeited
@@ -180,7 +185,7 @@ function TicketNotPaid() {
       <div className="flex flex-col gap-3">
         <button
           type="button"
-          className="bg-primary py-4 text-white font-bold rounded"
+          className="bg-primary rounded py-4 font-bold text-white"
         >
           Check Payment
         </button>

@@ -12,7 +12,7 @@ import TimelineProcess from "../../components/TimelineProcess";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, type FieldValues } from "react-hook-form";
 import { addOrderAction } from "../../redux/reducers/orderSlice";
-
+import { addHistoryUserAction } from "../../redux/reducers/userSlice";
 
 function OrderPaymentPage() {
   const [isModalShow, setIsModalShow] = useState(false);
@@ -79,12 +79,12 @@ function PaymentInfo() {
   );
 }
 
-function PaymentMethod({setIsModalShow}) {
+function PaymentMethod({ setIsModalShow }) {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const onSubmit = (data: FieldValues) => {
     console.log(data);
-    
+
     dispatch(addOrderAction(data));
     setIsModalShow(() => setIsModalShow(true));
   };
@@ -224,10 +224,17 @@ type PaymentModalProps = {
   isModalShow: boolean;
 };
 const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
-  const { id } = useParams()
-  const order = useSelector((state) => state.order.order);
-  console.log("order after submit payment", order)
-  
+  const { id } = useParams();
+  const user = useSelector(
+    (state: { user: { user: User } }) => state.user.user,
+  );
+  const order = useSelector(
+    (state: { order: { order: OrderProps } }) => state.order.order,
+  );
+  const dispatch = useDispatch();
+  console.log("order after submit payment", order);
+  console.log("user after submit payment", user);
+
   return (
     <section
       className={`payment-modal ${
@@ -249,7 +256,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
         </div>
         <div>
           <p className="text-secondary text-sm font-normal">Total Payment</p>
-          <p className="text-primary mt-2 font-bold">${order.seat.length * 10}</p>
+          <p className="text-primary mt-2 font-bold">
+            ${order.seat.length * 10}
+          </p>
         </div>
         <p className="text-secondary text-sm leading-8 font-normal tracking-[.75px]">
           Pay this payment bill before it is due, on{" "}
@@ -260,12 +269,20 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
           <Link
             to={`/order/ticket/${id}`}
             className="bg-primary text-orange active:bg-orange rounded py-2 text-center font-bold outline-2 transition-all active:scale-99 active:text-white"
+            onClick={() => {
+              dispatch(addOrderAction({ statusPayment: true, ...order }));
+              dispatch(addHistoryUserAction({ ...order, statusPayment: true }));
+            }}
           >
             Check Payment
           </Link>
           <Link
-            to={"#"}
+            to={`/profile/history`}
             className="outline-primary bg-orange outline-orange active:outline-orange active:text-orange rounded py-2 text-center font-bold text-white outline-2 transition-all active:scale-99 active:bg-white"
+            onClick={() => {
+              dispatch(addOrderAction({ statusPayment: false, ...order }));
+              dispatch(addHistoryUserAction({ statusPayment: false, ...order }));
+            }}
           >
             Pay Later
           </Link>

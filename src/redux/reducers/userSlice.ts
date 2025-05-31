@@ -7,6 +7,7 @@ const initialState: { user: User } = {
     password: "",
     createdAt: "",
     isLogin: false,
+    history: [],
   },
 };
 
@@ -26,8 +27,15 @@ const user = createSlice({
         isLogin: false,
       };
     },
+    addHistoryUserAction: (state, action) => {
+      state.user.history?.push(action.payload);
+    },
   },
 });
 
-export const { addInfoLoginAction, logoutUserAction } = user.actions;
+export const { 
+  addInfoLoginAction, 
+  logoutUserAction, 
+  addHistoryUserAction 
+} = user.actions;
 export default user.reducer;

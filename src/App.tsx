@@ -45,7 +45,7 @@ function App() {
       </Route>
 
       <Route element={<ProfileLayout />}>
-        <Route path="profile" element={<ProfileAccountPage />}>
+        <Route path="profile">
           <Route path="account" element={<ProfileAccountPage />} />
           <Route path="history" element={<ProfileHistoryPage />} />
         </Route>
