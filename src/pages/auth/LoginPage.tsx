@@ -16,43 +16,49 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loaderAuth, setLoaderAuth] = useState(false);
   const [showModalAuth, setShowModalAuth] = useState(false);
-  const { register, handleSubmit, formState: { errors }} = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(schemaLogin),
   });
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const registeredUsers = useSelector((state: Users) => state.users.users.users);
-  const user = useSelector((state: {user: {user: User}}) => state.user.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const registeredUsers = useSelector(
+    (state: Users) => state.users.users.users,
+  );
+  const user = useSelector(
+    (state: { user: { user: User } }) => state.user.user,
+  );
   console.log("user di login", user);
-  
+
   const isDataMatched = (email: string, password: string): boolean => {
     const result = registeredUsers.filter((user: User) => {
-      return user.email === email && user.password === password
-    })
-    return result.length > 0
-  }
-
+      return user.email === email && user.password === password;
+    });
+    return result.length > 0;
+  };
 
   const onSubmit = (data: FieldValues) => {
-    const { email, password } = data
+    const { email, password } = data;
 
     const userData = {
       id: nanoid(),
       email: email,
-      password: password
-    }
+      password: password,
+    };
 
     if (isDataMatched(email, password)) {
-      dispatch(addInfoLoginAction({...userData, history: []}))
-      setLoaderAuth(true)
+      dispatch(addInfoLoginAction({ ...userData, history: [] }));
+      setLoaderAuth(true);
       setTimeout(() => {
-        return navigate("/")  
-      }, 2000)
-      return 
+        return navigate("/");
+      }, 2000);
+      return;
     } else {
-      setShowModalAuth(true)
+      setShowModalAuth(true);
     }
-
   };
 
   return (
@@ -82,7 +88,9 @@ function LoginPage() {
               id="email"
               placeholder="example@gmail.com"
             />
-            {!errors.email && <small className="invisible">this is just invisible text</small>}
+            {!errors.email && (
+              <small className="invisible">this is just invisible text</small>
+            )}
             {errors.email && (
               <small className="font-semibold text-red-600 transition-all duration-300">
                 Email ga valid
@@ -94,7 +102,7 @@ function LoginPage() {
           <label className="text-2xl font-semibold text-white" htmlFor="email">
             Password
           </label>
-          <div className="mt-4 relative">
+          <div className="relative mt-4">
             <input
               className="focus:border-orange w-full border-b-2 duration-300 focus:border-b-2 focus:transition-colors focus:duration-300 focus:outline-none"
               type={showPassword ? "text" : "password"}
@@ -102,12 +110,26 @@ function LoginPage() {
               id="password"
               placeholder="Enter Your Password"
             />
-            {
-              showPassword 
-                ? <button type="button" className="absolute right-2 cursor-pointer text-xl" onClick={() => setShowPassword(!showPassword)}><IoMdEyeOff /></button>
-                : <button type="button" className="absolute right-2 cursor-pointer text-xl" onClick={() => setShowPassword(!showPassword)}><IoMdEye /></button>
-            }
-            {!errors.password && <small className="invisible">this is just invisible text</small>}
+            {showPassword ? (
+              <button
+                type="button"
+                className="absolute right-2 cursor-pointer text-xl"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <IoMdEyeOff />
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="absolute right-2 cursor-pointer text-xl"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <IoMdEye />
+              </button>
+            )}
+            {!errors.password && (
+              <small className="invisible">this is just invisible text</small>
+            )}
             {errors.password && (
               <small className="font-semibold text-red-600 transition duration-300">
                 {errors.password?.message}
@@ -154,8 +176,15 @@ function LoginPage() {
           </section>
         </section>
       </form>
-      { showModalAuth && <ModalAuth setShowModalAuth={() => setShowModalAuth(false)} message={"Login Failed. Please recheck your email or password. make sure it's correct"} /> }
-      { loaderAuth && <Loader overlay={true} /> }
+      {showModalAuth && (
+        <ModalAuth
+          setShowModalAuth={() => setShowModalAuth(false)}
+          message={
+            "Login Failed. Please recheck your email or password. make sure it's correct"
+          }
+        />
+      )}
+      {loaderAuth && <Loader overlay={true} />}
     </>
   );
 }

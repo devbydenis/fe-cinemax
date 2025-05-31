@@ -1,141 +1,201 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ThemeContext from "../../context/EditProfileContext";
-import { useParams } from "react-router-dom";
+import { useForm, type FieldErrors, type FieldValues, type UseFormRegister } from "react-hook-form";
+import { schemaEditProfile } from "./schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch, useSelector } from "react-redux";
+import { addInfoLoginAction } from "../../redux/reducers/userSlice";
+import ModalProfile from "../../components/profile/ModalProfile";
 
+function ProfileAccountPage() {
+  const { showEditProfile, setShowEditProfile } = useContext(ThemeContext);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const user = useSelector((state) => state.user.user);
+  console.log("user di profile", user);
+  const dispatch = useDispatch();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: yupResolver(schemaEditProfile),
+    mode: "onChange",
+    defaultValues: {
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
+      email: user.email || '',
+      phoneNumber: user.phoneNumber || '',
+    },
+  });
+  const handleShowPassword = (e) => {
+    setShowPassword(e.target.checked);
+  }
+  
+  const onSubmit = (data: FieldValues) => {
+    delete data.confirmPassword
+    dispatch(addInfoLoginAction({...data, ...user}))
 
-function ProfileAccountPage() { 
-const {showEditProfile, setShowEditProfile} = useContext(ThemeContext)
-const {id} = useParams()
-console.log(id);
+    reset({
+      firstName: data.firstName,
+      lastName: data.lastName,  
+      email: data.email,        
+      phoneNumber: data.phoneNumber,
+      password: "",
+      confirmPassword: ""
+    })
+
+    setShowAlert(true)
+    setTimeout(() => {
+      setShowAlert(false)
+    }, 3000);
+  }
+
   return (
     <>
-    
-    <div
-      className={`col-span-2 bg-white ${showEditProfile ? "absolute top-5 right-10 left-10 z-20" : "hidden"} shadow-orange rounded-2xl shadow-lg md:block md:mr-10 `}
-    >
-      <form className="relative rounded-2xl p-10">
-    {
-      showEditProfile && (
+      <div className={`${showAlert ? "flex" : "hidden"} justify-center`}>
+        <ModalProfile />
+      </div>
+      <div
+        className={`col-span-2 bg-white ${showEditProfile ? "absolute top-5 right-10 left-10 z-20" : "hidden"} shadow-orange rounded-2xl shadow-lg md:mr-10 md:block`}
+      >
+        <form className="relative rounded-2xl p-10" onSubmit={handleSubmit(onSubmit)}>
+          {showEditProfile && (
             <button
-          className="absolute top-5 right-5 font-bold text-black"
-          type="button"
-          onClick={() => setShowEditProfile(false)}
-        >
-          X
-        </button>
-      )
-    }
-        <h1 className="mb-9 text-2xl font-bold tracking-wider">
-          Account Settings
-        </h1>
-        <p className="border-b-2 border-gray-300 pb-2 text-base font-normal tracking-wider">
-          Detail Information
-        </p>
-        <section className="gap-5 md:grid md:grid-cols-2">
-          <div>
-            <label
-              className="text-title-info-first block pt-6 pb-3 text-base font-normal"
-              htmlFor="fullname"
+              className="absolute top-5 right-5 font-bold text-black"
+              type="button"
+              onClick={() => setShowEditProfile(false)}
             >
-              First Name
-            </label>
-            <input
-              className="border-gray w-full rounded border-1 px-6 py-3 focus:outline-none"
-              type="text"
-              name="firstName"
-              id="firstName"
+              X
+            </button>
+          )}
+          <h1 className="mb-9 text-2xl font-bold tracking-wider">
+            Account Settings
+          </h1>
+          <p className="border-b-2 border-gray-300 pb-2 text-base font-normal tracking-wider">
+            Detail Information
+          </p>
+          <section className="gap-5 md:grid md:grid-cols-2">
+            <InputField
+              register={register}
+              nameInput={"firstName"}
+              labelInput="First Name"
+              typeInput="text"
+              idInput="firstName"
+              forInput="firstName"
+              
+              errors={errors}
             />
-          </div>
-          <div>
-            <label
-              className="text-title-info-first block pt-6 pb-3 text-base font-normal"
-              htmlFor="fullname"
-            >
-              Last Name
-            </label>
-            <input
-              className="border-gray w-full rounded border-1 px-6 py-3 focus:outline-none"
-              type="text"
-              name="lastName"
-              id="lastName"
+            <InputField 
+              register={register}
+              nameInput={"lastName"}
+              labelInput="Last Name"
+              typeInput="text"
+              idInput="lastName"
+              forInput="lastName"
+              
+              errors={errors}
             />
-          </div>
-          <div>
-            <label
-              className="text-title-info-first block pt-6 pb-3 text-base font-normal"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              className="border-gray w-full rounded border-1 px-6 py-3 focus:outline-none"
-              type="text"
-              name="email"
-              id="email"
-              autoComplete="off"
+            <InputField 
+              register={register}
+              nameInput={"email"}
+              labelInput="Email"
+              typeInput="email" 
+              idInput="email"
+              forInput="email"
+              
+              errors={errors}
             />
-          </div>
-          <div>
-            <label
-              className="text-title-info-first block pt-6 pb-3 text-base font-normal"
-              htmlFor="phone"
-            >
-              Phone Number
-            </label>
-            <span className="border-gray flex w-full rounded border-1 px-6 py-3">
-              <p className="text-secondary border-r-2 border-gray-300 pr-3">
-                +62
-              </p>
-              <input
-                className="w-full pl-3 focus:outline-none"
-                type="text"
-                name="phone"
-                id="phone"
+            <InputField 
+              register={register}
+              nameInput={"phoneNumber"}
+              labelInput="Phone Number"
+              typeInput="text" 
+              idInput="phone" 
+              forInput="phone"
+              
+              errors={errors}
+            />
+            
+          </section>
+          <p className="mt-10 border-b-2 border-gray-300 pb-2 text-base font-normal tracking-wider">
+            Change Password
+          </p>
+          <section className="grid grid-cols-2 gap-5">
+            <InputField 
+              register={register}
+              nameInput={"password"}
+              labelInput="Password"
+              typeInput={showPassword ? "text" : "password"} 
+              idInput="password" 
+              forInput="password"
+              
+              errors={errors}
+            />
+            <InputField 
+              register={register}
+              nameInput={"confirmPassword"}
+              labelInput="Confirm Password"
+              typeInput={showPassword ? "text" : "password"} 
+              idInput="confirmPassword" 
+              forInput="confirmPassword"
+              
+              errors={errors}
+            />
+            <label htmlFor="showPassword" className="flex gap-2 cursor-pointer">
+              <input 
+                type="checkbox" 
+                name="showPassword" 
+                id="showPassword"
+                checked={showPassword}
+                onChange={handleShowPassword}
               />
-            </span>
-          </div>
-        </section>
-        <p className="mt-10 border-b-2 border-gray-300 pb-2 text-base font-normal tracking-wider">
-          Account and Privacy
-        </p>
-        <section className="grid grid-cols-2 gap-5">
-          <div>
-            <label
-              className="text-title-info-first block pt-6 pb-3 text-base font-normal"
-              htmlFor="password"
-            >
-              Password
+              Show Password
             </label>
-            <input
-              className="border-gray w-full rounded border-1 px-6 py-3 focus:outline-none"
-              type="password"
-              name="password"
-              id="password"
-            />
-          </div>
-          <div>
-            <label
-              className="text-title-info-first block pt-6 pb-3 text-base font-normal"
-              htmlFor="confirm-password"
-            >
-              Confirm Password
-            </label>
-            <input
-              className="border-gray w-full rounded border-1 px-6 py-3 focus:outline-none"
-              type="password"
-              name="confirm-password"
-              id="confirm-password"
-            />
-          </div>
-        </section>
-        <button
-          className="bg-orange mt-10 w-full rounded-lg px-6 py-3 font-bold text-white"
-          type="button"
+          </section>
+          <button
+            className="bg-orange mt-10 w-full rounded-lg px-6 py-3 font-bold text-white active:scale-98 transition-all duration-300 active:bg-white active:text-orange active:border-2 active:border-orange"
+            type="submit"
+          >
+            Update Change
+          </button>
+        </form>
+      </div>
+    </>
+  );
+}
+
+type FormData = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    password: string;
+    confirmPassword: string | undefined;
+}
+type InputFieldProps = {
+  labelInput: string;
+  nameInput: string;
+  typeInput: string;
+  forInput: string;
+  idInput: string;
+  register: UseFormRegister<FormData>;
+  errors: FieldErrors<FieldValues>;
+}
+function InputField({ labelInput, nameInput, typeInput, forInput, idInput, register, errors }: InputFieldProps) {
+  return (
+    <>
+      <div>
+        <label
+          className="text-title-info-first block pt-6 pb-3 text-base font-normal"
+          htmlFor={forInput}
         >
-          Update Change
-        </button>
-      </form>
-    </div>
+          {labelInput}
+        </label>
+        <input
+          className="border-gray w-full rounded border-1 px-6 py-3 focus:outline-none"
+          type={typeInput}
+          {...register(nameInput)}
+          id={idInput}
+        />
+        {errors[nameInput] && <p className={`${errors[nameInput] ? "visible" : "invisible"} text-red-500`}>{errors[nameInput].message}</p>}
+      </div>
     </>
   );
 }

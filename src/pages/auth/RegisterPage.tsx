@@ -18,17 +18,20 @@ function RegisterPage() {
   const [loaderAuth, setLoaderAuth] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const date = new Date()
+  const date = new Date();
   const selector = useSelector((state: Users) => state.users);
-  const {users} = selector.users
+  const { users } = selector.users;
   console.log("selector", users);
-  
-  
-  const {register, handleSubmit, formState: { errors }} = useForm({
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(schemaRegister),
     mode: "onChange",
   });
-  
+
   const onSubmit = (data: FieldValues) => {
     console.log(data);
 
@@ -37,35 +40,37 @@ function RegisterPage() {
         addRegisteredUsersAction({
           id: nanoid(),
           email: data.email,
-          password: data.password,  
+          password: data.password,
           createdAt: date.toLocaleString(),
         }),
       );
       console.log("register berhasil");
-      setLoaderAuth(true)
+      setLoaderAuth(true);
       setTimeout(() => {
         navigate("/auth/login");
       }, 2000);
-      return
+      return;
     }
-    
-    const isEmailExists = users.filter((user: User) => user.email === data.email);
+
+    const isEmailExists = users.filter(
+      (user: User) => user.email === data.email,
+    );
     console.log("ISEMAIL", isEmailExists);
-    
+
     if (isEmailExists.length > 0) {
-      setShowModalAuth(true)
-      return
+      setShowModalAuth(true);
+      return;
     }
-    
+
     dispatch(
       addRegisteredUsersAction({
         id: nanoid(),
         email: data.email,
-        password: data.password,  
+        password: data.password,
         createdAt: date.toLocaleString(),
       }),
     );
-    setLoaderAuth(true)
+    setLoaderAuth(true);
     setTimeout(() => {
       navigate("/auth/login");
     }, 2000);
@@ -202,11 +207,7 @@ function RegisterPage() {
           Register
         </button>
       </form>
-      {
-        loaderAuth && (
-          <Loader overlay={true} />
-        )
-      }
+      {loaderAuth && <Loader overlay={true} />}
       {showModalAuth && (
         <ModalAuth
           setShowModalAuth={() => setShowModalAuth(false)}

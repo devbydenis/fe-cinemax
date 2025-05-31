@@ -2,10 +2,14 @@ import { useContext } from "react";
 import avatar from "../../assets/avatar_default.png";
 import star from "../../assets/star.svg";
 import ThemeContext from "../../context/EditProfileContext";
+import { useSelector } from "react-redux";
 
 
 function InfoAccountProfile() {
-    const {showEditProfile, setShowEditProfile, display} = useContext(ThemeContext)  
+  const {showEditProfile, setShowEditProfile, display} = useContext(ThemeContext)
+  const user = useSelector((state) => state.user.user);
+  console.log("user name di profile", user);
+
   return (
     <>
       <section className={` shadow-lg shadow-orange row-span-2 m-10 h-fit flex-col rounded-3xl bg-white`}>
@@ -20,7 +24,9 @@ function InfoAccountProfile() {
             height={132}
           />
           <p className="mb-3 text-center text-xl font-semibold tracking-wider">
-            user name
+            {
+              user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user
+            }
           </p>
           <p className="text-center text-gray-600">Moviegoers</p>
         </div>
