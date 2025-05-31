@@ -17,6 +17,9 @@ function ProfileHistoryPage() {
               <CardHistory
                 cinema={history.cinema}
                 date={history.date}
+                time={history.time}
+                seat={history.seat}
+                totalPrice={history.totalPrice}
                 title={history.title}
                 isTicketPaid={history.statusPayment}
               />
@@ -33,7 +36,7 @@ interface CardHistoryProps {
   title: string;
   isTicketPaid: boolean;
 }
-function CardHistory(props: CardHistoryProps) {
+function CardHistory(props) {
   const { cinema, date, title, isTicketPaid, time, seat, totalPrice } = props;
   const [showModal, setShowModal] = useState(false);
 
@@ -151,7 +154,7 @@ function TicketPaid({ date, time, title, seat, totalPrice }) {
           <div className="mt-5 flex flex-col justify-between rounded-lg">
             <p className="text-title-info-first text-lg font-semibold">Total</p>
             <p className="mt-3 text-2xl font-bold tracking-widest text-[#14142B]">
-              {totalPrice}
+              {"$" + totalPrice}
             </p>
           </div>
         </div>
@@ -160,6 +163,11 @@ function TicketPaid({ date, time, title, seat, totalPrice }) {
   );
 }
 function TicketNotPaid() {
+  const userHistories = useSelector((state) => state.user.user.history);
+  console.log("user history not paid",userHistories);
+  const totalPrice = userHistories.filter((item) => !item.statusPayment)[0].totalPrice
+  // console.log("total price", totalPriceice);
+
   return (
     <div className="flex flex-col gap-5">
       <div>
@@ -175,7 +183,7 @@ function TicketNotPaid() {
       </div>
       <div>
         <p className="text-secondary text-sm font-normal">Total Payment</p>
-        <p className="text-primary mt-2 font-bold">$30</p>
+        <p className="text-primary mt-2 font-bold">{"$" + totalPrice}</p>
       </div>
       <p className="text-secondary text-sm leading-8 font-normal tracking-[.75px]">
         Pay this payment bill before it is due, on{" "}
