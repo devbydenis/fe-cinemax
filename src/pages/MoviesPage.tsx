@@ -10,6 +10,7 @@ import { moviesActions } from "../redux/reducers/moviesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch } from "../redux/store";
 import MoviesContext from "../context/MoviesContext";
+import { useSearchParams } from "react-router-dom";
 
 function Movies() {
   const { nowPlayingMovies, genres } = useSelector((state: { movies: StateMovies }) => state.movies);
@@ -17,7 +18,7 @@ function Movies() {
   const dispatch: AppDispatch = useDispatch();
   const [page, setPage] = useState(1)
 
-  console.log(page);
+  console.log("now playing", nowPlayingMovies);
 
   useEffect(() => {
     dispatch(getNowPlayingMoviesThunk(page));
@@ -25,6 +26,10 @@ function Movies() {
     window.scrollTo(0, 0);
   }, [page]);
 
+  //  S E A R C H I N G
+  const [searchParams,] = useSearchParams();
+  const filteredMovies = nowPlayingMovies.filter((movie: movies) => movie.title.toLowerCase().includes(searchParams.get("query") || "") );
+  console.log("searchParams", searchParams.get("query"));
   return (
     <>
     <MoviesContext.Provider value={{page, setPage}}>
@@ -33,8 +38,21 @@ function Movies() {
         <Menu />
         <section className="px-5 md:px-10">
           <ul className="flex flex-wrap justify-center gap-5 sm:gap-10">
-            {nowPlayingMovies &&
+            {/* {nowPlayingMovies &&
               nowPlayingMovies.map((movie: movies) => {
+                return (
+                  <li key={`movie-id-${movie.id}`}>
+                    <Card
+                      category="now playing"
+                      movie={movie}
+                      genres={genres}
+                    />
+                  </li>
+                );
+              })} */}
+              {filteredMovies.length === 0 && <h1 className="text-center text-2xl font-semibold">No movie found</h1>}
+              {filteredMovies &&
+              filteredMovies.map((movie: movies) => {
                 return (
                   <li key={`movie-id-${movie.id}`}>
                     <Card
@@ -46,6 +64,7 @@ function Movies() {
                 );
               })}
           </ul>
+              <p className="text-center text-xl font-semibold">{filteredMovies.length} result</p>
           <Pagination />
         </section>
         <Newslater />
@@ -75,14 +94,23 @@ function Banner() {
 }
 
 function Menu() {
+  // S E A R C H I N G
+  const [, setSearchParams] = useSearchParams();
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTimeout(() => {
+      setSearchParams({ query: e.target.value })
+    }, 2000);
+    // console.log("Search for:", e.target.query.value);
+  }
   return (
     // <section className="flex flex-col gap-5 px-5 py-10">
-    <section className="grid grid-cols-1 gap-5 px-5 py-10 md:grid-cols-2 md:px-20 md:py-15">
+    <form className="grid grid-cols-1 gap-5 px-5 py-10 md:grid-cols-2 md:px-20 md:py-15">
       {/* Sorting */}
-      <div className="flex w-full justify-between gap-5 md:col-span-2">
+      <section className="flex w-full justify-between gap-5 md:col-span-2">
         <h2 className="text-2xl leading-7 font-semibold md:text-4xl">
           Now Showing in Cinemas
         </h2>
+        {/* Sorting */}
         <button
           className="bg-orange flex items-center gap-2 rounded-full px-6 py-5 leading-4 font-bold text-white uppercase"
           type="button"
@@ -95,10 +123,10 @@ function Menu() {
           <li>Name (A-Z)</li>
           <li>Name (Z-A)</li>
         </ul>
-      </div>
+      </section>
       {/* Searching */}
-      <div className="">
-        <form className="flex flex-col gap-5">
+      <section className="">
+        <div className="flex flex-col gap-5">
           <h2 className="text-xl/7 font-semibold">Find Movie</h2>
           <div className="flex items-center gap-3 rounded-full border-2 px-6 py-4">
             <FiSearch className="text-gray-400" />
@@ -106,15 +134,14 @@ function Menu() {
               className="w-full rounded-full tracking-wider focus:outline-none"
               type="text"
               placeholder="Search Your Movie"
+              name="query"
+              onChange={handleSearch}
             />
           </div>
-          <button className="hidden" type="submit">
-            Search
-          </button>
-        </form>
-      </div>
+        </div>
+      </section>
       {/* Filtering */}
-      <div>
+      <section>
         <h2 className="text-xl/7 font-semibold">Filter</h2>
         <ul className="flex flex-wrap gap-4 py-4">
           <Genre title="Action" />
@@ -122,15 +149,13 @@ function Menu() {
           <Genre title="Comedy" />
           <Genre title="Sci-Fi" />
         </ul>
-      </div>
-    </section>
+      </section>
+    </form>
   );
 }
 
 function Pagination() {
-  const {page, setPage} = useContext(MoviesContext)
-  // console.log("page", page)
-
+  const { setPage } = useContext(MoviesContext)
 
   return (
     <div className="my-20 flex items-center justify-center gap-5">

@@ -3,9 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 function Card(props: CardPRops) {
   const { category } = props;
   const genres = props.genres || [];
-  const genreNames = new Map();
   const location = useLocation();
   
+  const genreNames = new Map();
   genres.forEach((genre) => {
     genreNames.set(genre.id, genre.name);
   });
