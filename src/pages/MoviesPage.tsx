@@ -11,12 +11,15 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch } from "../redux/store";
 import MoviesContext from "../context/MoviesContext";
 import { useSearchParams } from "react-router-dom";
+import { BiArrowToBottom } from "react-icons/bi";
 
 function Movies() {
-  const { nowPlayingMovies, genres } = useSelector((state: { movies: StateMovies }) => state.movies);
+  const { nowPlayingMovies, genres } = useSelector(
+    (state: { movies: StateMovies }) => state.movies,
+  );
   const { getNowPlayingMoviesThunk, getGenresMovieThunk } = moviesActions;
   const dispatch: AppDispatch = useDispatch();
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
 
   console.log("now playing", nowPlayingMovies);
 
@@ -27,18 +30,20 @@ function Movies() {
   }, [page]);
 
   //  S E A R C H I N G
-  const [searchParams,] = useSearchParams();
-  const filteredMovies = nowPlayingMovies.filter((movie: movies) => movie.title.toLowerCase().includes(searchParams.get("query") || "") );
+  const [searchParams] = useSearchParams();
+  const filteredMovies = nowPlayingMovies.filter((movie: movies) =>
+    movie.title.toLowerCase().includes(searchParams.get("query") || ""),
+  );
   console.log("searchParams", searchParams.get("query"));
   return (
     <>
-    <MoviesContext.Provider value={{page, setPage}}>
-      <section>
-        <Banner />
-        <Menu />
-        <section className="px-5 md:px-10">
-          <ul className="flex flex-wrap justify-center gap-5 sm:gap-10">
-            {/* {nowPlayingMovies &&
+      <MoviesContext.Provider value={{ page, setPage }}>
+        <section>
+          <Banner />
+          <Menu />
+          <section className="px-5 md:px-10">
+            <ul className="flex flex-wrap justify-center gap-5 sm:gap-10">
+              {/* {nowPlayingMovies &&
               nowPlayingMovies.map((movie: movies) => {
                 return (
                   <li key={`movie-id-${movie.id}`}>
@@ -50,26 +55,32 @@ function Movies() {
                   </li>
                 );
               })} */}
-              {filteredMovies.length === 0 && <h1 className="text-center text-2xl font-semibold">No movie found</h1>}
+              {filteredMovies.length === 0 && (
+                <h1 className="text-center text-2xl font-semibold">
+                  No movie found
+                </h1>
+              )}
               {filteredMovies &&
-              filteredMovies.map((movie: movies) => {
-                return (
-                  <li key={`movie-id-${movie.id}`}>
-                    <Card
-                      category="now playing"
-                      movie={movie}
-                      genres={genres}
-                    />
-                  </li>
-                );
-              })}
-          </ul>
-              <p className="text-center text-xl font-semibold">{filteredMovies.length} result</p>
-          <Pagination />
+                filteredMovies.map((movie: movies) => {
+                  return (
+                    <li key={`movie-id-${movie.id}`}>
+                      <Card
+                        category="now playing"
+                        movie={movie}
+                        genres={genres}
+                      />
+                    </li>
+                  );
+                })}
+            </ul>
+            <p className="text-center text-xl font-semibold">
+              {filteredMovies.length} result
+            </p>
+            <Pagination />
+          </section>
+          <Newslater />
         </section>
-        <Newslater />
-      </section>
-    </MoviesContext.Provider>
+      </MoviesContext.Provider>
     </>
   );
 }
@@ -98,10 +109,10 @@ function Menu() {
   const [, setSearchParams] = useSearchParams();
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTimeout(() => {
-      setSearchParams({ query: e.target.value })
+      setSearchParams({ query: e.target.value });
     }, 2000);
     // console.log("Search for:", e.target.query.value);
-  }
+  };
   return (
     // <section className="flex flex-col gap-5 px-5 py-10">
     <form className="grid grid-cols-1 gap-5 px-5 py-10 md:grid-cols-2 md:px-20 md:py-15">
@@ -111,18 +122,15 @@ function Menu() {
           Now Showing in Cinemas
         </h2>
         {/* Sorting */}
-        <button
-          className="bg-orange flex items-center gap-2 rounded-full px-6 py-5 leading-4 font-bold text-white uppercase"
-          type="button"
+        <select
+          className="border-2 border-orange w-fit cursor-pointer rounded-md px-2 py-3 font-semibold text-orange focus:outline-none active:rounded-b-none"
+          id="sortby"
         >
-          Popular <IoIosArrowDown />
-        </button>
-        <ul className="hidden">
-          <li>Popular</li>
-          <li>Latest</li>
-          <li>Name (A-Z)</li>
-          <li>Name (Z-A)</li>
-        </ul>
+          <option value="popular">Popular</option>
+          <option value="latest">Latest</option>
+          <option value="ascending">Ascending</option>
+          <option value="descending">Descending</option>
+        </select>
       </section>
       {/* Searching */}
       <section className="">
@@ -142,39 +150,72 @@ function Menu() {
       </section>
       {/* Filtering */}
       <section>
-        <h2 className="text-xl/7 font-semibold">Filter</h2>
-        <ul className="flex flex-wrap gap-4 py-4">
+        <h2 className="mb-5 text-xl/7 font-semibold">Filter</h2>
+        {/* <ul className="flex flex-wrap gap-4 py-4">
           <Genre title="Action" />
           <Genre title="Adventure" />
           <Genre title="Comedy" />
           <Genre title="Sci-Fi" />
-        </ul>
+        </ul> */}
+        <div className="flex flex-wrap gap-4">
+          <FilterChip genre="Action" />
+          <FilterChip genre="Adventure" />
+          <FilterChip genre="Comedy" />
+          <FilterChip genre="Sci-Fi" />
+        </div>
       </section>
     </form>
   );
 }
 
 function Pagination() {
-  const { setPage } = useContext(MoviesContext)
+  const { setPage } = useContext(MoviesContext);
 
   return (
     <div className="my-20 flex items-center justify-center gap-5">
-      <button onClick={() => setPage(1)} className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
+      <button
+        onClick={() => setPage(1)}
+        className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white"
+      >
         1
       </button>
-      <button onClick={() => setPage(2)} className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
+      <button
+        onClick={() => setPage(2)}
+        className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white"
+      >
         2
       </button>
-      <button onClick={() => setPage(3)} className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
+      <button
+        onClick={() => setPage(3)}
+        className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white"
+      >
         3
       </button>
-      <button onClick={() => setPage(4)} className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
+      <button
+        onClick={() => setPage(4)}
+        className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white"
+      >
         4
       </button>
-      <button onClick={() => setPage(prev => prev + 1)} className="bg-orange w-fit rounded-full border-2 px-4.5 py-4.5 text-lg font-bold text-white">
+      <button
+        onClick={() => setPage((prev) => prev + 1)}
+        className="bg-orange w-fit rounded-full border-2 px-4.5 py-4.5 text-lg font-bold text-white"
+      >
         <FaArrowRight />
       </button>
     </div>
+  );
+}
+
+function FilterChip(props: { genre: string }) {
+  return (
+    <label
+      htmlFor={props.genre}
+      className={`bg-orange border-orange min-w-fit cursor-pointer rounded-3xl border px-4 py-2 font-medium text-white uppercase`}
+    >
+      {props.genre}
+      <input type="checkbox" name="filter" id={props.genre} />
+    </label>
   );
 }
 
