@@ -23,10 +23,14 @@ function InfoAccountProfile() {
             width={132}
             height={132}
           />
-          <p className="mb-3 text-center text-xl font-semibold tracking-wider">
+          <p className="mb-3 text-center text-xl font-semibold tracking-wider break-all capitalize">
             {
-              user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user
+              // user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user
+              user.firstName && 
+              user.lastName &&
+              `${user.firstName} ${user.lastName}`
             }
+            {!user.firstName && !user.lastName && user.email}
           </p>
           <p className="text-center text-gray-600">Moviegoers</p>
         </div>
