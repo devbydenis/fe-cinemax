@@ -3,62 +3,54 @@ import background_img from "../assets/background_img.png";
 import Chip from "../components/Chip";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import Card from "../components/Card";
 import { moviesActions } from "../redux/reducers/moviesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch } from "../redux/store";
+import MoviesContext from "../context/MoviesContext";
 
 function Movies() {
-  const { nowPlayingMovies, genres } = useSelector((state: {movies: StateMovies}) => state.movies);
-  const { getNowPlayingMoviesThunk, getGenresMovieThunk} = moviesActions;
-  const dispatch:AppDispatch = useDispatch();
+  const { nowPlayingMovies, genres } = useSelector((state: { movies: StateMovies }) => state.movies);
+  const { getNowPlayingMoviesThunk, getGenresMovieThunk } = moviesActions;
+  const dispatch: AppDispatch = useDispatch();
+  const [page, setPage] = useState(1)
+
+  console.log(page);
 
   useEffect(() => {
-    dispatch(getNowPlayingMoviesThunk());
+    dispatch(getNowPlayingMoviesThunk(page));
     dispatch(getGenresMovieThunk());
     window.scrollTo(0, 0);
-  }, [])
-  
+  }, [page]);
+
   return (
     <>
+    <MoviesContext.Provider value={{page, setPage}}>
       <section>
         <Banner />
         <Menu />
         <section className="px-5 md:px-10">
           <ul className="flex flex-wrap justify-center gap-5 sm:gap-10">
-            {
-              nowPlayingMovies && nowPlayingMovies.map((movie:movies) => {
+            {nowPlayingMovies &&
+              nowPlayingMovies.map((movie: movies) => {
                 return (
                   <li key={`movie-id-${movie.id}`}>
-                    <Card category="now playing" movie={movie} genres={genres} />
+                    <Card
+                      category="now playing"
+                      movie={movie}
+                      genres={genres}
+                    />
                   </li>
                 );
-              })
-            }
-            
+              })}
           </ul>
-          <div className="flex justify-center items-center gap-5 my-20">
-            <button className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
-              1
-            </button>
-            <button className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
-              2
-            </button>
-            <button className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
-              3
-            </button>
-            <button className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
-              4
-            </button>
-            <button className="bg-orange rounded-full border-2 w-fit px-4.5 py-4.5 text-lg font-bold text-white">
-              <FaArrowRight />
-            </button>
-          </div>
+          <Pagination />
         </section>
         <Newslater />
       </section>
+    </MoviesContext.Provider>
     </>
   );
 }
@@ -132,6 +124,32 @@ function Menu() {
         </ul>
       </div>
     </section>
+  );
+}
+
+function Pagination() {
+  const {page, setPage} = useContext(MoviesContext)
+  // console.log("page", page)
+
+
+  return (
+    <div className="my-20 flex items-center justify-center gap-5">
+      <button onClick={() => setPage(1)} className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
+        1
+      </button>
+      <button onClick={() => setPage(2)} className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
+        2
+      </button>
+      <button onClick={() => setPage(3)} className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
+        3
+      </button>
+      <button onClick={() => setPage(4)} className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white">
+        4
+      </button>
+      <button onClick={() => setPage(prev => prev + 1)} className="bg-orange w-fit rounded-full border-2 px-4.5 py-4.5 text-lg font-bold text-white">
+        <FaArrowRight />
+      </button>
+    </div>
   );
 }
 

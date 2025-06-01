@@ -3,9 +3,9 @@ import { getGenres, getNowPlayingMovie, getUpComingMovies } from "../../service"
 
 const getNowPlayingMoviesThunk = createAsyncThunk(
   "movies/nowPlayingMovies",
-  async (_, { rejectWithValue }) => {
+  async ( page , { rejectWithValue }) => {
     try {
-      const response = await getNowPlayingMovie();
+      const response = await getNowPlayingMovie(page);
       if (!response.ok) throw new Error(response.statusText);
 
       const json = await response.json()
