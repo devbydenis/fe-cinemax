@@ -19,3 +19,7 @@ export const schemaLogin = yup.object().shape({
     .required("Password cannot be empty!"),
 })
 
+export const schemaForgetPassword = yup.object().shape({
+  email:yup.string().email("Email is invalid!").required("Email cannot be empty!"),
+})
+

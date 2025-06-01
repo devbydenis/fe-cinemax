@@ -25,12 +25,10 @@ function LoginPage() {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const registeredUsers = useSelector(
-    (state: Users) => state.users.users.users,
-  );
-  const user = useSelector(
-    (state: { user: { user: User } }) => state.user.user,
-  );
+  const registeredUsers = useSelector((state: Users) => state.users.users);
+  const user = useSelector((state: { user: { user: User } }) => state.user.user);
+
+  console.log("registered users", registeredUsers);
   console.log("user di login", user);
 
   const isDataMatched = (email: string, password: string): boolean => {
@@ -136,6 +134,7 @@ function LoginPage() {
               </small>
             )}
           </div>
+          <Link className="flex justify-end font-semibold hover:text-blue-500" to={"/auth/forget-password"}>Forget Password</Link>
         </section>
         <button
           className="bg-primary text-background bg-orange active:text-orange active:border-orange h-12 cursor-pointer rounded-full font-bold active:scale-99 active:border-2 active:bg-transparent active:duration-100"
@@ -161,14 +160,14 @@ function LoginPage() {
           <section className="flex justify-around">
             <Link
               to="#"
-              className="flex items-center gap-3 rounded-xl p-5 shadow-md"
+              className="flex items-center gap-3 rounded-xl p-5 shadow-md hover:bg-white/10"
             >
               <FaGoogle />
               <p className="text-title-info-second hidden md:block">Google</p>
             </Link>
             <Link
               to="#"
-              className="flex items-center gap-3 rounded-xl p-5 shadow-md"
+              className="flex items-center gap-3 rounded-xl p-5 shadow-md hover:bg-white/10"
             >
               <FaFacebook />
               <p className="text-title-info-second hidden md:block">Facebook</p>

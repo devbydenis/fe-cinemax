@@ -13,6 +13,7 @@ import ProfileAccountPage from "./pages/profile/ProfileAccountPage.tsx"
 import ProfileHistoryPage from "./pages/profile/ProfileHistoryPage.tsx"
 import DetailPage from "./pages/DetailPage.tsx"
 import NotFoundPage from "./pages/NotFoundPage.tsx"
+import ForgetPasswordPage from "./pages/auth/ForgetPasswordPage.tsx"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path="auth" element={<AuthLayout />}>
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
+        <Route path="forget-password" element={<ForgetPasswordPage />} />
       </Route>
 
       <Route  element={<MainLayout />}>

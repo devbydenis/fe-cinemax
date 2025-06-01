@@ -3,7 +3,7 @@ import tickitzLogo from "../../assets/tickitz-revert-logo.svg";
 import { schemaRegister } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { IoMdEye } from "react-icons/io";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import ModalAuth from "../../components/ModalAuth";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,7 @@ function RegisterPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const date = new Date();
-  const selector = useSelector((state: Users) => state.users);
+  const selector = useSelector((state: Users) => state);
   const { users } = selector.users;
   console.log("selector", users);
 
@@ -140,7 +140,7 @@ function RegisterPage() {
                 className="absolute right-2 cursor-pointer text-xl"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                <IoMdEye />
+                <IoMdEyeOff />
               </button>
             )}
           </div>
@@ -179,7 +179,7 @@ function RegisterPage() {
                 className="absolute right-2 cursor-pointer text-xl"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
-                <IoMdEye />
+                <IoMdEyeOff />
               </button>
             )}
           </div>
