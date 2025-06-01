@@ -22,6 +22,10 @@ function TicketBanner() {
   const [movieDetail, setMovieDetail] = useState<MovieDetail>();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
     const options = {
       method: "GET",

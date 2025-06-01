@@ -47,7 +47,13 @@ function CardHistory(props) {
           <img
             className="bg-orange mb-5 rounded px-2 py-2"
             // src={`${cinema}`}
-            src={cinema === "cineone" ? cineone : cinema === "hiflix" ? hiflix : ebvid}
+            src={
+              cinema === "cineone"
+                ? cineone
+                : cinema === "hiflix"
+                  ? hiflix
+                  : ebvid
+            }
             alt="cineone-logo"
           />
           <div>
@@ -93,10 +99,17 @@ function CardHistory(props) {
           <h2 className="mt-3 mb-8 text-2xl font-semibold">
             Ticket Information
           </h2>
-          {
-            isTicketPaid 
-              ? <TicketPaid date={date} time={time} title={title} seat={seat} totalPrice={totalPrice} /> 
-              : <TicketNotPaid />}
+          {isTicketPaid ? (
+            <TicketPaid
+              date={date}
+              time={time}
+              title={title}
+              seat={seat}
+              totalPrice={totalPrice}
+            />
+          ) : (
+            <TicketNotPaid />
+          )}
         </div>
       </section>
     </>
@@ -134,9 +147,7 @@ function TicketPaid({ date, time, title, seat, totalPrice }) {
           <div>
             <p className="text-xs text-[#AAAAAA]">Movie</p>
             <p className="text-sm font-semibold tracking-wider text-[#14142B]">
-              {title.length >= 12
-                ? subStrTitle(title)
-                : title}
+              {title.length >= 12 ? subStrTitle(title) : title}
             </p>
           </div>
           <div>
@@ -164,8 +175,8 @@ function TicketPaid({ date, time, title, seat, totalPrice }) {
 }
 function TicketNotPaid() {
   const userHistories = useSelector((state) => state.user.user.history);
-  console.log("user history not paid",userHistories);
-  const totalPrice = userHistories.filter((item) => !item.statusPayment)[0].totalPrice
+  console.log("user history not paid", userHistories);
+  const totalPrice = userHistories?.filter((item) => !item.statusPayment)[0].totalPrice;
   // console.log("total price", totalPriceice);
 
   return (

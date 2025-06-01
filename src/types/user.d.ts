@@ -18,8 +18,6 @@ interface User {
   history?: History[]
 }
 interface Users {
-  users: {
-    users: User[]
-  };
+  users: User[]
 }
 
