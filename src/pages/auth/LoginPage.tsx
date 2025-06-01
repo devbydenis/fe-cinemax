@@ -4,18 +4,21 @@ import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import { useForm, type FieldValues } from "react-hook-form";
 import { schemaLogin } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import Loader from "../../components/Loader";
 import ModalAuth from "../../components/ModalAuth";
 import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { addInfoLoginAction } from "../../redux/reducers/userSlice";
+import AuthContext from "./AuthContext";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loaderAuth, setLoaderAuth] = useState(false);
   const [showModalAuth, setShowModalAuth] = useState(false);
+  const {setIsLoggedinRoute} = useContext(AuthContext); 
+
   const {
     register,
     handleSubmit,
@@ -49,6 +52,7 @@ function LoginPage() {
 
     if (isDataMatched(email, password)) {
       dispatch(addInfoLoginAction({ ...userData, history: [] }));
+      setIsLoggedinRoute(true);
       setLoaderAuth(true);
       setTimeout(() => {
         return navigate("/");
