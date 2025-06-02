@@ -9,13 +9,14 @@ type History = {
   cinema: string;
   seat: string[];
   totalPrice: number;
+  type: string;
 }
 
 type Histories = {
-  histories: History[]
+  histories: []
 }
 
-const initialState = {
+const initialState:Histories = {
   histories: []
 };
 
@@ -23,8 +24,8 @@ const history = createSlice({
   name: "history",
   initialState,
   reducers: {
-    addHistoryAction: (state, action: { payload:PayloadAction<History>}) => {
-      state.histories.push(action.payload)
+    addHistoryAction: (state, action: PayloadAction<History>) => {
+      (state.histories as History[]).push(action.payload)
     }
   },
 });

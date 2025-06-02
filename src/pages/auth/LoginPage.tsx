@@ -17,7 +17,7 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loaderAuth, setLoaderAuth] = useState(false);
   const [showModalAuth, setShowModalAuth] = useState(false);
-  const {setIsLoggedinRoute} = useContext(AuthContext); 
+  const { setIsLoggedinRoute } = useContext(AuthContext);
 
   const {
     register,
@@ -28,8 +28,10 @@ function LoginPage() {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const registeredUsers = useSelector((state: Users) => state.users.users);
-  const user = useSelector((state: { user: { user: User } }) => state.user.user);
+  const registeredUsers = useSelector(
+    (state: { users: Users }) => state.users.users,
+  );
+  const user = useSelector((state: { user: UserState }) => state.user.user);
 
   console.log("registered users", registeredUsers);
   console.log("user di login", user);
@@ -138,7 +140,12 @@ function LoginPage() {
               </small>
             )}
           </div>
-          <Link className="flex justify-end font-semibold hover:text-blue-500" to={"/auth/forget-password"}>Forget Password</Link>
+          <Link
+            className="flex justify-end font-semibold hover:text-blue-500"
+            to={"/auth/forget-password"}
+          >
+            Forget Password
+          </Link>
         </section>
         <button
           className="bg-primary text-background bg-orange active:text-orange active:border-orange h-12 cursor-pointer rounded-full font-bold active:scale-99 active:border-2 active:bg-transparent active:duration-100"

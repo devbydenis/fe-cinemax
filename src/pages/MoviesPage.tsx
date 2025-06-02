@@ -1,7 +1,6 @@
 import Newslater from "../components/Newslater";
 import background_img from "../assets/background_img.png";
 import Chip from "../components/Chip";
-import { IoIosArrowDown } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
@@ -11,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch } from "../redux/store";
 import MoviesContext from "../context/MoviesContext";
 import { useSearchParams } from "react-router-dom";
-import { BiArrowToBottom } from "react-icons/bi";
 
 function Movies() {
   const { nowPlayingMovies, genres } = useSelector(
@@ -123,7 +121,7 @@ function Menu() {
         </h2>
         {/* Sorting */}
         <select
-          className="border-2 border-orange w-fit cursor-pointer rounded-md px-2 py-3 font-semibold text-orange focus:outline-none active:rounded-b-none"
+          className="border-orange text-orange w-fit cursor-pointer rounded-md border-2 px-2 py-3 font-semibold focus:outline-none active:rounded-b-none"
           id="sortby"
         >
           <option value="popular">Popular</option>
@@ -174,31 +172,31 @@ function Pagination() {
   return (
     <div className="my-20 flex items-center justify-center gap-5">
       <button
-        onClick={() => setPage(1)}
+        onClick={() => setPage?.(1)}
         className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white"
       >
         1
       </button>
       <button
-        onClick={() => setPage(2)}
+        onClick={() => setPage?.(2)}
         className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white"
       >
         2
       </button>
       <button
-        onClick={() => setPage(3)}
+        onClick={() => setPage?.(3)}
         className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white"
       >
         3
       </button>
       <button
-        onClick={() => setPage(4)}
+        onClick={() => setPage?.(4)}
         className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white"
       >
         4
       </button>
       <button
-        onClick={() => setPage((prev) => prev + 1)}
+        onClick={() => setPage?.((prev) => prev + 1)}
         className="bg-orange w-fit rounded-full border-2 px-4.5 py-4.5 text-lg font-bold text-white"
       >
         <FaArrowRight />
@@ -219,20 +217,20 @@ function FilterChip(props: { genre: string }) {
   );
 }
 
-type GenreProps = {
-  title: string;
-};
-function Genre(props: GenreProps) {
-  const [isActive, setIsActive] = useState<boolean>(false);
+// type GenreProps = {
+//   title: string;
+// };
+// function Genre(props: GenreProps) {
+//   const [isActive, setIsActive] = useState<boolean>(false);
 
-  return (
-    <li
-      className={`${isActive ? "bg-orange border-orange text-white" : ""} min-w-fit cursor-pointer rounded-3xl border border-black px-4 py-2 font-medium uppercase`}
-      onClick={() => setIsActive(!isActive)}
-    >
-      {props.title}
-    </li>
-  );
-}
+//   return (
+//     <li
+//       className={`${isActive ? "bg-orange border-orange text-white" : ""} min-w-fit cursor-pointer rounded-3xl border border-black px-4 py-2 font-medium uppercase`}
+//       onClick={() => setIsActive(!isActive)}
+//     >
+//       {props.title}
+//     </li>
+//   );
+// }
 
 export default Movies;

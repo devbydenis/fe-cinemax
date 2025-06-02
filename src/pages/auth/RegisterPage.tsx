@@ -20,7 +20,7 @@ function RegisterPage() {
   const navigate = useNavigate();
   const date = new Date();
   const selector = useSelector((state: Users) => state);
-  const { users } = selector.users;
+  const users = selector.users.users;
   console.log("selector", users);
 
   const {

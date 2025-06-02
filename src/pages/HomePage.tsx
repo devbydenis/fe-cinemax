@@ -12,7 +12,6 @@ import { moviesActions } from "../redux/reducers/moviesSlice";
 import type { AppDispatch } from "../redux/store";
 import Loader from "../components/Loader";
 
-
 function HomePage() {
   return (
     <>
@@ -30,12 +29,12 @@ function HomePage() {
 function Banner() {
   return (
     <>
-      <section className="my-7 flex flex-col items-center justify-center gap-4 md:mx-16 ">
+      <section className="my-7 flex flex-col items-center justify-center gap-4 md:mx-16">
         <Chip value="MOVIE TICKET PURCHASES #1 IN INDONESIA" />
         <div className="px-7">
-          <p className="text-center text-5xl xl:text-6xl xl:leading-23 2xl:text-7xl/14 2xl:leading-25 font-medium">
+          <p className="text-center text-5xl font-medium xl:text-6xl xl:leading-23 2xl:text-7xl/14 2xl:leading-25">
             Experience the Magic of Cinema:{" "}
-            <span className="block text-orange font-bold">
+            <span className="text-orange block font-bold">
               Book Your Tickets Today
             </span>
           </p>
@@ -50,15 +49,14 @@ function Banner() {
   );
 }
 function NowPlaying() {
-  const { nowPlayingMovies, genres, isLoading, isError } = useSelector((state: {movies: StateMovies}) => state.movies);
-  const { 
-    getNowPlayingMoviesThunk,
-    getGenresMovieThunk
-  } = moviesActions;
-  const dispatch:AppDispatch = useDispatch();
+  const { nowPlayingMovies, genres, isLoading, isError } = useSelector(
+    (state: { movies: StateMovies }) => state.movies,
+  );
+  const { getNowPlayingMoviesThunk, getGenresMovieThunk } = moviesActions;
+  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getNowPlayingMoviesThunk());
+    dispatch(getNowPlayingMoviesThunk(1));
     dispatch(getGenresMovieThunk());
   }, []);
   return (
@@ -67,22 +65,23 @@ function NowPlaying() {
         <h2 className="text-center text-2xl leading-11 font-semibold md:mb-9 md:text-4xl">
           Now Showing in Cinemas
         </h2>
-        <ul className="relative container-card custom-scrollbar flex gap-5 overflow-x-scroll">
-          { 
-            isLoading && <div className="absolute top-50 left-1/2"><Loader overlay={false} /></div>
-          }
-          {
-            nowPlayingMovies && nowPlayingMovies.map((movie:movies) => {
+        <ul className="container-card custom-scrollbar relative flex gap-5 overflow-x-scroll">
+          {isLoading && (
+            <div className="absolute top-50 left-1/2">
+              <Loader overlay={false} />
+            </div>
+          )}
+          {nowPlayingMovies &&
+            nowPlayingMovies.map((movie: movies) => {
               return (
                 <li key={`movie-id-${movie.id}`}>
                   <Card category="now playing" movie={movie} genres={genres} />
                 </li>
               );
-            })
-          }
-          {
-            isError && <p className="text-center text-2xl text-red-500">Error</p>
-          }
+            })}
+          {isError && (
+            <p className="text-center text-2xl text-red-500">Error</p>
+          )}
         </ul>
         <span className="flex justify-center">
           <Link
@@ -108,7 +107,7 @@ function WhyChooseUs() {
             Unleashing the Ultimate Movie Experience
           </h3>
         </div>
-        <div className="custom-scrollbar mt-10 flex flex-col md:flex-row flex-wrap items-center justify-center gap-5 sm:flex-row sm:items-start sm:justify-center lg:overflow-hidden">
+        <div className="custom-scrollbar mt-10 flex flex-col flex-wrap items-center justify-center gap-5 sm:flex-row sm:items-start sm:justify-center md:flex-row lg:overflow-hidden">
           <CardWhyChooseUs
             img={guaranted}
             title="Guaranteed"
@@ -131,23 +130,25 @@ function WhyChooseUs() {
 }
 
 function UpComingMovies() {
-  const dispatch:AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const { getUpComingMoviesThunk } = moviesActions;
-  const { upComingMovies } = useSelector((state: {movies: StateMovies}) => state.movies);
-  
+  const { upComingMovies } = useSelector(
+    (state: { movies: StateMovies }) => state.movies,
+  );
+
   useEffect(() => {
     dispatch(getUpComingMoviesThunk());
-  }, [])
+  }, []);
   return (
     <>
       <section className="my-10 md:mx-20">
         <div className="mb-4 flex flex-col items-center justify-center gap-4">
           <Chip value="UPCOMING MOVIES" />
           <div className="flex flex-col items-center justify-center gap-5 md:flex-row md:items-start">
-            <h3 className="text-black-primary flex-1 px-20 text-center text-3xl/9 lg:text-5xl lg:flex-4 font-extrabold">
+            <h3 className="text-black-primary flex-1 px-20 text-center text-3xl/9 font-extrabold lg:flex-4 lg:text-5xl">
               Exciting Movie Coming Soon
             </h3>
-            <ul className="pb-5 custom-scrollbar mx-auto mb-3 flex w-fit flex-2 gap-2">
+            <ul className="custom-scrollbar mx-auto mb-3 flex w-fit flex-2 gap-2 pb-5">
               <Genre title="Action" />
               <Genre title="Adventure" />
               <Genre title="Comedy" />
@@ -156,15 +157,14 @@ function UpComingMovies() {
           </div>
         </div>
         <ul className="container-card custom-scrollbar mx-3 flex gap-5 overflow-x-scroll">
-          {
-            upComingMovies && upComingMovies.map((movie:movies) => {
+          {upComingMovies &&
+            upComingMovies.map((movie: movies) => {
               return (
                 <li key={`movie-id-${movie.id}`}>
-                  <Card category="upcoming" movie={movie}  />
+                  <Card category="upcoming" movie={movie} />
                 </li>
               );
-            })
-          }
+            })}
         </ul>
         <span className="flex justify-center">
           <Link
@@ -203,7 +203,7 @@ type CardWhyChooseUsProps = {
 };
 function CardWhyChooseUs(props: CardWhyChooseUsProps) {
   return (
-    <div className="bg-white-secondary mx-5 rounded-xl p-6 max-w-[25.5rem]">
+    <div className="bg-white-secondary mx-5 max-w-[25.5rem] rounded-xl p-6">
       <img src={props.img} alt="logo-why-choose-us" />
       <h4 className="mt-[2.125rem] mb-16 text-[1.75rem] leading-9 font-semibold">
         {props.title}
