@@ -3,7 +3,7 @@ import { getGenres, getNowPlayingMovie, getUpComingMovies } from "../../service"
 
 const getNowPlayingMoviesThunk = createAsyncThunk(
   "movies/nowPlayingMovies",
-  async ( page , { rejectWithValue }) => {
+  async ( page = 1 , { rejectWithValue }) => {
     try {
       const response = await getNowPlayingMovie(page);
       if (!response.ok) throw new Error(response.statusText);
