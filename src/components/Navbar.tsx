@@ -12,20 +12,21 @@ function Navbar() {
   const [profileName, SetProfileName] = useState<string>("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {isLogin, email} = useSelector((state: User) => state.user.user)
+  const { isLogin, email } = useSelector(
+    (state: { user: { user: User } }) => state.user.user,
+  );
 
   useEffect(() => {
     if (isLogin) {
       SetProfileName(email.split("@")[0]);
-    } 
-
+    }
   }, [isLogin, email]);
   return (
-    <nav className="shadow-lg relative z-50">
+    <nav className="relative z-50 shadow-lg">
       <ul className="flex items-center justify-between px-10 py-6 lg:px-20">
         <li>
           {/* logo */}
-          <Link to={'/'}>
+          <Link to={"/"}>
             <img src={logoTickitz} alt="logo-tickitz" />
           </Link>
         </li>
@@ -70,17 +71,15 @@ function Navbar() {
                 style={{ backgroundImage: `url(${avatarDefault})` }}
                 to={"/profile/account"}
               ></Link>
-              <button
-                className="cursor-pointer text-gray-800 uppercase"
-              >
+              <button className="cursor-pointer text-gray-800 uppercase">
                 {"Hi, " + profileName.split("@")[0]}
               </button>
               <div>
                 <button
-                  className="cursor-pointer text-red-500 uppercase border-2 border-red-500 rounded-xl px-4 py-2"
+                  className="cursor-pointer rounded-xl border-2 border-red-500 px-4 py-2 text-red-500 uppercase"
                   onClick={() => {
-                    navigate("/")
-                    dispatch(logoutUserAction())
+                    navigate("/");
+                    dispatch(logoutUserAction());
                   }}
                 >
                   Logout

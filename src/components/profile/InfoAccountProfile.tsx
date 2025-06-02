@@ -4,16 +4,21 @@ import star from "../../assets/star.svg";
 import ThemeContext from "../../context/EditProfileContext";
 import { useSelector } from "react-redux";
 
-
 function InfoAccountProfile() {
-  const {showEditProfile, setShowEditProfile, display} = useContext(ThemeContext)
-  const user = useSelector((state) => state.user.user);
+  const { showEditProfile, setShowEditProfile } = useContext(ThemeContext);
+  const user = useSelector(
+    (state: { user: { user: User } }) => state.user.user,
+  );
   console.log("user name di profile", user);
 
   return (
     <>
-      <section className={` shadow-lg shadow-orange row-span-2 m-10 h-fit flex-col rounded-3xl bg-white`}>
-      <div className={`${showEditProfile ? 'block' : 'hidden'} absolute top-0 right-0 bottom-0  h-screen left-0 z-20 bg-black/50`}></div>
+      <section
+        className={`shadow-orange row-span-2 m-10 h-fit flex-col rounded-3xl bg-white shadow-lg`}
+      >
+        <div
+          className={`${showEditProfile ? "block" : "hidden"} absolute top-0 right-0 bottom-0 left-0 z-20 h-screen bg-black/50`}
+        ></div>
         <div className="info p-10">
           <h1 className="text-start text-2xl font-bold">INFO</h1>
           <img
@@ -26,9 +31,9 @@ function InfoAccountProfile() {
           <p className="mb-3 text-center text-xl font-semibold tracking-wider break-all capitalize">
             {
               // user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user
-              user.firstName && 
-              user.lastName &&
-              `${user.firstName} ${user.lastName}`
+              user.firstName &&
+                user.lastName &&
+                `${user.firstName} ${user.lastName}`
             }
             {!user.firstName && !user.lastName && user.email}
           </p>
@@ -62,10 +67,10 @@ function InfoAccountProfile() {
           </div>
         </div>
         <button
-          className="flex justify-center border-orange w-3/4 mx-auto cursor-pointer text-orange mb-6 rounded-lg border-1 py-3 font-bold active:scale-99 active:opacity-50 md:hidden"
+          className="border-orange text-orange mx-auto mb-6 flex w-3/4 cursor-pointer justify-center rounded-lg border-1 py-3 font-bold active:scale-99 active:opacity-50 md:hidden"
           type="button"
           onClick={() => {
-            setShowEditProfile(true)
+            setShowEditProfile(true);
           }}
         >
           Edit Profile
@@ -75,4 +80,4 @@ function InfoAccountProfile() {
   );
 }
 
-export default InfoAccountProfile
+export default InfoAccountProfile;

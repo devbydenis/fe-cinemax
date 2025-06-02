@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import ModalContext from "../context/ModalContext";
 
-const Modal = (props) => {
+const Modal = (props: { color: string; message: string }) => {
   const { setShowModal } = useContext(ModalContext);
   return (
     <div
@@ -12,7 +12,7 @@ const Modal = (props) => {
         <p className="text-lg text-gray-400">{props.message}</p>
       </div>
       <div className="flex justify-end">
-        <button 
+        <button
           className="bg-orange w-full rounded-xl px-3 py-1 font-semibold text-white transition-colors ease-in-out hover:bg-orange-400"
           onClick={() => setShowModal(false)}
         >

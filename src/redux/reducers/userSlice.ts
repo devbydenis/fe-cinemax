@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: { user: User } = {
+const initialState: UserState = {
   user: {
     id: "",
     email: "",
@@ -33,9 +33,6 @@ const user = createSlice({
   },
 });
 
-export const { 
-  addInfoLoginAction, 
-  logoutUserAction, 
-  addHistoryUserAction 
-} = user.actions;
+export const { addInfoLoginAction, logoutUserAction, addHistoryUserAction } =
+  user.actions;
 export default user.reducer;
