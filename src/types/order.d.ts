@@ -13,6 +13,23 @@ type Order = {
 };
 
 interface OrderProps {
-  Order: Order;
-  Orders: Order[];
+  order: Order;
+  orders: Order[];
+}
+
+type OrderState = {
+  order: {
+    order: Order;
+  };
+  orders: Order[];
+  
+}
+
+interface RootStateOrder {
+  order: {
+    order: Order
+  }
+  orders: {
+    orders: Order[]
+  }
 }

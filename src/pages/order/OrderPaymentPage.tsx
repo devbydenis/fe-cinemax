@@ -39,7 +39,7 @@ function OrderPaymentPage() {
 }
 
 function PaymentInfo() {
-  const order = useSelector((state) => state.order.order);
+  const order = useSelector((state: {order: OrderProps}) => state.order.order);
   return (
     <div className="payment-info my-7 w-6/7">
       <h1 className="mb-5 text-2xl font-bold">Payment Info</h1>
@@ -79,14 +79,18 @@ function PaymentInfo() {
   );
 }
 
-function PaymentMethod({ setIsModalShow }) {
+type PaymentMethodProps = {
+  setIsModalShow: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function PaymentMethod({ setIsModalShow }: PaymentMethodProps) {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const onSubmit = (data: FieldValues) => {
     console.log(data);
 
     dispatch(addOrderAction(data));
-    setIsModalShow(() => setIsModalShow(true));
+    setIsModalShow(true);
   };
   return (
     <form
@@ -229,7 +233,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
     (state: { user: { user: User } }) => state.user.user,
   );
   const order = useSelector(
-    (state: { order: { order: OrderProps } }) => state.order.order,
+    // (state: { order: { order: OrderProps } }) => state.order.order,
+    (state: RootStateOrder) => state.order.order,
   );
   const dispatch = useDispatch();
   console.log("order after submit payment", order);
@@ -257,7 +262,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
         <div>
           <p className="text-secondary text-sm font-normal">Total Payment</p>
           <p className="text-primary mt-2 font-bold">
-            ${order.seat.length * 10}
+            ${order.totalPrice}
           </p>
         </div>
         <p className="text-secondary text-sm leading-8 font-normal tracking-[.75px]">
@@ -270,7 +275,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
             to={`/order/ticket/${id}`}
             className="bg-primary text-orange active:bg-orange rounded py-2 text-center font-bold outline-2 transition-all active:scale-99 active:text-white"
             onClick={() => {
-              dispatch(addOrderAction({ statusPayment: true, ...order }));
+              dispatch(addOrderAction({ ...order, statusPayment: true }));
               dispatch(addHistoryUserAction({ ...order, statusPayment: true }));
             }}
           >
@@ -280,8 +285,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
             to={`/profile/history`}
             className="outline-primary bg-orange outline-orange active:outline-orange active:text-orange rounded py-2 text-center font-bold text-white outline-2 transition-all active:scale-99 active:bg-white"
             onClick={() => {
-              dispatch(addOrderAction({ statusPayment: false, ...order }));
-              dispatch(addHistoryUserAction({ statusPayment: false, ...order }));
+              dispatch(addOrderAction({ ...order, statusPayment: true }));
+              dispatch(addHistoryUserAction({ ...order, statusPayment: true }));
             }}
           >
             Pay Later

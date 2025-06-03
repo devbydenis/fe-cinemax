@@ -52,7 +52,7 @@ function DetailPage() {
           >
             <Modal
               message="You are not logged in, please login first"
-              color="orange"
+            color="orange"
             />
           </div>
           <Banner />
