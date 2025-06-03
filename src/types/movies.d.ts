@@ -32,7 +32,7 @@ type MovieDetail = {
   release_date: string;
   title: string;
   genres: Genre[];
-  runtime: number ;
+  runtime: number;
 }
 
 type Credit = {

@@ -13,7 +13,7 @@ import ModalContext from "../context/ModalContext";
 import DetailContext from "../context/DetailContext";
 
 function DetailPage() {
-  const [movieDetail, setMovieDetail] = useState<MovieDetail>();
+  const [movieDetail, setMovieDetail] = useState();
   const [showModal, setShowModal] = useState(false);
   const { id } = useParams();
 
@@ -64,9 +64,8 @@ function DetailPage() {
 }
 
 function Banner() {
-  // const [movieDetail, setMovieDetail] = useState<MovieDetail>();
   const { movieDetail } = useContext(DetailContext);
-  const [movieCredits, setMovieCredits] = useState<MovieCredits[]>([]);
+  const [movieCredits, setMovieCredits] = useState();
   const { id } = useParams();
   console.log("movie detail", movieDetail);
 
@@ -76,7 +75,6 @@ function Banner() {
     return `${hours}h ${minutes}m`;
   };
 
-  // console.log("movie credits", movieCredits);
   const getDirectors = (movieCredits: MovieCredits) => {
     const result =
       movieCredits.crew &&
@@ -92,23 +90,6 @@ function Banner() {
     // console.log("casts", result);
     return result;
   };
-
-  // useEffect(() => {
-  //   const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
-  //   const options = {
-  //     method: "GET",
-  //     headers: {
-  //       accept: "application/json",
-  //       Authorization:
-  //         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
-  //     },
-  //   };
-
-  //   fetch(url, options)
-  //     .then((res) => res.json())
-  //     .then((json) => setMovieDetail(json))
-  //     .catch((err) => console.error(err));
-  // }, [id]);
 
   useEffect(() => {
     const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
@@ -177,7 +158,7 @@ function Banner() {
               </h2>
               {/* <p className="text-xl leading-7 font-semibold">{"yanto"}</p> */}
               <p className="text-xl leading-7 font-semibold">
-                {getDirectors(movieCredits)}
+                {movieCredits && getDirectors(movieCredits)}
               </p>
             </li>
             <li className="col-span-4">
@@ -185,13 +166,13 @@ function Banner() {
                 Duration
               </h2>
               <p className="text-xl leading-7 font-semibold">
-                {getDuration(movieDetail?.runtime)}
+                {movieDetail && getDuration(movieDetail.runtime)}
               </p>
             </li>
             <li className="col-span-4">
               <h2 className="text-black-primary text-lg font-light">Cast</h2>
               <p className="text-xl leading-7 font-semibold">
-                {getCasts(movieCredits)}
+                {movieCredits && getCasts(movieCredits)}
               </p>
               {/* <p className="text-xl leading-7 font-semibold">{["yanti", "yanto"]}</p> */}
             </li>
@@ -209,7 +190,7 @@ function SetOrder() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const param = useParams();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state: RootState) => state.user);
   console.log("user in detail", !user.user.isLogin);
 
   const onSubmit = (data: FieldValues) => {
@@ -224,7 +205,7 @@ function SetOrder() {
       addOrderAction({
         userId: user.user.id,
         orderId: nanoid(),
-        title: movieDetail.title,
+        title: movieDetail?.title,
         ...data,
       }),
     );

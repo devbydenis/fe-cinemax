@@ -34,4 +34,5 @@ interface Users {
 
 interface RootState {
   users: UsersState;
+  user: UserState;
 }
