@@ -5,16 +5,70 @@ import ebvid from "../../assets/ebvid-logo.svg";
 import qrcode from "../../assets/qrcode.svg";
 import { useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
+
+// Redux State Types
+interface User {
+  history: History[];
+  // tambahin properti user laen kalo ada
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phoneNumber?: string;
+}
+
+interface UserState {
+  user: User;
+}
+
+interface RootState {
+  user: UserState;
+  // tambahin state laen kalo ada
+}
+
+// History Types
+interface History {
+  cinema: CinemaType;
+  date: string;
+  time: string;
+  seat: string[];
+  totalPrice: number;
+  title: string;
+  statusPayment: boolean;
+}
+
+type CinemaType = "cineone" | "hiflix" | "ebvid";
+
+// Component Props Types
+interface CardHistoryProps {
+  cinema: CinemaType;
+  date: string;
+  title: string;
+  isTicketPaid: boolean;
+  time: string;
+  seat: string[];
+  totalPrice: number;
+}
+
+interface TicketPaidProps {
+  date: string;
+  time: string;
+  title: string;
+  seat: string[];
+  totalPrice: number;
+}
+
 function ProfileHistoryPage() {
-  const userHistories = useSelector((state) => state.user.user.history);
+  const userHistories = useSelector((state: RootState) => state.user.user.history);
   console.log("user di history", userHistories);
+  
   return (
     <>
       <section className="col-span-2 md:block">
         {userHistories &&
-          userHistories.map((history) => {
+          userHistories.map((history: History, index: number) => {
             return (
               <CardHistory
+                key={index}
                 cinema={history.cinema}
                 date={history.date}
                 time={history.time}
@@ -30,15 +84,9 @@ function ProfileHistoryPage() {
   );
 }
 
-interface CardHistoryProps {
-  cinema: string;
-  date: string;
-  title: string;
-  isTicketPaid: boolean;
-}
-function CardHistory(props) {
+function CardHistory(props: CardHistoryProps) {
   const { cinema, date, title, isTicketPaid, time, seat, totalPrice } = props;
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   return (
     <>
@@ -46,7 +94,6 @@ function CardHistory(props) {
         <div className="p-6 md:flex md:flex-row-reverse md:justify-between">
           <img
             className="bg-orange mb-5 rounded px-2 py-2"
-            // src={`${cinema}`}
             src={
               cinema === "cineone"
                 ? cineone
@@ -54,7 +101,7 @@ function CardHistory(props) {
                   ? hiflix
                   : ebvid
             }
-            alt="cineone-logo"
+            alt={`${cinema}-logo`}
           />
           <div>
             <p className="text-secondary text-[13px] tracking-widest">{date}</p>
@@ -116,8 +163,8 @@ function CardHistory(props) {
   );
 }
 
-function TicketPaid({ date, time, title, seat, totalPrice }) {
-  const subStrTitle = (str: string) => {
+function TicketPaid({ date, time, title, seat, totalPrice }: TicketPaidProps) {
+  const subStrTitle = (str: string): string => {
     return str.substring(0, 12) + "...";
   };
 
@@ -173,11 +220,14 @@ function TicketPaid({ date, time, title, seat, totalPrice }) {
     </>
   );
 }
+
 function TicketNotPaid() {
-  const userHistories = useSelector((state) => state.user.user.history);
+  const userHistories = useSelector((state: RootState) => state.user.user.history);
   console.log("user history not paid", userHistories);
-  const totalPrice = userHistories?.filter((item) => !item.statusPayment)[0].totalPrice;
-  // console.log("total price", totalPriceice);
+  
+  // Lebih aman dengan optional chaining dan nullish coalescing
+  const unpaidHistory = userHistories?.find((item: History) => !item.statusPayment);
+  const totalPrice = unpaidHistory?.totalPrice ?? 0;
 
   return (
     <div className="flex flex-col gap-5">
