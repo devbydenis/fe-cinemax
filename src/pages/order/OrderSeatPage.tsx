@@ -18,7 +18,7 @@ function OrderSeatPage() {
 
 function OrderInfo() {
   const [movieDetail, setMovieDetail] = useState<MovieDetail>();
-  const order = useSelector((state:{order: StateMovies}) => state.order);
+  const order = useSelector((state: RootStateOrder) => state.order);
   const { id } = useParams();
 
   useEffect(() => {
@@ -67,7 +67,7 @@ function OrderInfo() {
           </ul>
           <div className="mt-4 flex flex-col items-start gap-5">
             <p className="text-lg font-medium text-gray-500 md:mt-1">
-              Regular - {order.time}
+              Regular - {order.order.time}
             </p>
             <button
               type="button"
@@ -82,10 +82,15 @@ function OrderInfo() {
   );
 }
 
-function OrderSeatsSelector({setShowModal}: ShowModal) {
+type OrderSeatsSelectorType = {
+  showModal?: boolean;
+  setShowModal:  React.Dispatch<React.SetStateAction<boolean>>
+}
+
+function OrderSeatsSelector({setShowModal}: OrderSeatsSelectorType) {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
-  const order = useSelector((state: {order: StateMovies}) => state.order.order);
+  // const order = useSelector((state: {order: RootStateOrder}) => state.order.order);
   const [selectedSeats, setSelectedSeats] = useState<SeatId[]>([]);
   // console.log("order in seat", order);
   // console.log("selectedSeats", selectedSeats);
@@ -224,7 +229,7 @@ function OrderSeatsSelector({setShowModal}: ShowModal) {
 function OrderModal({showModal, setShowModal}: ShowModal) {
   const {id} = useParams();
   const navigate = useNavigate();
-  const order = useSelector((state) => state.order.order)
+  const order = useSelector((state: RootStateOrder) => state.order.order)
   const dispatch = useDispatch();
   // console.log("order modal", order.seat);
 
