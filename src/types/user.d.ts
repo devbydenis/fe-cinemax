@@ -18,6 +18,7 @@ interface User {
   history?: History[];
   firstName?: string;
   lastName?: string;
+  phoneNumber?: string;
 }
 
 interface UserState {

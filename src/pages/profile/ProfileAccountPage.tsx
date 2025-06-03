@@ -11,7 +11,7 @@ function ProfileAccountPage() {
   const { showEditProfile, setShowEditProfile } = useContext(ThemeContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state: RootState) => state.user.user);
   // console.log("user di profile", user);
   const dispatch = useDispatch();
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
@@ -24,7 +24,7 @@ function ProfileAccountPage() {
       phoneNumber: user.phoneNumber || '',
     },
   });
-  const handleShowPassword = (e) => {
+  const handleShowPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShowPassword(e.target.checked);
   }
   
@@ -169,16 +169,16 @@ type FormData = {
     password: string;
     confirmPassword: string | undefined;
 }
-type InputFieldProps = {
+type InputFieldProps<T extends FieldValues> = {
   labelInput: string;
   nameInput: string;
   typeInput: string;
   forInput: string;
   idInput: string;
-  register: UseFormRegister<FormData>;
-  errors: FieldErrors<FieldValues>;
+  register: UseFormRegister<T>;
+  errors: FieldErrors<T>;
 }
-function InputField({ labelInput, nameInput, typeInput, forInput, idInput, register, errors }: InputFieldProps) {
+function InputField({ labelInput, nameInput, typeInput, forInput, idInput, register, errors }: InputFieldProps<FormData>) {
   return (
     <>
       <div>
@@ -191,10 +191,10 @@ function InputField({ labelInput, nameInput, typeInput, forInput, idInput, regis
         <input
           className="border-gray w-full rounded border-1 px-6 py-3 focus:outline-none"
           type={typeInput}
-          {...register(nameInput)}
+          {...register(nameInput as keyof FormData)}
           id={idInput}
         />
-        {errors[nameInput] && <p className={`${errors[nameInput] ? "visible" : "invisible"} text-red-500`}>{errors[nameInput].message}</p>}
+        {errors[nameInput as keyof FormData] && <p className={`${errors[nameInput as keyof FormData] ? "visible" : "invisible"} text-red-500`}>{errors[nameInput as keyof FormData]?.message}</p>}
       </div>
     </>
   );
