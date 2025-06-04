@@ -7,6 +7,7 @@ type History = {
   cinema: string;
   seat: string[];
   totalPrice: number;
+  statusPayment?: boolean;
 };
 
 interface User {

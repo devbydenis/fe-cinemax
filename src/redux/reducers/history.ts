@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 type History = {
-  id:string;
+  id?:string;
   title: string;
   date: string;
   time: string;
@@ -9,7 +9,7 @@ type History = {
   cinema: string;
   seat: string[];
   totalPrice: number;
-  type: string;
+  type?: string;
 }
 
 type Histories = {

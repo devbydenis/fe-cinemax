@@ -63,7 +63,7 @@ function TicketBanner() {
   );
 }
 function TicketResult() {
-  const order = useSelector((state) => state.order.order);
+  const order = useSelector((state: {order: {order: Order}}) => state.order.order);
   const {title, seat, date, time } = order
   console.log("order", order);
   const subStrTitle = (str: string) => {
@@ -116,7 +116,7 @@ function TicketResult() {
   );
 }
 function TicketButton() {
-  const order = useSelector((state) => state.order.order);
+  const order = useSelector((state: {order: {order: Order}}) => state.order.order);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (

@@ -19,8 +19,7 @@ function RegisterPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const date = new Date();
-  const selector = useSelector((state: Users) => state);
-  const users = selector.users.users;
+  const users = useSelector((state: { users: { users: User[] } }) => state.users.users);
   console.log("selector", users);
 
   const {
