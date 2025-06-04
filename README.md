@@ -1,4 +1,4 @@
-# React Todo App
+# Tickitz
 
 A modern and responsive online ticketing application built with React and TypeScript, featuring state management, form validation, and Docker support for easy deployment.
 
