@@ -1,93 +1,159 @@
-## Tickitz-Prototype
-Version: 1.0.0
-Status: CI Status License
-Demo: Live Preview (soon)
+# React Todo App
 
+A modern and responsive online ticketing application built with React and TypeScript, featuring state management, form validation, and Docker support for easy deployment.
 
+## Preview
 
-## 📌 Overview
-Tickitz-Prototype adalah sebuah aplikasi web berbasis React.js yang mensimulasikan sistem pemesanan tiket bioskop. Dibangun dengan teknologi modern seperti TailwindCSS untuk styling, React Router untuk navigasi, dan React Hook Form untuk manajemen form yang efisien.
+![Preview Image](preview.png)
 
-## ✨ Features
-🎬 Halaman utama menampilkan film yang sedang tayang
-🔍 Pencarian film berdasarkan judul/genre
-🎟️ Sistem pemesanan tiket dengan pemilihan kursi
-📱 Responsive design (mobile & desktop)
-📝 Form validasi menggunakan React Hook Form
-🔄 Dynamic routing dengan React Router
+## 🚀 Features
+
+- ✅ Create, read, update, and delete todos
+- 🎨 Modern and responsive UI with Tailwind CSS
+- 🔄 State management with Redux and Redux Persist
+- 📝 Form validation with React Hook Form
+- 🧭 Client-side routing with React Router DOM
+- 💾 Data persistence across browser sessions
+- 🐳 Docker support for containerized deployment
+- ⚡ Fast development with Vite
+- 📱 Mobile-friendly responsive design
 
 ## 🛠️ Tech Stack
-React
-TailwindCSS
-React Router
-React Hook Form
+
+- **Frontend Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **State Management**: Redux with Redux Persist
+- **Routing**: React Router DOM
+- **Form Handling**: React Hook Form
+- **Icons**: React Icons
+- **Containerization**: Docker
+
+## 📋 Prerequisites
+
+Before running this project, make sure you have the following installed:
+
+- Node.js (version 16 or higher)
+- npm or yarn
+- Docker (optional, for containerized deployment)
 
 ## 🚀 Getting Started
-Prerequisites:
- - Node.js v16+
- - npm atau yarn
 
-## Installation
-### Clone repository
+### Local Development
 
-```bash
-git clone https://github.com/your-username/Tickitz-Prototype.git
-cd Tickitz-Prototype
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/devbydenis/Tickitz-Prototype.git
+   cd react-todo
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Start the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. **Open your browser**
+   Navigate to `http://localhost:5173` to view the application.
+
+### Docker Deployment
+
+1. **Build the Docker image**
+   ```bash
+   docker build -t image-tickitz .
+   ```
+
+2. **Run the container**
+   ```bash
+   docker run -d --name container-tickitz -p 8080:80 image-tickitz
+   ```
+
+3. **Access the application**
+   Open your browser and go to `http://localhost:8080`
+
+## 📁 Project Structure
+
 ```
-### Install dependencies
-
-```bash
-npm install
+react-todo/
+├── public/
+│   └── vite.svg
+├── src/
+│   ├── components/
+│   │   └── [React components]
+│   ├── pages/
+│   │   └── [Page components]
+│   ├── store/
+│   │   └── [Redux store configuration]
+│   ├── types/
+│   │   └── [TypeScript type definitions]
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+├── Dockerfile
+├── package.json
+├── tailwind.config.js
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
 ```
 
-### Jalankan development 
+## 🎯 Available Scripts
 
-```bash
-npm run dev
-```
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint for code linting
 
-Buka di browser
-Aplikasi akan berjalan di `http://localhost:3000`
+## 🔧 Configuration
 
-## 📂 Project Structure
-```
-src/
-├── assets/            # Gambar, font, dll
-├── components/        # Komponen reusable
-├── pages/             # Halaman aplikasi
-├── routes/            # Konfigurasi routing
-├── styles/            # File CSS/Tailwind custom
-├── utils/             # Helper functions
-├── App.js             # Main component
-└── index.js           # Entry point
-```
+### Tailwind CSS
+The project uses Tailwind CSS for styling. Configuration can be found in `tailwind.config.js`.
 
-<!-- 🧪 Testing
-Jalankan test dengan: -->
+### Redux Store
+State management is handled by Redux with persistence. Store configuration is located in the `src/store/` directory.
 
-<!-- 
-```bash
-npm test
-# atau
-yarn test
--->
+### Vite Configuration
+Build tool configuration can be found in `vite.config.ts`.
 
-## 🤝 How to Contribute
-- Fork project ini
+## 📱 Features Overview
 
-- Buat branch baru (git checkout -b feature/your-feature)
+### Online Ticketing
+- Add new tickets with form validation
+- Mark tickets as complete/incomplete
+- Edit existing tickets
+- Delete order
+- Filter movies (All, Active, Completed)
 
-- Commit perubahan (git commit -m 'Add some feature')
+### Data Persistence
+- All todos are automatically saved to localStorage using Redux Persist
+- Data persists across browser sessions and page refreshes
 
-- Push ke branch (git push origin feature/your-feature)
+### Responsive Design
+- Fully responsive layout that works on desktop, tablet, and mobile devices
+- Modern UI components with smooth animations and transitions
 
-- Buat Pull Request
+## 🤝 Contributing
 
-## 📜 License
-Project ini dilisensikan di bawah MIT License - lihat file LICENSE untuk detail lebih lanjut.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📞 Contact
-Email: hello.denisrahmadi@example.com
+## 📄 License
 
-LinkedIn: Denis Rahmadi
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🙏 Acknowledgments
+
+- React team for the amazing framework
+- Vite team for the fast build tool
+- Tailwind CSS for the utility-f
