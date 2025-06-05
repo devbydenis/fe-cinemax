@@ -62,7 +62,7 @@ function Card(props: CardPRops) {
                   key={id}
                   className="text-gray-secondary bg-silver/30 text-xs rounded-full border px-2 py-1.5 mb-2 text-[0.75rem] leading-3 md:px-3 md:py-2 md:text-sm md:leading-6"
                 >
-                  {genreNames.get(id)}
+                  {genreNames.get(id) === "Science Fiction" ? "Sci-Fi" : genreNames.get(id)}
                 </li>
               );
             })}

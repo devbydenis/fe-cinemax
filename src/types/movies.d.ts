@@ -7,6 +7,7 @@ interface movies {
   vote_average: number;
   release_date: string;
   genre_ids: number[];
+  vote_count: number;
 }
 
 interface StateMovies {
@@ -53,7 +54,14 @@ type CardPRops = {
 };
 
 type SeatId = string;
+
 type ShowModal = {
   showModal: boolean
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+type FilterChipType = {
+  genre: string, 
+  isChecked: boolean,
+  handleSelectedGenres: (e: React.ChangeEvent<HTMLInputElement>) => void 
 }

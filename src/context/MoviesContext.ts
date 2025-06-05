@@ -13,6 +13,7 @@ type MoviesContextProps = {
   setShowFilter?: React.Dispatch<React.SetStateAction<boolean>>,
   showModal?: boolean,
   setShowModal?: React.Dispatch<React.SetStateAction<boolean>>,
+  handleSortMovies?: (sort: string) => void,
 }
 
 const MoviesContext = createContext({} as MoviesContextProps);

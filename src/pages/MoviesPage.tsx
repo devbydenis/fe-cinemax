@@ -12,14 +12,11 @@ import MoviesContext from "../context/MoviesContext";
 import { useSearchParams } from "react-router-dom";
 
 function Movies() {
-  const { nowPlayingMovies, genres } = useSelector(
-    (state: { movies: StateMovies }) => state.movies,
-  );
+  const { nowPlayingMovies, genres } = useSelector((state: { movies: StateMovies }) => state.movies);
   const { getNowPlayingMoviesThunk, getGenresMovieThunk } = moviesActions;
   const dispatch: AppDispatch = useDispatch();
   const [page, setPage] = useState(1);
 
-  console.log("now playing", nowPlayingMovies);
 
   useEffect(() => {
     dispatch(getNowPlayingMoviesThunk(page));
@@ -29,37 +26,50 @@ function Movies() {
 
   //  S E A R C H I N G
   const [searchParams] = useSearchParams();
-  const filteredMovies = nowPlayingMovies.filter((movie: movies) =>
+  const searchingMovie = nowPlayingMovies.filter((movie: movies) =>
     movie.title.toLowerCase().includes(searchParams.get("query") || ""),
   );
-  console.log("searchParams", searchParams.get("query"));
+  console.log("searching movie", searchingMovie);
+  
+  // S O R T I N G
+  const [sort, setSort] = useState("Popular");
+  const sortedMovies = searchingMovie.sort((a, b) => {
+    switch (sort) {
+      case "Popular":
+        return b.vote_count - a.vote_count;
+      case "latest":
+        return new Date(b.release_date).getTime() - new Date(a.release_date).getTime();
+      case "oldest":
+        return new Date(a.release_date).getTime() - new Date(b.release_date).getTime();
+      case "ascending":
+        return a.title.localeCompare(b.title);
+      case "descending":
+        return b.title.localeCompare(a.title);
+      default:
+        return 0;
+    }
+  });
+  
+  const handleSortMovies = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // console.log("current Target", e.currentTarget.value);
+    setSort(e.currentTarget.value);
+  };
+  
   return (
     <>
-      <MoviesContext.Provider value={{ page, setPage }}>
+      <MoviesContext.Provider value={{ page, setPage, handleSortMovies }}>
         <section>
           <Banner />
           <Menu />
           <section className="px-5 md:px-10">
             <ul className="flex flex-wrap justify-center gap-5 sm:gap-10">
-              {/* {nowPlayingMovies &&
-              nowPlayingMovies.map((movie: movies) => {
-                return (
-                  <li key={`movie-id-${movie.id}`}>
-                    <Card
-                      category="now playing"
-                      movie={movie}
-                      genres={genres}
-                    />
-                  </li>
-                );
-              })} */}
-              {filteredMovies.length === 0 && (
+              {sortedMovies.length === 0 && (
                 <h1 className="text-center text-2xl font-semibold">
                   No movie found
                 </h1>
               )}
-              {filteredMovies &&
-                filteredMovies.map((movie: movies) => {
+              {sortedMovies &&
+                sortedMovies.map((movie: movies) => {
                   return (
                     <li key={`movie-id-${movie.id}`}>
                       <Card
@@ -72,7 +82,7 @@ function Movies() {
                 })}
             </ul>
             <p className="text-center text-xl font-semibold">
-              {filteredMovies.length} result
+              {sortedMovies.length} result
             </p>
             <Pagination />
           </section>
@@ -109,8 +119,23 @@ function Menu() {
     setTimeout(() => {
       setSearchParams({ query: e.target.value });
     }, 2000);
-    // console.log("Search for:", e.target.query.value);
   };
+  
+  // F I L T E R I N G
+  const [selectedGenre, setSelectedGenre] = useState<string[]>([]);
+  const [selectedOptions, ] = useState<string[]>(["Action", "Horror", "Comedy", "Drama", "Adventure", "Sci-Fi", "Fantasy", "Romance", "Thriller", "Mystery", "Crime", "Animation", "Family" , "War"]);  
+  const handleSelectedGenres = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (e.target.checked) {
+      setSelectedGenre([...selectedGenre, value]);
+    } else {
+      setSelectedGenre(selectedGenre.filter((genre) => genre !== value));
+    }
+  }
+  console.log("selected genre to filter:", selectedGenre)
+  
+  // S O R T I N
+  const { handleSortMovies } = useContext(MoviesContext)
   return (
     // <section className="flex flex-col gap-5 px-5 py-10">
     <form className="grid grid-cols-1 gap-5 px-5 py-10 md:grid-cols-2 md:px-20 md:py-15">
@@ -123,11 +148,12 @@ function Menu() {
         <select
           className="border-orange text-orange w-fit cursor-pointer rounded-md border-2 px-2 py-3 font-semibold focus:outline-none active:rounded-b-none"
           id="sortby"
+          onChange={handleSortMovies}
         >
-          <option value="popular">Popular</option>
-          <option value="latest">Latest</option>
-          <option value="ascending">Ascending</option>
-          <option value="descending">Descending</option>
+          <option className="font-semibold" value="popular">Popular</option>
+          <option className="font-semibold" value="latest">Latest</option>
+          <option className="font-semibold" value="ascending">Ascending</option>
+          <option className="font-semibold" value="descending">Descending</option>
         </select>
       </section>
       {/* Searching */}
@@ -149,17 +175,12 @@ function Menu() {
       {/* Filtering */}
       <section>
         <h2 className="mb-5 text-xl/7 font-semibold">Filter</h2>
-        {/* <ul className="flex flex-wrap gap-4 py-4">
-          <Genre title="Action" />
-          <Genre title="Adventure" />
-          <Genre title="Comedy" />
-          <Genre title="Sci-Fi" />
-        </ul> */}
         <div className="flex flex-wrap gap-4">
-          <FilterChip genre="Action" />
-          <FilterChip genre="Adventure" />
-          <FilterChip genre="Comedy" />
-          <FilterChip genre="Sci-Fi" />
+          {selectedOptions 
+            && selectedOptions.map((option) => (
+              <FilterChip key={option} genre={option} isChecked={selectedGenre.includes(option)} handleSelectedGenres={handleSelectedGenres} />
+            ))
+          }
         </div>
       </section>
     </form>
@@ -205,32 +226,16 @@ function Pagination() {
   );
 }
 
-function FilterChip(props: { genre: string }) {
+function FilterChip(props: FilterChipType) {
   return (
     <label
       htmlFor={props.genre}
-      className={`bg-orange border-orange min-w-fit cursor-pointer rounded-3xl border px-4 py-2 font-medium text-white uppercase`}
+      className={`${!props.isChecked ? 'bg-white text-orange transition-colors duration-300' : 'bg-orange text-white transition-colors duration-300'} border-2 border-orange min-w-fit cursor-pointer rounded-3xl px-4 py-2 font-medium uppercase`}
     >
       {props.genre}
-      <input type="checkbox" name="filter" id={props.genre} />
+      <input className="hidden" type="checkbox" name="filter" checked={props.isChecked} id={props.genre} onChange={props.handleSelectedGenres} value={props.genre} />
     </label>
   );
 }
-
-// type GenreProps = {
-//   title: string;
-// };
-// function Genre(props: GenreProps) {
-//   const [isActive, setIsActive] = useState<boolean>(false);
-
-//   return (
-//     <li
-//       className={`${isActive ? "bg-orange border-orange text-white" : ""} min-w-fit cursor-pointer rounded-3xl border border-black px-4 py-2 font-medium uppercase`}
-//       onClick={() => setIsActive(!isActive)}
-//     >
-//       {props.title}
-//     </li>
-//   );
-// }
 
 export default Movies;
