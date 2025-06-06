@@ -1,5 +1,10 @@
 import { createContext } from "react";
 
+type genresType = {
+  id: number;
+  name: string;
+}
+
 type MoviesContextProps = {
   search?: string,
   setSearch?: React.Dispatch<React.SetStateAction<string>>,
@@ -13,7 +18,11 @@ type MoviesContextProps = {
   setShowFilter?: React.Dispatch<React.SetStateAction<boolean>>,
   showModal?: boolean,
   setShowModal?: React.Dispatch<React.SetStateAction<boolean>>,
-  handleSortMovies?: (sort: string) => void,
+  handleSortMovies?: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+  selectedGenre?: string[],
+  selectedOptions?: string[],
+  handleSelectedGenres?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  genres?: genresType[],
 }
 
 const MoviesContext = createContext({} as MoviesContextProps);

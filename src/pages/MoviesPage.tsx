@@ -11,12 +11,13 @@ import type { AppDispatch } from "../redux/store";
 import MoviesContext from "../context/MoviesContext";
 import { useSearchParams } from "react-router-dom";
 
+// const filterGenres = ["Action", "Horror", "Comedy", "Drama", "Adventure", "Sci-Fi", "Fantasy", "Romance", "Thriller", "Mystery", "Crime", "Animation", "Family" , "War"]
+
 function Movies() {
   const { nowPlayingMovies, genres } = useSelector((state: { movies: StateMovies }) => state.movies);
   const { getNowPlayingMoviesThunk, getGenresMovieThunk } = moviesActions;
   const dispatch: AppDispatch = useDispatch();
   const [page, setPage] = useState(1);
-
 
   useEffect(() => {
     dispatch(getNowPlayingMoviesThunk(page));
@@ -24,12 +25,12 @@ function Movies() {
     window.scrollTo(0, 0);
   }, [page]);
 
+  
   //  S E A R C H I N G
   const [searchParams] = useSearchParams();
   const searchingMovie = nowPlayingMovies.filter((movie: movies) =>
     movie.title.toLowerCase().includes(searchParams.get("query") || ""),
   );
-  console.log("searching movie", searchingMovie);
   
   // S O R T I N G
   const [sort, setSort] = useState("Popular");
@@ -49,15 +50,36 @@ function Movies() {
         return 0;
     }
   });
-  
-  const handleSortMovies = (e: React.MouseEvent<HTMLButtonElement>) => {
-    // console.log("current Target", e.currentTarget.value);
+  const handleSortMovies = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSort(e.currentTarget.value);
   };
   
+  // F I L T E R I N G
+  const listGenres = genres.map((genre) => genre.id.toString())
+  const [selectedGenre, setSelectedGenre] = useState<string[]>([]);
+  const [selectedOptions] = useState<string[]>(listGenres);
+  const filteredMovies = sortedMovies.filter((movie) =>
+    selectedGenre.length === 0
+      ? true
+      : movie.genre_ids.some((genreId) => selectedGenre.includes(String(genreId)))
+  );
+  console.log("filtered movies:", filteredMovies);
+  console.log("selected genres:", selectedGenre);
+  console.log("listGenres", listGenres)
+  
+  
+  const handleSelectedGenres = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (e.target.checked) {
+      setSelectedGenre([...selectedGenre, value]);
+    } else {
+      setSelectedGenre(selectedGenre.filter((genre) => genre !== value));
+    }
+  }
+  
   return (
     <>
-      <MoviesContext.Provider value={{ page, setPage, handleSortMovies }}>
+      <MoviesContext.Provider value={{ page, setPage, genres, handleSortMovies, selectedGenre, selectedOptions, handleSelectedGenres }}>
         <section>
           <Banner />
           <Menu />
@@ -68,8 +90,8 @@ function Movies() {
                   No movie found
                 </h1>
               )}
-              {sortedMovies &&
-                sortedMovies.map((movie: movies) => {
+              {filteredMovies &&
+                filteredMovies.map((movie: movies) => {
                   return (
                     <li key={`movie-id-${movie.id}`}>
                       <Card
@@ -82,7 +104,7 @@ function Movies() {
                 })}
             </ul>
             <p className="text-center text-xl font-semibold">
-              {sortedMovies.length} result
+              {filteredMovies.length} result
             </p>
             <Pagination />
           </section>
@@ -122,19 +144,8 @@ function Menu() {
   };
   
   // F I L T E R I N G
-  const [selectedGenre, setSelectedGenre] = useState<string[]>([]);
-  const [selectedOptions, ] = useState<string[]>(["Action", "Horror", "Comedy", "Drama", "Adventure", "Sci-Fi", "Fantasy", "Romance", "Thriller", "Mystery", "Crime", "Animation", "Family" , "War"]);  
-  const handleSelectedGenres = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (e.target.checked) {
-      setSelectedGenre([...selectedGenre, value]);
-    } else {
-      setSelectedGenre(selectedGenre.filter((genre) => genre !== value));
-    }
-  }
-  console.log("selected genre to filter:", selectedGenre)
-  
-  // S O R T I N
+  const { selectedGenre, selectedOptions, handleSelectedGenres } = useContext(MoviesContext);
+  // S O R T I N G
   const { handleSortMovies } = useContext(MoviesContext)
   return (
     // <section className="flex flex-col gap-5 px-5 py-10">
@@ -176,9 +187,14 @@ function Menu() {
       <section>
         <h2 className="mb-5 text-xl/7 font-semibold">Filter</h2>
         <div className="flex flex-wrap gap-4">
-          {selectedOptions 
+          {selectedOptions
             && selectedOptions.map((option) => (
-              <FilterChip key={option} genre={option} isChecked={selectedGenre.includes(option)} handleSelectedGenres={handleSelectedGenres} />
+              <FilterChip 
+                key={option} 
+                genre={option} 
+                isChecked={selectedGenre?.includes(option)} 
+                handleSelectedGenres={handleSelectedGenres} 
+              />
             ))
           }
         </div>
@@ -227,13 +243,26 @@ function Pagination() {
 }
 
 function FilterChip(props: FilterChipType) {
+  const { genres } = useContext(MoviesContext);
+  const genreNames = new Map();
+  genres?.forEach((genre) => {
+    genreNames.set(genre.id, genre.name);
+  });
   return (
     <label
       htmlFor={props.genre}
       className={`${!props.isChecked ? 'bg-white text-orange transition-colors duration-300' : 'bg-orange text-white transition-colors duration-300'} border-2 border-orange min-w-fit cursor-pointer rounded-3xl px-4 py-2 font-medium uppercase`}
     >
-      {props.genre}
-      <input className="hidden" type="checkbox" name="filter" checked={props.isChecked} id={props.genre} onChange={props.handleSelectedGenres} value={props.genre} />
+      {genreNames.get(Number(props.genre))}
+      <input 
+        className="hidden" 
+        type="checkbox" 
+        name="filter" 
+        checked={props.isChecked} 
+        id={props.genre} 
+        onChange={props.handleSelectedGenres} 
+        value={props.genre} 
+      />
     </label>
   );
 }

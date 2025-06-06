@@ -62,6 +62,7 @@ type ShowModal = {
 
 type FilterChipType = {
   genre: string, 
-  isChecked: boolean,
-  handleSelectedGenres: (e: React.ChangeEvent<HTMLInputElement>) => void 
+  isChecked: boolean | undefined,
+  // handleSelectedGenres: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleSelectedGenres: React.ChangeEventHandler<HTMLInputElement> | undefined
 }
