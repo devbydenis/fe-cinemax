@@ -43,7 +43,7 @@ function DetailPage() {
   return (
     <DetailContext.Provider value={{ movieDetail }}>
       <ModalContext.Provider value={{ showModal, setShowModal }}>
-        <section className="relative">
+        <section className="relative grid grid-cols-1 grid-rows-2">
           <div
             className={`${showModal ? "block" : "hidden"} absolute top-0 right-0 bottom-0 left-0 z-10 rounded-4xl bg-black opacity-50`}
           ></div>
@@ -63,125 +63,127 @@ function DetailPage() {
   );
 }
 
-function Banner() {
-  const { movieDetail } = useContext(DetailContext);
-  const [movieCredits, setMovieCredits] = useState();
-  const { id } = useParams();
-  console.log("movie detail", movieDetail);
-
-  const getDuration = (duration: number) => {
-    const hours = Math.floor(duration / 60);
-    const minutes = duration % 60;
-    return `${hours}h ${minutes}m`;
-  };
-
-  const getDirectors = (movieCredits: MovieCredits) => {
-    const result =
-      movieCredits.crew &&
-      movieCredits.crew.filter((credit) => credit.job == "Director")[0].name;
-    return result;
-  };
-
-  const getCasts = (movieCredits: MovieCredits) => {
-    const result = movieCredits.cast
-      ?.map((credit) => credit.name)
-      .slice(0, 5)
-      .join(", ");
-    // console.log("casts", result);
-    return result;
-  };
-
-  useEffect(() => {
-    const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
-      },
+  function Banner() {
+    const { movieDetail } = useContext(DetailContext);
+    const [movieCredits, setMovieCredits] = useState();
+    const { id } = useParams();
+    console.log("movie detail", movieDetail);
+  
+    const getDuration = (duration: number) => {
+      const hours = Math.floor(duration / 60);
+      const minutes = duration % 60;
+      return `${hours}h ${minutes}m`;
     };
-    fetch(url, options)
-      .then((res) => res.json())
-      .then((json) => setMovieCredits(json))
-      .catch((err) => console.error(err));
-  }, [id]);
-
-  return (
-    <section
-      className="relative h-[32.5rem] rounded-[3rem] bg-cover bg-center bg-no-repeat md:my-10 md:h-[28.125rem]"
-      style={{
-        backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieDetail?.poster_path})`,
-      }}
-    >
-      <div className="absolute top-0 right-0 bottom-0 left-0 z-10 rounded-4xl bg-black opacity-50"></div>
-      <div className="absolute z-40 grid h-full grid-cols-1 justify-items-center gap-10 px-6 py-4 text-white md:top-10 md:grid-cols-[1fr_3fr] md:items-start md:justify-items-start lg:top-40 lg:grid-cols-[20rem_1fr_1fr]">
-        <div className="order-2 lg:order-1 lg:row-span-2">
-          <img
-            src={`https://image.tmdb.org/t/p/w500${movieDetail?.backdrop_path}`}
-            alt="movie-poster"
-            className="rounded-2xl"
-          />
-        </div>
-        <div className="order-1 md:col-span-2">
-          <h1 className="text-4xl font-semibold md:text-[4rem]">
+  
+    const getDirectors = (movieCredits: MovieCredits) => {
+      const result =
+        movieCredits.crew &&
+        movieCredits.crew.filter((credit) => credit.job == "Director")[0].name;
+      return result;
+    };
+  
+    const getCasts = (movieCredits: MovieCredits) => {
+      const result = movieCredits.cast
+        ?.map((credit) => credit.name)
+        .slice(0, 5)
+        .join(", ");
+      // console.log("casts", result);
+      return result;
+    };
+  
+    useEffect(() => {
+      const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
+      const options = {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
+        },
+      };
+      fetch(url, options)
+        .then((res) => res.json())
+        .then((json) => setMovieCredits(json))
+        .catch((err) => console.error(err));
+    }, [id]);
+    
+    return (
+      <>
+        <section
+          className="h-160 bg-orange relative bg-cover bg-center bg-no-repeat"
+          style={{
+                backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieDetail?.backdrop_path})`,
+              }}
+        >
+          <div className="absolute inset-0 z-10 bg-black opacity-80"></div>
+        </section>
+        <section className="absolute z-20 px-5 grid place-items-center gap-y-3 md:grid-cols-[350px_1fr] md:grid-rows-[50px_230px_100px_1fr] gap-10">
+          <h1 className="md:col-span-2 md:order-1 mt-10 md:mt-20 text-white text-4xl break-all min-w-50 md:text-4xl font-semibold md:text-[4rem]">
             {movieDetail?.title}
           </h1>
-          <p className="mt-4 leading-6 font-light md:text-lg">
+          <p className="md:col-span-1 md:order-3 mt-4 md:h-full md:place-content-end text-white text-medium leading-6 font-normal md:text-lg">
             {movieDetail?.overview}
           </p>
-          <ul className="mt-5 flex justify-center gap-3 md:justify-start">
+          <ul className="md:order-4 mt-5 flex flex-wrap gap-3 justify-center md:justify-start w-full h-full">
             {movieDetail &&
               movieDetail.genres.map((genre) => (
                 <li
                   key={"genre" + genre.id}
-                  className={`focus:border-orange min-w-fit cursor-pointer rounded-3xl border border-black px-4 py-2 font-medium text-white uppercase`}
+                  className={`focus:border-orange tracking-wider min-w-fit cursor-pointer rounded-3xl border border-white px-4 py-2 font-medium text-white uppercase h-fit`}
                 >
                   {genre.name}
                 </li>
-              ))}
+            ))}
           </ul>
-        </div>
-        <div className="text-black-primary order-3 lg:col-span-2">
-          <ul className="grid-col-6 flex grid-flow-col grid-rows-2 flex-col items-start gap-x-10 gap-y-7 md:grid md:gap-y-0 md:pt-30 lg:pt-0">
-            <li className="col-span-2">
-              <h2 className="text-black-primary text-lg font-light">
-                Release Date
-              </h2>
-              <p className="text-xl leading-7 font-semibold">
-                {movieDetail?.release_date}
-              </p>
-            </li>
-            <li className="col-span-2">
-              <h2 className="text-black-primary text-lg font-light">
-                Directed By
-              </h2>
-              {/* <p className="text-xl leading-7 font-semibold">{"yanto"}</p> */}
-              <p className="text-xl leading-7 font-semibold">
-                {movieCredits && getDirectors(movieCredits)}
-              </p>
-            </li>
-            <li className="col-span-4">
-              <h2 className="text-black-primary text-lg font-light">
-                Duration
-              </h2>
-              <p className="text-xl leading-7 font-semibold">
-                {movieDetail && getDuration(movieDetail.runtime)}
-              </p>
-            </li>
-            <li className="col-span-4">
-              <h2 className="text-black-primary text-lg font-light">Cast</h2>
-              <p className="text-xl leading-7 font-semibold">
-                {movieCredits && getCasts(movieCredits)}
-              </p>
-              {/* <p className="text-xl leading-7 font-semibold">{["yanti", "yanto"]}</p> */}
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-  );
-}
+          <div className="md:order-2 md:row-span-3 md:mt-10 w-full flex justify-center">
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movieDetail?.poster_path}`}
+              alt="movie-poster"
+              className="rounded-2xl shadow-md w-80"
+            />
+          </div>
+          <div className="md:order-5 h-60 place-content-start w-full">
+            <ul className="grid-col-6 flex grid-flow-col grid-rows-[80px_1fr] flex-col items-start justify-start gap-x-10 gap-y-7 md:grid md:gap-y-0">
+              <li className="col-span-2 md:text-white">
+                <h2 className="text-lg font-light">
+                  Release Date
+                </h2>
+                <p className="text-xl leading-7 font-semibold">
+                  {movieDetail?.release_date}
+                </p>
+              </li>
+              <li className="col-span-2 md:text-white">
+                <h2 className="text-lg font-light">
+                  Directed By
+                </h2>
+                {/* <p className="text-xl leading-7 font-semibold">{"yanto"}</p> */}
+                <p className="text-xl leading-7 font-semibold">
+                  {movieCredits && getDirectors(movieCredits)}
+                </p>
+              </li>
+              <li className="col-span-4 md:text-white">
+                <h2 className="text-lg font-light">
+                  Duration
+                </h2>
+                <p className="text-xl leading-7 font-semibold">
+                  {movieDetail && getDuration(movieDetail.runtime)}
+                </p>
+              </li>
+              <li className="col-span-4 md:text-white">
+                <h2 className="text-lg font-light">Cast</h2>
+                <p className="text-xl leading-7 font-semibold">
+                  {movieCredits && getCasts(movieCredits)}
+                </p>
+                {/* <p className="text-xl leading-7 font-semibold">{["yanti", "yanto"]}</p> */}
+              </li>
+            </ul>
+          </div>
+        </section>
+        
+      </>
+    )
+    
+  }
 
 function SetOrder() {
   const { register, handleSubmit } = useForm();
@@ -213,7 +215,7 @@ function SetOrder() {
   };
   return (
     <>
-      <section className="my-[10rem] mt-[50rem] h-screen px-5 py-10 sm:mt-[45rem] md:mt-[20rem] md:mb-[-15rem]">
+      <section className="px-5 my-[5rem]">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3"

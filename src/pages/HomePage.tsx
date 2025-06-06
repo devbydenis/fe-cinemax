@@ -86,7 +86,7 @@ function NowPlaying() {
         <span className="flex justify-center">
           <Link
             to={"movies"}
-            className="bg-orange mt-5 flex items-center justify-center gap-2 rounded-full px-3 py-1 text-sm font-medium text-white uppercase hover:opacity-70 active:scale-95 active:transition-all md:px-6 md:py-3 md:text-lg md:font-medium"
+            className="bg-orange mt-10 flex items-center justify-center gap-2 rounded-full px-3 py-1 text-sm font-medium text-white uppercase hover:opacity-70 active:scale-95 active:transition-all md:px-6 md:py-3 md:text-lg md:font-medium"
           >
             View All
             <FaArrowRight />
@@ -169,7 +169,7 @@ function UpComingMovies() {
         <span className="flex justify-center">
           <Link
             to={"movies"}
-            className="bg-orange mt-5 flex items-center justify-center gap-2 rounded-full px-3 py-1 text-sm font-medium text-white uppercase hover:opacity-70 active:scale-95 active:transition-all md:px-6 md:py-3 md:text-lg md:font-medium"
+            className="bg-orange mt-10 flex items-center justify-center gap-2 rounded-full px-3 py-1 text-sm font-medium text-white uppercase hover:opacity-70 active:scale-95 active:transition-all md:px-6 md:py-3 md:text-lg md:font-medium"
           >
             View All
             <FaArrowRight />
