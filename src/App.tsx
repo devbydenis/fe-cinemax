@@ -17,6 +17,11 @@ import ForgetPasswordPage from "./pages/auth/ForgetPasswordPage.tsx";
 import { useState } from "react";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import AuthContext from "./pages/auth/AuthContext.tsx";
+import AddMoviePage from "./pages/admin/AddMoviePage.tsx";
+import ListMoviePage from "./pages/admin/ListMoviePage.tsx";
+import DashboardPage from "./pages/admin/DashboardPage.tsx";
+import AdminLayout from "./layout/AdminLayout.tsx";
+
 
 function App() {
   const [isLoggedinRoute, setIsLoggedinRoute] = useState(false);
@@ -28,6 +33,14 @@ function App() {
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="forget-password" element={<ForgetPasswordPage />} />
+        </Route>
+        
+        <Route element={<AdminLayout />}>
+          <Route path="admin">
+            <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="add-movie" element={<AddMoviePage />} />
+            <Route path="list-movie" element={<ListMoviePage />} />
+          </Route>
         </Route>
 
         <Route element={<MainLayout />}>
