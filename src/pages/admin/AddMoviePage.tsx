@@ -1,5 +1,6 @@
-import React from "react";
 import { useForm, type UseFormRegister } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { addMovie } from "../../redux/reducers/adminSlice";
 
 interface FormData {
   title: string;
@@ -17,9 +18,14 @@ interface FormData {
 
 function AddMoviePage() {
   const { register, handleSubmit } = useForm<FormData>();
+  const dispatch = useDispatch();
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+    dispatch(addMovie(data));
+  }
   return (
     <>
-      <form onSubmit={handleSubmit((data) => console.log(data))} className="mx-5 bg-white py-12 px-9 rounded-lg flex flex-col gap-5 border-1 border-orange my-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-3/4 mx-auto bg-white py-12 px-9 rounded-lg flex flex-col gap-5 shadow-md my-10">
         <h1 className="text-2xl font-bold">Add New Movie</h1>
         <div className="flex flex-col gap-2">
           <p className="text-title-info-first font-normal text-base">Upload Image</p>
@@ -110,7 +116,7 @@ function AddMoviePage() {
           type="time" 
           id="time" 
         />
-        <button className="bg-orange text-white py-2 rounded font-bold active:scale-95 transition-all" type="submit">Save Movie</button>
+        <button className="bg-orange text-white py-2 rounded font-bold active:scale-95 transition-all" type="submit">Add Movie</button>
       </form>
     </>
   );

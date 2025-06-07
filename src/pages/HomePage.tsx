@@ -57,7 +57,7 @@ function NowPlaying() {
 
   useEffect(() => {
     dispatch(getNowPlayingMoviesThunk(1));
-    dispatch(getGenresMovieThunk());
+      dispatch(getGenresMovieThunk());
   }, []);
   return (
     <>

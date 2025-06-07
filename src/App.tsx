@@ -21,6 +21,7 @@ import AddMoviePage from "./pages/admin/AddMoviePage.tsx";
 import ListMoviePage from "./pages/admin/ListMoviePage.tsx";
 import DashboardPage from "./pages/admin/DashboardPage.tsx";
 import AdminLayout from "./layout/AdminLayout.tsx";
+import ExamplePage from "./pages/admin/ExamplePage.tsx";
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="add-movie" element={<AddMoviePage />} />
             <Route path="list-movie" element={<ListMoviePage />} />
+            <Route path="example" element={<ExamplePage />} />
           </Route>
         </Route>
 

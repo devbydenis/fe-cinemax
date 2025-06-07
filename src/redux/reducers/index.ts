@@ -5,6 +5,7 @@ import usersReducer from "./usersSlice";
 import userReducer from "./userSlice";
 import moviesReducer from "./moviesSlice";
 import orderReducer from "./orderSlice";
+import adminReducer from "./adminSlice";
 
 const usersPersistConfig = {
   key: "usersRegistered",
@@ -25,7 +26,8 @@ const reducers = combineReducers({
   users: persistReducer(usersPersistConfig, usersReducer),
   user: persistReducer(userPersistConfig, userReducer),
   order: persistReducer(orderPersistConfig, orderReducer),
-  movies: moviesReducer
+  movies: moviesReducer,
+  admin: adminReducer
 })
 
 export default reducers
