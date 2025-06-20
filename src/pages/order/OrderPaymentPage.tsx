@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import gpay from "../../assets/gpay.svg";
 import visa from "../../assets/visa.svg";
 import dana from "../../assets/dana.svg";

@@ -1,4 +1,4 @@
-# Tickitz
+# Cinemax
 
 A modern and responsive online ticketing application built with React and TypeScript, featuring state management, form validation, and Docker support for easy deployment.
 
@@ -43,8 +43,8 @@ Before running this project, make sure you have the following installed:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/devbydenis/Tickitz-Prototype.git
-   cd react-todo
+   git clone https://github.com/devbydenis/Cinemax-Prototype.git
+   cd Cinemax-Prototype
    ```
 
 2. **Install dependencies**
@@ -68,18 +68,18 @@ Before running this project, make sure you have the following installed:
 
 1. **Build the Docker image**
    ```bash
-   docker build -t image-tickitz .
+   docker build -t image-cinemax .
    ```
 
 2. **Run the container**
    ```bash
-   docker run -d --name container-tickitz -p 8080:80 image-tickitz
+   docker run -d --name container-cinemax -p 8080:80 image-cinemax
    ```
 
 3. **Access the application**
    Open your browser and go to `http://localhost:8080`
 
-## 📁 Project Structure
+<!-- ## 📁 Project Structure
 
 ```
 react-todo/
@@ -103,22 +103,15 @@ react-todo/
 ├── tsconfig.json
 ├── vite.config.ts
 └── README.md
-```
-
-## 🎯 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build locally
-- `npm run lint` - Run ESLint for code linting
+``` -->
 
 ## 🔧 Configuration
 
 ### Tailwind CSS
-The project uses Tailwind CSS for styling. Configuration can be found in `tailwind.config.js`.
+The project uses Tailwind CSS for styling. Configuration can be found in `index.css`.
 
 ### Redux Store
-State management is handled by Redux with persistence. Store configuration is located in the `src/store/` directory.
+State management is handled by Redux with persistence. Store configuration is located in the `src/redux` directory.
 
 ### Vite Configuration
 Build tool configuration can be found in `vite.config.ts`.

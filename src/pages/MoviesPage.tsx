@@ -185,7 +185,7 @@ function Menu() {
       </section>
       {/* Filtering */}
       <section>
-        <h2 className="mb-5 text-xl/7 font-semibold">Filter</h2>
+        <h2 className="mb-5 text-xl/7 font-semibold text-white-primary">Filter</h2>
         <div className="flex flex-wrap gap-4 custom-scrollbar overflow-x-scroll h-28">
           {selectedOptions
             && selectedOptions.map((option) => (
