@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import logoTickitz from "../assets/tickitz-revert-logo.svg";
+import logoTickitz from "../assets/cinemax-logo-transparent.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgClose } from "react-icons/cg";

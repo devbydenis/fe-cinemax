@@ -1,4 +1,4 @@
-import logoTickitz from "../assets/tickitz-revert-logo.svg";
+import logoTickitz from "../assets/cinemax-logo-transparent.png";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";

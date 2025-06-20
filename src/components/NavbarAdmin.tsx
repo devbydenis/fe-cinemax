@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import logo from '../assets/tickitz-logo.svg';
+import logo from '../assets/cinemax-logo-transparent.png';
 
 function NavbarAdmin() {
   return (

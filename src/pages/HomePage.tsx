@@ -100,7 +100,7 @@ function Banner() {
           </p>
         </div>
         <div>
-          <p className="text-center text-gray-100 text-lg/6 font-light">
+          <p className="text-center text-red-100 text-lg tracking-wider font-light">
             Sign up and get the ticket with a lot of discount
           </p>
         </div>

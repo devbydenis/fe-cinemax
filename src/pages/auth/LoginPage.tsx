@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import tickitzLogo from "../../assets/tickitz-revert-logo.svg";
+import tickitzLogo from "../../assets/cinemax-logo-transparent.png";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import { useForm, type FieldValues } from "react-hook-form";
 import { schemaLogin } from "./schema";

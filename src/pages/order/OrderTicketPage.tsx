@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import qrcode from "../../assets/qrcode.svg";
-import tickitzLogo from "../../assets/tickitz-revert-logo.svg"
+import tickitzLogo from "../../assets/cinemax-logo-transparent.png"
 import { BiDownload } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
