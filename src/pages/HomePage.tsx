@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
 import Chip from "../components/Chip";
@@ -26,6 +27,65 @@ function HomePage() {
   );
 }
 
+interface GradientTextProps {
+    children: React.ReactNode;
+    className?: string;
+    colors?: string[];
+    animationSpeed?: number;
+    showBorder?: boolean;
+}
+
+function GradientText({
+    children,
+    className = "",
+    colors = ["#E95102", "#FFB03D", "#E95102", "#FFB03D", "#E95102"],
+    animationSpeed = 3,
+    showBorder = false,
+}: GradientTextProps) {
+    const gradientStyle = {
+        backgroundImage: `linear-gradient(to right, ${colors.join(", ")})`,
+        animationDuration: `${animationSpeed}s`,
+    };
+
+    return (
+        <div
+            className={`relative mx-auto flex max-w-fit flex-row items-center justify-center rounded-[1.25rem] font-medium backdrop-blur transition-shadow duration-500 overflow-hidden cursor-pointer ${className}`}
+        >
+            {showBorder && (
+                <div
+                    className="absolute inset-0 bg-cover z-0 pointer-events-none animate-gradient"
+                    style={{
+                        ...gradientStyle,
+                        backgroundSize: "300% 100%",
+                    }}
+                >
+                    <div
+                        className="absolute inset-0 bg-black rounded-[1.25rem] z-[-1]"
+                        style={{
+                            width: "calc(100% - 2px)",
+                            height: "calc(100% - 2px)",
+                            left: "50%",
+                            top: "50%",
+                            transform: "translate(-50%, -50%)",
+                        }}
+                    ></div>
+                </div>
+            )}
+            <div
+                className="inline-block relative z-2 text-transparent text-6xl font-bold text-center bg-cover animate-gradient"
+                style={{
+                    ...gradientStyle,
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    backgroundSize: "300% 100%",
+                }}
+            >
+                {children}
+            </div>
+        </div>
+    );
+}
+
 function Banner() {
   return (
     <>
@@ -33,14 +93,14 @@ function Banner() {
         <Chip value="MOVIE TICKET PURCHASES #1 IN INDONESIA" />
         <div className="px-7">
           <p className="text-center text-5xl font-medium xl:text-6xl xl:leading-23 2xl:text-7xl/14 2xl:leading-25">
-            Experience the Magic of Cinema:{" "}
-            <span className="text-orange block font-bold">
+            <GradientText>Experience the Magic of Cinema:{" "}</GradientText>
+            <span className="text-gray-200 block font-bold animate-pulse">
               Book Your Tickets Today
             </span>
           </p>
         </div>
         <div>
-          <p className="text-center text-lg/6 font-light">
+          <p className="text-center text-gray-100 text-lg/6 font-light">
             Sign up and get the ticket with a lot of discount
           </p>
         </div>
@@ -62,7 +122,7 @@ function NowPlaying() {
   return (
     <>
       <section className="mx-10 md:mx-20 md:mt-16 md:pb-20">
-        <h2 className="text-center text-2xl leading-11 font-semibold md:mb-9 md:text-4xl">
+        <h2 className="text-center text-white text-2xl leading-11 font-semibold md:mb-9 md:text-4xl">
           Now Showing in Cinemas
         </h2>
         <ul className="container-card custom-scrollbar relative flex gap-5 overflow-x-scroll">
@@ -100,10 +160,10 @@ function NowPlaying() {
 function WhyChooseUs() {
   return (
     <>
-      <section className="bg-black-primary mt-10 rounded-[2.5rem] py-10">
+      <section className="bg-black-primary/30 mt-10 rounded-[2.5rem] py-10">
         <div className="flex flex-col items-center justify-center gap-4 md:gap-7">
           <Chip value="WHY CHOOSE US" />
-          <h3 className="px-10 text-center text-5xl/9 font-extrabold text-white">
+          <h3 className="px-10 text-center text-5xl font-extrabold text-white">
             Unleashing the Ultimate Movie Experience
           </h3>
         </div>
@@ -145,7 +205,7 @@ function UpComingMovies() {
         <div className="mb-4 flex flex-col items-center justify-center gap-4">
           <Chip value="UPCOMING MOVIES" />
           <div className="flex flex-col items-center justify-center gap-5 md:flex-row md:items-start">
-            <h3 className="text-black-primary flex-1 px-20 text-center text-3xl/9 font-extrabold lg:flex-4 lg:text-5xl">
+            <h3 className="text-white flex-1 px-20 text-center text-3xl/9 font-extrabold lg:flex-4 lg:text-5xl">
               Exciting Movie Coming Soon
             </h3>
             <ul className="custom-scrollbar mx-auto mb-3 flex w-fit flex-2 gap-2 pb-5">
@@ -188,7 +248,7 @@ function Genre(props: GenreProps) {
 
   return (
     <li
-      className={`${isActive ? "bg-orange border-orange text-white" : ""} min-w-fit cursor-pointer rounded-3xl border border-black px-4 py-2 font-medium uppercase`}
+      className={`${isActive ? "bg-orange border-orange text-white" : ""} min-w-fit cursor-pointer rounded-3xl border border-orange text-orange px-4 py-2 font-medium uppercase`}
       onClick={() => setIsActive(!isActive)}
     >
       {props.title}

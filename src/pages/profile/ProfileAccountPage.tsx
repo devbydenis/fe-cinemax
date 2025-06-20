@@ -53,7 +53,7 @@ function ProfileAccountPage() {
         <ModalProfile />
       </div>
       <div
-        className={`col-span-2 bg-white ${showEditProfile ? "absolute top-5 right-10 left-10 z-20" : "hidden"} shadow-orange rounded-2xl shadow-lg md:mr-10 md:block`}
+        className={`col-span-2 bg-white-primary/90 ${showEditProfile ? "absolute top-5 right-10 left-10 z-20" : "hidden"} shadow-orange rounded-2xl shadow-lg md:mr-10 md:block`}
       >
         <form className="relative rounded-2xl p-10" onSubmit={handleSubmit(onSubmit)}>
           {showEditProfile && (

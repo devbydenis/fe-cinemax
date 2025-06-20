@@ -117,7 +117,7 @@ function DetailPage() {
         >
           <div className="absolute inset-0 z-10 bg-black opacity-80"></div>
         </section>
-        <section className="absolute z-20 px-5 grid place-items-center gap-y-3 md:grid-cols-[350px_1fr] md:grid-rows-[50px_230px_100px_1fr] gap-10">
+        <section className="absolute z-20 px-5 text-white-primary grid place-items-center gap-y-3 md:grid-cols-[350px_1fr] md:grid-rows-[50px_230px_100px_1fr] gap-10">
           <h1 className="md:col-span-2 md:order-1 mt-10 md:mt-20 text-white text-4xl break-all min-w-50 md:text-4xl font-semibold md:text-[4rem]">
             {movieDetail?.title}
           </h1>
@@ -220,20 +220,21 @@ function SetOrder() {
           onSubmit={handleSubmit(onSubmit)}
           className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3"
         >
-          <h2 className="col-span-3 text-4xl leading-7 font-bold">
+          <h2 className="col-span-3 text-4xl leading-7 font-bold text-white-primary">
             Book Tickets
           </h2>
           <div className="choose-date col-span-2 flex flex-col md:col-span-1">
             <label
-              className="text-black-primary mb-3 text-lg font-semibold"
+              className="text-white-primary mb-3 text-lg font-semibold"
               htmlFor="date"
             >
               Choose Date
             </label>
-            <div className="flex items-center gap-4 rounded-full border-2 px-5 py-3">
+            <div className="flex items-center gap-4 rounded-full border-2 border-white-primary text-white px-5 py-3">
               <FiSearch />
+              <label htmlFor="date"></label>
               <input
-                className="datepicker-input w-full outline-none"
+                className="datepicker-input w-full outline-none text-white cursor-pointer"
                 {...register("date")}
                 type="date"
                 id="date"
@@ -242,45 +243,45 @@ function SetOrder() {
             </div>
           </div>
           <div className="choose-time col-span-2 md:col-span-1">
-            <h2 className="text-black-primary mb-3 text-lg font-semibold">
+            <h2 className="text-white-primary mb-3 text-lg font-semibold">
               Choose Time
             </h2>
-            <div className="flex items-center gap-4 rounded-full border-2 px-5 py-3">
+            <div className="flex items-center gap-4 rounded-full border-2 border-white-primary text-white px-5 py-3">
               <FiSearch />
               <select
                 className="w-full outline-none"
                 {...register("time")}
                 id="time"
               >
-                <option value="10.00">10.00-11.00</option>
-                <option value="12.00">12.00-13.00</option>
-                <option value="14.00">14.00-15.00</option>
-                <option value="16.00">16.00-17.00</option>
-                <option value="18.00">18.00-19.00</option>
+                <option className="text-black" value="10.00">10.00-11.00</option>
+                <option className="text-black" value="12.00">12.00-13.00</option>
+                <option className="text-black" value="14.00">14.00-15.00</option>
+                <option className="text-black" value="16.00">16.00-17.00</option>
+                <option className="text-black" value="18.00">18.00-19.00</option>
               </select>
             </div>
           </div>
           <div className="choose-location col-span-2 md:col-span-1">
-            <h2 className="text-black-primary mb-3 text-lg font-semibold">
+            <h2 className="text-white-primary mb-3 text-lg font-semibold">
               Choose Location
             </h2>
-            <div className="flex items-center gap-4 rounded-full border-2 px-5 py-3">
+            <div className="flex items-center gap-4 rounded-full border-2 border-white-primary text-white px-5 py-3">
               <FiSearch />
               <select
                 className="w-full outline-none"
                 {...register("location")}
                 id="location"
               >
-                <option value="Jakarta">Jakarta</option>
-                <option value="Bogor">Bogor</option>
-                <option value="Depok">Depok</option>
-                <option value="Tangerang">Tangerang</option>
-                <option value="Bekasi">Bekasi</option>
+                <option className="text-black" value="Jakarta">Jakarta</option>
+                <option className="text-black" value="Bogor">Bogor</option>
+                <option className="text-black" value="Depok">Depok</option>
+                <option className="text-black" value="Tangerang">Tangerang</option>
+                <option className="text-black" value="Bekasi">Bekasi</option>
               </select>
             </div>
           </div>
           <div className="choose-cinema col-span-2 md:col-span-3">
-            <h2 className="text-black-primary mb-3 text-lg font-semibold">
+            <h2 className="text-white-primary mb-3 text-lg font-semibold">
               Choose Cinema
             </h2>
             <div className="flex flex-col items-center gap-5 md:flex-row md:justify-center md:gap-10">

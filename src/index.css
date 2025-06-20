@@ -3,9 +3,9 @@
 @theme {
   --font-display: "DM Sans", sans-serif;
 
-  --color-black-primary : #0F100D;
+  --color-black-primary : #060010;
   --color-black-secondary : #333333;
-  --color-white : #FFFFFF;
+  --color-white-primary : #FFFFFF;
   --color-white-secondary: #F3F3F3;
   --color-silver: #E0E0E0; 
   --color-orange: #E95102;
@@ -16,6 +16,10 @@
 
 * {
   /* @apply border border-red-500  */
+}
+
+body {
+    @apply bg-black-primary
 }
 
 button {
@@ -57,3 +61,13 @@ button {
     -moz-appearance: none;
     appearance: none;
 } */
+
+.animate-gradient {
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: '0% 50%' }
+    50% { background-position: '100% 50%' }
+    100% { backgroundPosition: '0% 50%' }
+  }

@@ -103,7 +103,7 @@ function Movies() {
                   );
                 })}
             </ul>
-            <p className="text-center text-xl font-semibold">
+            <p className="text-center text-xl font-semibold text-white-primary">
               {filteredMovies.length} result
             </p>
             <Pagination />
@@ -152,7 +152,7 @@ function Menu() {
     <form className="grid grid-cols-1 gap-5 px-5 py-10 md:grid-cols-2 md:px-20 md:py-15">
       {/* Sorting */}
       <section className="flex w-full justify-between gap-5 md:col-span-2">
-        <h2 className="text-2xl leading-7 font-semibold md:text-4xl">
+        <h2 className="text-2xl text-white-primary leading-7 font-semibold md:text-4xl">
           Now Showing in Cinemas
         </h2>
         {/* Sorting */}
@@ -170,11 +170,11 @@ function Menu() {
       {/* Searching */}
       <section className="">
         <div className="flex flex-col gap-5">
-          <h2 className="text-xl/7 font-semibold">Find Movie</h2>
-          <div className="flex items-center gap-3 rounded-full border-2 px-6 py-4">
-            <FiSearch className="text-gray-400" />
+          <h2 className="text-xl/7 font-semibold text-white-primary">Find Movie</h2>
+          <div className="flex items-center gap-3 rounded-full border-2 border-white-primary px-6 py-4">
+            <FiSearch className="text-white-primary" />
             <input
-              className="w-full rounded-full tracking-wider focus:outline-none"
+              className="w-full rounded-full tracking-wider focus:outline-none text-white-primary"
               type="text"
               placeholder="Search Your Movie"
               name="query"
@@ -186,7 +186,7 @@ function Menu() {
       {/* Filtering */}
       <section>
         <h2 className="mb-5 text-xl/7 font-semibold">Filter</h2>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-4 custom-scrollbar overflow-x-scroll h-28">
           {selectedOptions
             && selectedOptions.map((option) => (
               <FilterChip 
@@ -210,25 +210,25 @@ function Pagination() {
     <div className="my-20 flex items-center justify-center gap-5">
       <button
         onClick={() => setPage?.(1)}
-        className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white"
+        className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-orange focus:text-white"
       >
         1
       </button>
       <button
         onClick={() => setPage?.(2)}
-        className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white"
+        className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-orange focus:text-white"
       >
         2
       </button>
       <button
         onClick={() => setPage?.(3)}
-        className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white"
+        className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-orange focus:text-white"
       >
         3
       </button>
       <button
         onClick={() => setPage?.(4)}
-        className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-black focus:text-white"
+        className="focus:bg-orange w-fit rounded-full border-2 px-5 py-3 text-lg font-bold text-orange focus:text-white"
       >
         4
       </button>
@@ -251,7 +251,7 @@ function FilterChip(props: FilterChipType) {
   return (
     <label
       htmlFor={props.genre}
-      className={`${!props.isChecked ? 'bg-white text-orange transition-colors duration-300' : 'bg-orange text-white transition-colors duration-300'} border-2 border-orange min-w-fit cursor-pointer rounded-3xl px-4 py-2 font-medium uppercase`}
+      className={`${!props.isChecked ? ' text-orange transition-colors duration-300' : 'bg-orange text-white transition-colors duration-300'} border-2 border-orange min-w-fit cursor-pointer rounded-3xl px-4 py-2 font-medium uppercase`}
     >
       {genreNames.get(Number(props.genre))}
       <input 

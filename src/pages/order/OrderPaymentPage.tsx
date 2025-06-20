@@ -17,13 +17,13 @@ import { addHistoryUserAction } from "../../redux/reducers/userSlice";
 function OrderPaymentPage() {
   const [isModalShow, setIsModalShow] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [isModalShow]);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, [isModalShow]);
 
   return (
     <>
-      <section className="relative flex flex-col items-center bg-white py-10">
+      <section className="relative flex flex-col items-center bg-black-primary py-10">
         <div
           className={`${
             isModalShow ? "block" : "hidden"
@@ -42,37 +42,37 @@ function PaymentInfo() {
   const order = useSelector((state: {order: OrderProps}) => state.order.order);
   return (
     <div className="payment-info my-7 w-6/7">
-      <h1 className="mb-5 text-2xl font-bold">Payment Info</h1>
+      <h1 className="mb-5 text-2xl font-bold text-white-primary">Payment Info</h1>
       <div className="flex flex-col gap-6">
         <div className="border-orange/70 border-b-2 tracking-[.75px]">
-          <p className="text-secondary font-semibold uppercase">
+          <p className="text-secondary font-semibold uppercase text-white-primary">
             date &amp; time
           </p>
-          <p className="my-2 text-gray-700">
+          <p className="my-2 text-white-primary">
             {order.date} & {order.time}
           </p>
         </div>
         <div className="border-orange/70 border-b-2 tracking-[.75px]">
-          <p className="text-secondary font-semibold uppercase">movie title</p>
-          <p className="my-2 text-gray-700">{order.title}</p>
+          <p className="text-secondary font-semibold uppercase text-white-primary">movie title</p>
+          <p className="my-2 text-white-primary">{order.title}</p>
         </div>
         <div className="border-orange/70 border-b-2 tracking-[.75px]">
-          <p className="text-secondary font-semibold uppercase">cinema name</p>
-          <p className="my-2 text-gray-700">{order.cinema}</p>
+          <p className="text-secondary font-semibold uppercase text-white-primary">cinema name</p>
+          <p className="my-2 text-gray-400">{order.cinema}</p>
         </div>
         <div className="border-orange/70 border-b-2 tracking-[.75px]">
-          <p className="text-secondary font-semibold uppercase">
+          <p className="text-secondary font-semibold uppercase text-white-primary">
             number of tickets
           </p>
-          <p className="my-2 text-gray-700">
+          <p className="my-2 text-gray-400">
             {order.seat.length} pieces {`(${order.seat.join(", ")})`}
           </p>
         </div>
         <div className="border-orange/70 border-b-2 tracking-[.75px]">
-          <p className="text-secondary font-semibold uppercase">
+          <p className="text-secondary font-semibold uppercase text-white-primary">
             total payment
           </p>
-          <p className="my-2 text-gray-700">${order.seat.length * 10}</p>
+          <p className="my-2 text-gray-400">${order.seat.length * 10}</p>
         </div>
       </div>
     </div>
@@ -98,11 +98,11 @@ function PaymentMethod({ setIsModalShow }: PaymentMethodProps) {
       className="mx-10 mt-10 w-6/7 rounded-lg"
     >
       <div className="payment-method">
-        <h1 className="mb-5 text-2xl font-bold">Payment Method</h1>
+        <h1 className="mb-5 text-2xl font-bold text-white-primary">Payment Method</h1>
         {/* <div className="grid grid-cols-2 justify-items-center gap-3 sm:grid-cols-3 lg:grid-cols-4"> */}
         <div className="flex flex-wrap justify-center gap-4">
           <label
-            className="has-checked:outline-orange flex w-28 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
+            className="has-checked:outline-orange flex w-28 bg-white/80 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
             htmlFor="gpay"
           >
             <img className="mx-auto" src={gpay} alt="gpay" />
@@ -116,7 +116,7 @@ function PaymentMethod({ setIsModalShow }: PaymentMethodProps) {
           </label>
 
           <label
-            className="has-checked:outline-orange flex w-28 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
+            className="has-checked:outline-orange flex w-28 bg-white/80 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
             htmlFor="visa"
           >
             <img className="mx-auto" src={visa} alt="visa" />
@@ -130,7 +130,7 @@ function PaymentMethod({ setIsModalShow }: PaymentMethodProps) {
           </label>
 
           <label
-            className="has-checked:outline-orange flex w-28 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
+            className="has-checked:outline-orange flex w-28 bg-white/80 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
             htmlFor="gopay"
           >
             <img className="mx-auto" src={gopay} alt="gopay" />
@@ -144,7 +144,7 @@ function PaymentMethod({ setIsModalShow }: PaymentMethodProps) {
           </label>
 
           <label
-            className="has-checked:outline-orange flex w-28 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
+            className="has-checked:outline-orange flex w-28 bg-white/80 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
             htmlFor="paypal"
           >
             <img className="mx-auto" src={paypal} alt="paypal" />
@@ -158,7 +158,7 @@ function PaymentMethod({ setIsModalShow }: PaymentMethodProps) {
           </label>
 
           <label
-            className="has-checked:outline-orange flex w-28 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
+            className="has-checked:outline-orange flex w-28 bg-white/80 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
             htmlFor="dana"
           >
             <img className="mx-auto" src={dana} alt="dana" />
@@ -172,7 +172,7 @@ function PaymentMethod({ setIsModalShow }: PaymentMethodProps) {
           </label>
 
           <label
-            className="has-checked:outline-orange flex w-28 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
+            className="has-checked:outline-orange flex w-28 bg-white/80 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
             htmlFor="bca"
           >
             <img className="mx-auto" src={bca} alt="bca" />
@@ -186,7 +186,7 @@ function PaymentMethod({ setIsModalShow }: PaymentMethodProps) {
           </label>
 
           <label
-            className="has-checked:outline-orange flex w-28 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
+            className="has-checked:outline-orange flex w-28 bg-white/80 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
             htmlFor="bri"
           >
             <img className="mx-auto" src={bri} alt="bri" />
@@ -200,7 +200,7 @@ function PaymentMethod({ setIsModalShow }: PaymentMethodProps) {
           </label>
 
           <label
-            className="has-checked:outline-orange flex w-28 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
+            className="has-checked:outline-orange flex w-28 bg-white/80 cursor-pointer flex-col items-center justify-center rounded px-3 py-3 outline outline-gray-400 has-checked:outline-4"
             htmlFor="ovo"
           >
             <img className="mx-auto" src={ovo} alt="ovo" />
@@ -216,7 +216,7 @@ function PaymentMethod({ setIsModalShow }: PaymentMethodProps) {
       </div>
       <button
         type="submit"
-        className="bg-orange active:border-orange active:text-orange mt-10 block w-full cursor-pointer rounded border-2 py-3 text-center font-bold text-white transition-all active:scale-99 active:bg-white"
+        className="bg-orange active:border-orange active:text-orange mt-10 block w-full cursor-pointer rounded border-2 border-orange py-3 text-center font-bold text-white transition-all active:scale-99 active:bg-black-primary"
       >
         Pay Your Order
       </button>
@@ -244,9 +244,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
     <section
       className={`payment-modal ${
         isModalShow ? "block" : "hidden"
-      } absolute top-[25%] right-0 left-0 m-6 rounded-lg bg-white px-6 py-6 sm:mx-auto sm:w-4/5 md:w-2/3`}
+      } absolute top-[25%] right-0 left-0 m-6 rounded-lg bg-white-primary px-6 py-6 sm:mx-auto sm:w-4/5 md:w-2/3`}
     >
-      <h2 className="mt-3 mb-8 text-center text-3xl font-bold">Payment Info</h2>
+      <h2 className="mt-3 mb-8 text-center text-white-primary text-3xl font-bold">Payment Info</h2>
       <div className="flex flex-col gap-5">
         <div>
           <p className="text-secondary text-sm font-normal">

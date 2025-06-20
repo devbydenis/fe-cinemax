@@ -1,6 +1,6 @@
 # Stage 1
 # pake image node:18-alpine sebagai base image karena lebih ringan dan cepet
-FROM node:18-alpine AS react-build
+FROM node:24-alpine AS react-build
 
 # definisiin working directory di path /usr/src/app
 WORKDIR /usr/src/app

@@ -14,13 +14,13 @@ function InfoAccountProfile() {
   return (
     <>
       <section
-        className={`shadow-orange row-span-2 m-10 h-fit flex-col rounded-3xl bg-white shadow-lg`}
+        className={`shadow-orange row-span-2 m-10 h-fit flex-col rounded-3xl bg-black-primary shadow-lg`}
       >
         <div
           className={`${showEditProfile ? "block" : "hidden"} absolute top-0 right-0 bottom-0 left-0 z-20 h-screen bg-black/50`}
         ></div>
         <div className="info p-10">
-          <h1 className="text-start text-2xl font-bold">INFO</h1>
+          <h1 className="text-start text-2xl font-bold text-white-primary">INFO</h1>
           <img
             className="mx-auto my-8"
             src={avatar}
@@ -28,7 +28,7 @@ function InfoAccountProfile() {
             width={132}
             height={132}
           />
-          <p className="mb-3 text-center text-xl font-semibold tracking-wider break-all capitalize">
+          <p className="mb-3 text-center text-xl font-semibold tracking-wider break-all capitalize text-white-primary">
             {
               // user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user
               user.firstName &&
@@ -41,7 +41,7 @@ function InfoAccountProfile() {
         </div>
         <div className="border-b-2 border-orange-300"></div>
         <div className="loyalty relative p-10">
-          <h1 className="text-title-info-first mb-5 text-start font-semibold">
+          <h1 className="text-title-info-first mb-5 text-start font-semibold text-white-primary">
             Loyalty Poin
           </h1>
           <div className="bg-orange w-full rounded-xl p-4 text-white">
@@ -58,7 +58,7 @@ function InfoAccountProfile() {
             />
           </div>
           <div>
-            <p className="text-title-info-second mt-5 mb-1.5 text-center">
+            <p className="text-title-info-second mt-5 mb-1.5 text-center text-white-primary">
               180 points become a master
             </p>
             <div className="mb-6 h-4 w-full rounded-2xl bg-neutral-200">

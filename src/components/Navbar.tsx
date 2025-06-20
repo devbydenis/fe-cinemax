@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import logoTickitz from "../assets/tickitz-logo.svg";
+import logoTickitz from "../assets/tickitz-revert-logo.svg";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgClose } from "react-icons/cg";
@@ -27,7 +27,7 @@ function Navbar() {
         <li>
           {/* logo */}
           <Link to={"/"}>
-            <img src={logoTickitz} alt="logo-tickitz" />
+            <img src={logoTickitz} alt="logo-tickitz" width={200} className="underline hover:cursor-pointer" />
           </Link>
         </li>
         <li className="hidden gap-14 px-12 md:flex">
@@ -71,7 +71,7 @@ function Navbar() {
                 style={{ backgroundImage: `url(${avatarDefault})` }}
                 to={"/profile/account"}
               ></Link>
-              <button className="cursor-pointer text-gray-800 uppercase">
+              <button className="cursor-pointer text-gray-400 font-medium uppercase">
                 {"Hi, " + profileName.split("@")[0]}
               </button>
               <div>
@@ -104,7 +104,7 @@ function Navbar() {
             </div>
           )}
         </li>
-        <li className="md:hidden">
+        <li className="md:hidden text-orange/80">
           {isShowMenu ? (
             <CgClose
               className="cursor-pointer text-3xl md:hidden"

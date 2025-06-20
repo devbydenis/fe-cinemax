@@ -45,7 +45,7 @@ function Card(props: CardPRops) {
           }}
         ></div>
         <Link
-          className="text-lg leading-4 font-semibold md:text-xl md:leading-7"
+          className="text-lg text-white leading-4 font-semibold md:text-xl md:leading-7"
           to={`movies/${props.movie?.id}`}
         >
           {props.movie?.title.length <= 25
@@ -60,9 +60,9 @@ function Card(props: CardPRops) {
               return (
                 <li
                   key={id}
-                  className="text-gray-secondary bg-silver/30 text-xs rounded-full border px-2 py-1.5 mb-2 text-[0.75rem] leading-3 md:px-3 md:py-2 md:text-sm md:leading-6"
+                  className=" text-white bg-transparent text-xs rounded-full border px-2 py-1.5 mb-2 text-[0.75rem] leading-3 md:px-2 md:py-2 md:text-sm md:leading-6"
                 >
-                  {genreNames.get(id) === "Science Fiction" ? "Sci-Fi" : genreNames.get(id)}
+                  {genreNames.get(id) === "Science Fiction" ? "Sci-fi" : genreNames.get(id)}
                 </li>
               );
             })}

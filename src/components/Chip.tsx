@@ -6,7 +6,7 @@ type ChipProps = {
 function Chip(props: ChipProps) {
   return (
     <>
-      <div className="bg-[#FDECE3] px-2 py-4 rounded-full font-extrabold text-orange w-fit">
+      <div className="bg-[#ffffff16] px-8 py-4 rounded-full backdrop-blur-sm font-extrabold text-orange w-fit">
         <p className="uppercase">{props.value}</p>
       </div>
     </>

@@ -1,9 +1,9 @@
 function Newslater() {
   return (
     <>
-      <section className="bg-orange-secondary my-10 rounded-[3rem] py-10 sm:mx-10 md:mx-20 md:py-20">
+      <section className="border-2 border-orange my-10 rounded-[3rem] py-10 sm:mx-10 md:mx-20 md:py-20">
         <form className="mx-auto flex w-fit flex-col items-center gap-5">
-          <h4 className="w-full text-center text-3xl leading-9 font-semibold md:text-6xl md:leading-[4.5rem]">
+          <h4 className="w-full text-center text-white text-3xl leading-9 font-semibold md:text-6xl md:leading-[4.5rem]">
             Subscribe to Our Newsletter
           </h4>
           <div className="flex w-full flex-col gap-5 md:flex-row">

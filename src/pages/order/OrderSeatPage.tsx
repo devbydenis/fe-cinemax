@@ -40,7 +40,7 @@ function OrderInfo() {
 
   return (
     <>
-      <section className="m-4 gap-5 rounded-lg border border-gray-300 bg-white p-4 md:flex lg:justify-center">
+      <section className="m-4 gap-5 rounded-lg border border-gray-900 bg-black-primary p-4 md:flex lg:justify-center">
         <div
           className="h-54 rounded-lg bg-cover md:h-56 md:flex-1/2 lg:h-72 lg:flex-5"
           style={{
@@ -49,7 +49,7 @@ function OrderInfo() {
           }}
         ></div>
         <div className="lg:flex-5">
-          <h1 className="mt-4 text-4xl font-bold md:mt-1 md:text-2xl">
+          <h1 className="mt-4 text-4xl text-white-primary font-bold md:mt-1 md:text-2xl">
             {movieDetail?.title}
           </h1>
           <ul className="mt-4 flex flex-wrap gap-3">
@@ -136,7 +136,7 @@ function OrderSeatsSelector({setShowModal}: OrderSeatsSelectorType) {
 
       {/* nomor kolom */}
       <div className="mb-8 overflow-hidden">
-        <div className="mb-8 h-20 flex justify-center items-center rounded-b-4xl rounded-t-2xl bg-black p-2 font-semibold tracking-wider text-white shadow-2xl shadow-black text-3xl">
+        <div className="mb-8 h-20 flex justify-center items-center rounded-b-4xl rounded-t-2xl bg-white/30 p-2 font-semibold tracking-wider text-white shadow-md shadow-white text-3xl">
           SCREEN
         </div>
         <div className="mb-2 flex gap-2 lg:gap-4">
@@ -144,7 +144,7 @@ function OrderSeatsSelector({setShowModal}: OrderSeatsSelectorType) {
           {colLabels.map((col) => {
             if (col !== 6) {
               return (
-                <div key={`col-${col}`} className="w-8 lg:h-12 lg:w-12  text-center font-medium">
+                <div key={`col-${col}`} className="w-8 text-white-primary lg:h-12 lg:w-12  text-center font-medium">
                   {col}
                 </div>
               );
@@ -153,12 +153,10 @@ function OrderSeatsSelector({setShowModal}: OrderSeatsSelectorType) {
                 <div key={`col-${col}`} className="flex gap-2 ml-3 lg:ml-10 lg:gap-4">
                   <div className="w-5 lg:w-6 "></div>
                   <div
-                    // key={`col-${col}`}
-                    className="w-8 text-center font-medium lg:h-12 lg:w-12 "
+                    className="w-8 text-center text-white-primary font-medium lg:h-12 lg:w-12 "
                   >
                     {col}
                   </div>
-                  {/* <div className="w-5 lg:w-6 "></div> */}
                 </div>
               );
             }
@@ -167,7 +165,7 @@ function OrderSeatsSelector({setShowModal}: OrderSeatsSelectorType) {
 
         {/* huruf baris / satu baris  */}
         {rowLabels.map((row) => (
-          <div key={`row-${row}`} className="mb-2 lg lg:gap-2 flex items-center">
+          <div key={`row-${row}`} className="mb-2  text-white-primary lg lg:gap-2 flex items-center">
             <div className="mr-2 w-8 text-center font-medium">{row}</div>
               {/*maing-masing kursi penonton */}
               {colLabels.map((col) => {
@@ -180,7 +178,7 @@ function OrderSeatsSelector({setShowModal}: OrderSeatsSelectorType) {
                       className={`mx-1 text-xs font-medium lg:h-12 lg:w-12 flex h-8 w-8 cursor-pointer items-center justify-center rounded transition-colors duration-200 ${
                         isSeatSelected(seatId)
                           ? "bg-orange-500 text-white"
-                          : "bg-gray-300 hover:bg-gray-400"
+                          : "bg-black-primary border border-orange hover:bg-orange"
                       }`}
                     >
                       {seatId}
@@ -201,7 +199,7 @@ function OrderSeatsSelector({setShowModal}: OrderSeatsSelectorType) {
                         className={`mx-1 text-xs font-medium lg:h-12 lg:w-12 flex h-8 w-8 cursor-pointer items-center justify-center rounded transition-colors duration-200 ${
                           isSeatSelected(seatId)
                             ? "bg-orange-500 text-white"
-                            : "bg-gray-300 hover:bg-gray-400"
+                            : "bg-black-primary border border-orange hover:bg-orange"
                         }`}
                       >
                         {seatId}
@@ -251,7 +249,7 @@ function OrderModal({showModal, setShowModal}: ShowModal) {
     <section
       className={`${
         showModal ? "block" : "hidden"
-      } absolute top-20 right-0 left-0 mx-6 my-10 flex flex-col items-center rounded-xl outline-4 -outline-offset-8 outline-orange bg-white px-5 py-10 shadow-2xl md:mx-20 lg:mx-50 lg:px-20`}
+      } absolute top-20 right-0 left-0 mx-6 my-10 flex flex-col items-center rounded-xl outline-4 -outline-offset-8 outline-orange bg-white-primary/80 px-5 py-10 shadow-2xl md:mx-20 lg:mx-50 lg:px-20`}
     >
       <div className="mb-8 flex w-80 h-30 flex-col items-center bg-orange outline-8 outline-orange outline-offset-8 rounded-full">
         <img
