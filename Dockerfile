@@ -12,7 +12,6 @@ COPY package\*.json ./
 RUN npm install
 
 # salin semua file ke dalam container
-COPY .env /usr/src/app/.env
 COPY . .
 
 # build aplikasi
