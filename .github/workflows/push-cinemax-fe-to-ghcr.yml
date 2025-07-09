@@ -9,10 +9,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build and push Docker image for ${{ github.repository }}
-        uses: macbre/push-to-ghcr@master
-        with:
-          image_name: ghcr.io/${{ github.repository }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+          VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
+          VITE_BASE_URL_IMG: ${{ secrets.VITE_BASE_URL_IMG }}
+        run: |
+          docker build \
+            --build-arg VITE_API_KEY=$VITE_API_KEY \
+            --build-arg VITE_BASE_URL=$VITE_BASE_URL \
+            --build-arg VITE_BASE_URL_IMG=$VITE_BASE_URL_IMG \
+            -t ghcr.io/${{ github.repository }} .
+          docker push ghcr.io/${{ github.repository }}
+        
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1

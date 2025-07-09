@@ -5,6 +5,15 @@ FROM node:lts-alpine AS react-build
 # definisiin working directory di path /usr/src/app
 WORKDIR /usr/src/app
 
+ARG VITE_API_KEY
+ENV VITE_API_KEY=$VITE_API_KEY
+
+ARG VITE_BASE_URL
+ENV VITE_BASE_URL=$VITE_BASE_URL
+
+ARG VITE_BASE_URL_IMG
+ENV VITE_BASE_URL_IMG=$VITE_BASE_URL_IMG
+
 # copy file package.json ke dalem container
 COPY package\*.json ./
 
@@ -28,3 +37,4 @@ COPY --from=react-build /usr/src/app/dist /usr/share/nginx/html
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
+
