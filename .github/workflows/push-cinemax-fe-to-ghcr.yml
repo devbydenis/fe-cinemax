@@ -18,7 +18,8 @@ jobs:
             --build-arg VITE_API_KEY=$VITE_API_KEY \
             --build-arg VITE_BASE_URL=$VITE_BASE_URL \
             --build-arg VITE_BASE_URL_IMG=$VITE_BASE_URL_IMG \
-            -t ghcr.io/${{ github.repository }} .
+            -t ghcr.io/${{ github.repository }} \
+            .
           docker push ghcr.io/${{ github.repository }}
         
 
