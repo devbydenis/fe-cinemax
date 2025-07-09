@@ -22,6 +22,8 @@ RUN npm run build
 # gunakan image nginx:stable-alpine sebagai base image karena lebih ringan
 FROM nginx:stable-alpine
 
+COPY .env /usr/src/app/.env
+
 # salin hasil building dari stage 1 ke nginx
 COPY --from=react-build /usr/src/app/dist /usr/share/nginx/html
 
