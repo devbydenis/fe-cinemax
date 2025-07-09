@@ -1,12 +1,12 @@
 # Stage 1
 # pake image node:18-alpine sebagai base image karena lebih enteng + cepet
-FROM node:current-alpine3.22 AS react-build
+FROM node:lts-alpine AS react-build
 
 # definisiin working directory di path /usr/src/app
 WORKDIR /usr/src/app
 
 # copy file package.json ke dalem container
-COPY package\*.json ./
+COPY package*.json ./
 
 # install dependencies
 RUN npm install
@@ -14,7 +14,7 @@ RUN npm install
 # salin semua file ke dalam container
 COPY . .
 
-RUN cp .env.local .env
+COPY .env.local /usr/src/app/.env
 
 # build aplikasi
 RUN npm run build
