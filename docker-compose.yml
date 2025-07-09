@@ -1,6 +1,5 @@
 services:
   app:
-    image: 
+    image: ghcr.io/devbydenis/fe-cinemax:latest
     ports:
       - "9802:80"
-    
