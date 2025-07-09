@@ -14,7 +14,7 @@ RUN npm install
 # salin semua file ke dalam container
 COPY . .
 
-COPY .env.local /usr/src/app/.env
+RUN cp .env.local .env
 
 # build aplikasi
 RUN npm run build
