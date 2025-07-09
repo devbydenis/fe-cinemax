@@ -285,8 +285,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
             to={`/profile/history`}
             className="outline-primary bg-orange outline-orange active:outline-orange active:text-orange rounded py-2 text-center font-bold text-white outline-2 transition-all active:scale-99 active:bg-white"
             onClick={() => {
-              dispatch(addOrderAction({ ...order, statusPayment: true }));
-              dispatch(addHistoryUserAction({ ...order, statusPayment: true }));
+              dispatch(addOrderAction({ ...order, statusPayment: false }));
+              dispatch(addHistoryUserAction({ ...order, statusPayment: false }));
             }}
           >
             Pay Later

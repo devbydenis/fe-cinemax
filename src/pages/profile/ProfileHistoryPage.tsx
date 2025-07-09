@@ -90,7 +90,7 @@ function CardHistory(props: CardHistoryProps) {
 
   return (
     <>
-      <section className="mx-6 my-8 rounded-lg bg-white shadow-md shadow-orange-300 md:my-6 md:ml-0">
+      <section className="mx-6 my-8 rounded-lg bg-black-primary shadow-sm shadow-orange-800 md:my-6 md:ml-0">
         <div className="p-6 md:flex md:flex-row-reverse md:justify-between">
           <img
             className="bg-orange mb-5 rounded px-2 py-2"
@@ -104,8 +104,8 @@ function CardHistory(props: CardHistoryProps) {
             alt={`${cinema}-logo`}
           />
           <div>
-            <p className="text-secondary text-[13px] tracking-widest">{date}</p>
-            <p className="mt-2 text-lg font-semibold tracking-wider">{title}</p>
+            <p className="text-white-primary text-[13px] tracking-widest">{date}</p>
+            <p className="text-white-primary mt-2 text-lg font-semibold tracking-wider">{title}</p>
           </div>
         </div>
         <div className="border-b-2 border-gray-300"></div>
@@ -131,7 +131,7 @@ function CardHistory(props: CardHistoryProps) {
             </span>
           </div>
           <span
-            className="text-secondary mt-6 flex cursor-pointer justify-center gap-3 text-center text-lg font-normal md:w-40"
+            className="text-white-primary mt-6 flex cursor-pointer justify-center gap-3 text-center text-lg font-normal md:w-40"
             onClick={() => setShowModal(!showModal)}
           >
             <p>Show Detail</p>

@@ -1,0 +1,28 @@
+name: Push Frontend Cinemax to GHCR
+run-name: Release image fe-cinemax ghcr
+on: [push]
+jobs:
+  push-frontend-crud-to-ghcr:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build and push Docker image for ${{ github.repository }}
+        uses: macbre/push-to-ghcr@master
+        with:
+          image_name: ghcr.io/${{ github.repository }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Deploy to server
+      #   uses: appleboy/ssh-action@v1
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USERNAME }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }} 
+      #     port: ${{ secrets.SSH_PORT }}
+      #     script: |
+      #       docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GHCR_TOKEN }}
+      #       docker pull ghcr.io/${{ github.repository }}
+      #       docker compose down || true
+      #       docker compose up -d
