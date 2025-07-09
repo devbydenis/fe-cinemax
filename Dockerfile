@@ -6,15 +6,13 @@ FROM node:lts-alpine AS react-build
 WORKDIR /usr/src/app
 
 # copy file package.json ke dalem container
-COPY package*.json ./
+COPY package\*.json ./
 
 # install dependencies
 RUN npm install
 
 # salin semua file ke dalam container
 COPY . .
-
-COPY .env.local .env
 
 # build aplikasi
 RUN npm run build
