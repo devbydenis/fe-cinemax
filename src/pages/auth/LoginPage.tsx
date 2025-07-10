@@ -4,20 +4,20 @@ import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import { useForm, type FieldValues } from "react-hook-form";
 import { schemaLogin } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import Loader from "../../components/Loader";
 import ModalAuth from "../../components/ModalAuth";
 // import { nanoid } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 // import { addInfoLoginAction } from "../../redux/reducers/userSlice";
-import AuthContext from "./AuthContext";
+// import AuthContext from "./AuthContext";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loaderAuth, setLoaderAuth] = useState(false);
   const [showModalAuth, setShowModalAuth] = useState(false);
-  const { setIsLoggedinRoute } = useContext(AuthContext);
+  // const { setIsLoggedinRoute } = useContext(AuthContext);
 
   const {
     register,
@@ -27,7 +27,7 @@ function LoginPage() {
     resolver: yupResolver(schemaLogin),
   });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const registeredUsers = useSelector(
   //   (state: { users: Users }) => state.users.users,
   // );
@@ -70,18 +70,22 @@ function LoginPage() {
     }
     
     requestLogin("http://localhost:8989/auth/login", userData)
-
-    //   if (isDataMatched(email, password)) {
-    //     dispatch(addInfoLoginAction({ ...userData, history: [] }));
-    //     setIsLoggedinRoute(true);
-    //     setLoaderAuth(true);
-    //     setTimeout(() => {
-    //       return navigate("/");
-    //     }, 2000);
-    //     return;
-    //   } else {
-    //     setShowModalAuth(true);
-    //   }
+      setLoaderAuth(true);
+    setTimeout(() => {
+        return navigate("/");
+      }, 2000);
+    
+      // if (isDataMatched(email, password)) {
+      //   dispatch(addInfoLoginAction({ ...userData, history: [] }));
+      //   setIsLoggedinRoute(true);
+      //   setLoaderAuth(true);
+      //   setTimeout(() => {
+      //     return navigate("/");
+      //   }, 2000);
+      //   return;
+      // } else {
+      //   setShowModalAuth(true);
+      // }
   };
 
   return (
