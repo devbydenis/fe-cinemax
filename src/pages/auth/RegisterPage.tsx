@@ -6,22 +6,27 @@ import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import ModalAuth from "../../components/ModalAuth";
-import { useDispatch, useSelector } from "react-redux";
-import { addRegisteredUsersAction } from "../../redux/reducers/usersSlice";
-import { nanoid } from "@reduxjs/toolkit";
+// import { useDispatch, useSelector } from "react-redux";
+// import { addRegisteredUsersAction } from "../../redux/reducers/usersSlice";
+// import { nanoid } from "@reduxjs/toolkit";
 import Loader from "../../components/Loader";
+
+type RegisterData = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showModalAuth, setShowModalAuth] = useState(false);
   const [loaderAuth, setLoaderAuth] = useState(false);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
-  const date = new Date();
-  const users = useSelector((state: { users: { users: User[] } }) => state.users.users);
-  console.log("selector", users);
-
+  // const date = new Date();
+  // const users = useSelector((state: { users: { users: User[] } }) => state.users.users);
+  // console.log("selector", users);
   const {
     register,
     handleSubmit,
@@ -32,43 +37,76 @@ function RegisterPage() {
   });
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    // console.log(data);
 
-    if (users.length === 0) {
-      dispatch(
-        addRegisteredUsersAction({
-          id: nanoid(),
-          email: data.email,
-          password: data.password,
-          createdAt: date.toLocaleString(),
-        }),
-      );
-      console.log("register berhasil");
-      setLoaderAuth(true);
-      setTimeout(() => {
-        navigate("/auth/login");
-      }, 2000);
-      return;
+    // if (users.length === 0) {
+    //   dispatch(
+    //     addRegisteredUsersAction({
+    //       id: nanoid(),
+    //       email: data.email,
+    //       password: data.password,
+    //       createdAt: date.toLocaleString(),
+    //     }),
+    //   );
+    //   console.log("register berhasil");
+    //   setLoaderAuth(true);
+    //   setTimeout(() => {
+    //     navigate("/auth/login");
+    //   }, 2000);
+    //   return;
+    // }
+
+    // const isEmailExists = users.filter(
+    //   (user: User) => user.email === data.email,
+    // );
+    // console.log("ISEMAIL", isEmailExists);
+
+    // if (isEmailExists.length > 0) {
+    //   setShowModalAuth(true);
+    //   return;
+    // }
+
+    // dispatch(
+    //   addRegisteredUsersAction({
+    //     id: nanoid(),
+    //     email: data.email,
+    //     password: data.password,
+    //     createdAt: date.toLocaleString(),
+    //   }),
+    // );
+    
+    // Implementasi integrasi FE-BE: register
+    const registerData = {
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
     }
-
-    const isEmailExists = users.filter(
-      (user: User) => user.email === data.email,
-    );
-    console.log("ISEMAIL", isEmailExists);
-
-    if (isEmailExists.length > 0) {
-      setShowModalAuth(true);
-      return;
+    
+    async function registerUser(url: string, registerData: RegisterData) {
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(registerData),
+        });
+        console.log(response);
+        if (!response.ok) {
+          console.error('Failed to register user');
+        }
+          
+        const result = await response.json();
+        console.log('User registered successfully', result);
+        
+        
+      } catch (error) {
+        console.error('Error: ', error);
+      }
     }
-
-    dispatch(
-      addRegisteredUsersAction({
-        id: nanoid(),
-        email: data.email,
-        password: data.password,
-        createdAt: date.toLocaleString(),
-      }),
-    );
+    
+    registerUser('http://localhost:8989/auth/register', registerData);
+    
     setLoaderAuth(true);
     setTimeout(() => {
       navigate("/auth/login");

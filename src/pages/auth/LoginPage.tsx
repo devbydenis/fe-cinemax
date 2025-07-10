@@ -8,9 +8,9 @@ import { useContext, useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import Loader from "../../components/Loader";
 import ModalAuth from "../../components/ModalAuth";
-import { nanoid } from "@reduxjs/toolkit";
-import { useDispatch, useSelector } from "react-redux";
-import { addInfoLoginAction } from "../../redux/reducers/userSlice";
+// import { nanoid } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+// import { addInfoLoginAction } from "../../redux/reducers/userSlice";
 import AuthContext from "./AuthContext";
 
 function LoginPage() {
@@ -28,41 +28,60 @@ function LoginPage() {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const registeredUsers = useSelector(
-    (state: { users: Users }) => state.users.users,
-  );
-  const user = useSelector((state: { user: UserState }) => state.user.user);
+  // const registeredUsers = useSelector(
+  //   (state: { users: Users }) => state.users.users,
+  // );
+  // const user = useSelector((state: { user: UserState }) => state.user.user);
 
-  console.log("registered users", registeredUsers);
-  console.log("user di login", user);
+  // console.log("registered users", registeredUsers);
+  // console.log("user di login", user);
 
-  const isDataMatched = (email: string, password: string): boolean => {
-    const result = registeredUsers.filter((user: User) => {
-      return user.email === email && user.password === password;
-    });
-    return result.length > 0;
-  };
+  // const isDataMatched = (email: string, password: string): boolean => {
+  //   const result = registeredUsers.filter((user: User) => {
+  //     return user.email === email && user.password === password;
+  //   });
+  //   return result.length > 0;
+  // };
 
   const onSubmit = (data: FieldValues) => {
     const { email, password } = data;
 
     const userData = {
-      id: nanoid(),
+      // id: nanoid(),
       email: email,
       password: password,
     };
 
-    if (isDataMatched(email, password)) {
-      dispatch(addInfoLoginAction({ ...userData, history: [] }));
-      setIsLoggedinRoute(true);
-      setLoaderAuth(true);
-      setTimeout(() => {
-        return navigate("/");
-      }, 2000);
-      return;
-    } else {
-      setShowModalAuth(true);
+    async function requestLogin(url: string, userData: {email: string, password: string}) {
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
+        const responseData = await response.json();
+        return responseData
+        console.log(responseData);
+      } catch (error) {
+        console.error(error);
+      }
     }
+    
+    requestLogin("http://localhost:8989/auth/login", userData)
+
+    //   if (isDataMatched(email, password)) {
+    //     dispatch(addInfoLoginAction({ ...userData, history: [] }));
+    //     setIsLoggedinRoute(true);
+    //     setLoaderAuth(true);
+    //     setTimeout(() => {
+    //       return navigate("/");
+    //     }, 2000);
+    //     return;
+    //   } else {
+    //     setShowModalAuth(true);
+    //   }
   };
 
   return (
