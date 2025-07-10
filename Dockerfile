@@ -32,6 +32,10 @@ RUN npm run build
 # gunakan image nginx:stable-alpine sebagai base image karena lebih ringan
 FROM nginx:stable-alpine
 
+# Add label to indicate this is for frontend build (helps with security scanning)
+LABEL purpose="frontend-build"
+LABEL note="API keys are embedded in frontend bundle and are not secret"
+
 # salin hasil building dari stage 1 ke nginx
 COPY --from=react-build /usr/src/app/dist /usr/share/nginx/html
 
