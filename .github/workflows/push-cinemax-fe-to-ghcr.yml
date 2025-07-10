@@ -4,7 +4,7 @@ on: [push]
 jobs:
   push-frontend-crud-to-ghcr:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -13,13 +13,14 @@ jobs:
         with:
           image_name: ghcr.io/${{ github.repository }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          extra_args: --build-arg VITE_BASE_URL=${{secrets.VITE_BASE_URL}} --build-arg VITE_BASE_URL_IMG=${{secrets.VITE_BASE_URL_IMG}} --build-arg VITE_API_KEY=${{secrets.VITE_API_KEY}}
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }} 
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
             docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GHCR_TOKEN }}
