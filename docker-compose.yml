@@ -1,25 +1,5 @@
 services:
   app:
-    image: cinemax-local:latest
+    image: fe-cinemax:latest
     ports:
       - "9802:80"
-    
-# services:
-#   app:
-#     build:
-#       context: .
-#       dockerfile: Dockerfile
-#       args:
-#         - VITE_API_KEY=${VITE_API_KEY}
-#         - VITE_BASE_URL=${VITE_BASE_URL}
-#         - VITE_BASE_URL_IMG=${VITE_BASE_URL_IMG}
-#     image: cinemax-local:latest
-#     ports:
-#       - "9802:80"
-#     env_file:
-#       - .env
-#     environment:
-#       - VITE_API_KEY=${VITE_API_KEY}
-#       - VITE_BASE_URL=${VITE_BASE_URL}
-#       - VITE_BASE_URL_IMG=${VITE_BASE_URL_IMG}
-
