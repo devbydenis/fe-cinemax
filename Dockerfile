@@ -15,14 +15,14 @@ RUN npm install
 COPY . .
 
 # Define build arguments untuk environment variables
-ARG VITE_API_KEY
-ARG VITE_BASE_URL
-ARG VITE_BASE_URL_IMG
+# ARG VITE_API_KEY
+# ARG VITE_BASE_URL
+# ARG VITE_BASE_URL_IMG
 
-# Set environment variables untuk build process
-ENV VITE_API_KEY=$VITE_API_KEY
-ENV VITE_BASE_URL=$VITE_BASE_URL
-ENV VITE_BASE_URL_IMG=$VITE_BASE_URL_IMG
+# # Set environment variables untuk build process
+# ENV VITE_API_KEY=$VITE_API_KEY
+# ENV VITE_BASE_URL=$VITE_BASE_URL
+# ENV VITE_BASE_URL_IMG=$VITE_BASE_URL_IMG
 
 # build aplikasi
 RUN npm run build

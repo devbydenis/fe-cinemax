@@ -8,14 +8,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6
+      - name: Build and push Docker image for ${{ github.repository }}
+        uses: macbre/push-to-ghcr@master
         with:
-          context: .
-          push: true
-          tags: ghcr.io/${{ github.repository }}:latest
-          file: Dockerfile
-
+          image_name: ghcr.io/${{ github.repository }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Deploy to server
         uses: appleboy/ssh-action@v1
         with:
