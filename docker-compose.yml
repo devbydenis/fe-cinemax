@@ -3,3 +3,5 @@ services:
     image: ghcr.io/devbydenis/fe-cinemax:latest
     ports:
       - "9802:80"
+    env_file:
+      - .env
