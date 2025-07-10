@@ -15,10 +15,6 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
           file: Dockerfile
-          build-args: |
-            VITE_API_KEY=${{ secrets.VITE_API_KEY }}
-            VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}
-            VITE_BASE_URL_IMG=${{ secrets.VITE_BASE_URL_IMG }}
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1
