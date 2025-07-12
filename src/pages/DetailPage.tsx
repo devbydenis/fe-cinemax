@@ -280,6 +280,9 @@ function SetOrder() {
               </select>
             </div>
           </div>
+          {/* <div>
+            <button className="text-white rounded px-6 py-1 bg-orange">Filter</button>
+          </div> */}
           <div className="choose-cinema col-span-2 md:col-span-3">
             <h2 className="text-white-primary mb-3 text-lg font-semibold">
               Choose Cinema

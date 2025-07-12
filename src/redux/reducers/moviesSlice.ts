@@ -45,7 +45,7 @@ const getGenresMovieThunk = createAsyncThunk(
       if (!response.ok) throw new Error(response.statusText);
 
       const data = await response.json();
-      console.log("genres movies", data.genres);
+      // console.log("genres movies", data.genres);
       return data.genres;
     } catch (error) {
       if (error instanceof Error) rejectWithValue(error);

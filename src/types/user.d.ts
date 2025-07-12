@@ -10,8 +10,9 @@ type History = {
   statusPayment?: boolean;
 };
 
-interface User {
+interface User {  
   id: string;
+  token: string;
   email: string;
   password: string;
   createdAt?: string;
@@ -37,4 +38,25 @@ interface Users {
 interface RootState {
   users: UsersState;
   user: UserState;
+}
+
+interface UserLoginRequest {
+  email: string;
+  password: string;
+}
+
+// interface UserLoginResponse {
+//   token: string;
+//   email: string;
+//   createdAt: string;
+//   isLogin: boolean;
+//   history: History[];
+//   firstName: string;
+//   lastName: string;
+//   phoneNumber: string;
+// }
+
+interface UserLoginResponse {
+  id: string;
+  token: string
 }

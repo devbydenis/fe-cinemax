@@ -4,20 +4,20 @@ import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import { useForm, type FieldValues } from "react-hook-form";
 import { schemaLogin } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import Loader from "../../components/Loader";
 import ModalAuth from "../../components/ModalAuth";
 // import { nanoid } from "@reduxjs/toolkit";
-// import { useDispatch } from "react-redux";
-// import { addInfoLoginAction } from "../../redux/reducers/userSlice";
-// import AuthContext from "./AuthContext";
+import { useDispatch } from "react-redux";
+import { addInfoLoginAction } from "../../redux/reducers/userSlice";
+import AuthContext from "./AuthContext";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loaderAuth, setLoaderAuth] = useState(false);
   const [showModalAuth, setShowModalAuth] = useState(false);
-  // const { setIsLoggedinRoute } = useContext(AuthContext);
+  const { setIsLoggedinRoute } = useContext(AuthContext);
 
   const {
     register,
@@ -27,65 +27,61 @@ function LoginPage() {
     resolver: yupResolver(schemaLogin),
   });
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
-  // const registeredUsers = useSelector(
-  //   (state: { users: Users }) => state.users.users,
-  // );
-  // const user = useSelector((state: { user: UserState }) => state.user.user);
+  const dispatch = useDispatch();
+  
+  async function requestLogin(url: string, userData: { email: string; password: string },) {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+      const responseData = await response.json();
+      console.log(responseData);
+      return responseData;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 
-  // console.log("registered users", registeredUsers);
-  // console.log("user di login", user);
-
-  // const isDataMatched = (email: string, password: string): boolean => {
-  //   const result = registeredUsers.filter((user: User) => {
-  //     return user.email === email && user.password === password;
-  //   });
-  //   return result.length > 0;
-  // };
-
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = async (data: FieldValues) => {
     const { email, password } = data;
 
-    const userData = {
-      // id: nanoid(),
+    const userData: UserLoginRequest = {
       email: email,
       password: password,
     };
 
-    async function requestLogin(url: string, userData: {email: string, password: string}) {
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
-        });
-        const responseData = await response.json();
-        return responseData
-        console.log(responseData);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    
-    requestLogin("http://localhost:8989/auth/login", userData)
+    try {
+      const responseLogin = await requestLogin(
+        "http://localhost:8989/auth/login",
+        userData,
+      );
+      console.log(responseLogin);
+      
+      const data = {
+        id: responseLogin.result.id,
+        token: responseLogin.result.token,
+        email: userData.email,
+        password: userData.password,
+        createdAt: new Date().toISOString(), 
+        history: [], 
+      };
+      dispatch(
+        addInfoLoginAction(data),
+      );
+      setIsLoggedinRoute(true);
       setLoaderAuth(true);
-    setTimeout(() => {
+      setTimeout(() => {
         return navigate("/");
       }, 2000);
-    
-      // if (isDataMatched(email, password)) {
-      //   dispatch(addInfoLoginAction({ ...userData, history: [] }));
-      //   setIsLoggedinRoute(true);
-      //   setLoaderAuth(true);
-      //   setTimeout(() => {
-      //     return navigate("/");
-      //   }, 2000);
-      //   return;
-      // } else {
-      //   setShowModalAuth(true);
-      // }
+    } catch (error) {
+      console.error("Login failed:", error);
+      setShowModalAuth(true);
+    }
   };
 
   return (

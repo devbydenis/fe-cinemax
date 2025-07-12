@@ -17,7 +17,7 @@ const options = {
 
 
 export function getNowPlayingMovie(id: number) {
-  console.log("id",id);
+  // console.log("id",id);
   const response = fetch(`${BASE_URL}movie/now_playing?language=en-US&page=${id}`, options);
   return response
 }

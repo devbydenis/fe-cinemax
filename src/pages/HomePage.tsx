@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
 import Chip from "../components/Chip";
@@ -28,62 +28,62 @@ function HomePage() {
 }
 
 interface GradientTextProps {
-    children: React.ReactNode;
-    className?: string;
-    colors?: string[];
-    animationSpeed?: number;
-    showBorder?: boolean;
+  children: React.ReactNode;
+  className?: string;
+  colors?: string[];
+  animationSpeed?: number;
+  showBorder?: boolean;
 }
 
 function GradientText({
-    children,
-    className = "",
-    colors = ["#E95102", "#FFB03D", "#E95102", "#FFB03D", "#E95102"],
-    animationSpeed = 3,
-    showBorder = false,
+  children,
+  className = "",
+  colors = ["#E95102", "#FFB03D", "#E95102", "#FFB03D", "#E95102"],
+  animationSpeed = 3,
+  showBorder = false,
 }: GradientTextProps) {
-    const gradientStyle = {
-        backgroundImage: `linear-gradient(to right, ${colors.join(", ")})`,
-        animationDuration: `${animationSpeed}s`,
-    };
+  const gradientStyle = {
+    backgroundImage: `linear-gradient(to right, ${colors.join(", ")})`,
+    animationDuration: `${animationSpeed}s`,
+  };
 
-    return (
+  return (
+    <div
+      className={`relative mx-auto flex max-w-fit cursor-pointer flex-row items-center justify-center overflow-hidden rounded-[1.25rem] font-medium backdrop-blur transition-shadow duration-500 ${className}`}
+    >
+      {showBorder && (
         <div
-            className={`relative mx-auto flex max-w-fit flex-row items-center justify-center rounded-[1.25rem] font-medium backdrop-blur transition-shadow duration-500 overflow-hidden cursor-pointer ${className}`}
+          className="animate-gradient pointer-events-none absolute inset-0 z-0 bg-cover"
+          style={{
+            ...gradientStyle,
+            backgroundSize: "300% 100%",
+          }}
         >
-            {showBorder && (
-                <div
-                    className="absolute inset-0 bg-cover z-0 pointer-events-none animate-gradient"
-                    style={{
-                        ...gradientStyle,
-                        backgroundSize: "300% 100%",
-                    }}
-                >
-                    <div
-                        className="absolute inset-0 bg-black rounded-[1.25rem] z-[-1]"
-                        style={{
-                            width: "calc(100% - 2px)",
-                            height: "calc(100% - 2px)",
-                            left: "50%",
-                            top: "50%",
-                            transform: "translate(-50%, -50%)",
-                        }}
-                    ></div>
-                </div>
-            )}
-            <div
-                className="inline-block relative z-2 text-transparent text-6xl font-bold text-center bg-cover animate-gradient"
-                style={{
-                    ...gradientStyle,
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    backgroundSize: "300% 100%",
-                }}
-            >
-                {children}
-            </div>
+          <div
+            className="absolute inset-0 z-[-1] rounded-[1.25rem] bg-black"
+            style={{
+              width: "calc(100% - 2px)",
+              height: "calc(100% - 2px)",
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          ></div>
         </div>
-    );
+      )}
+      <div
+        className="animate-gradient relative z-2 inline-block bg-cover text-center text-6xl font-bold text-transparent"
+        style={{
+          ...gradientStyle,
+          backgroundClip: "text",
+          WebkitBackgroundClip: "text",
+          backgroundSize: "300% 100%",
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
 }
 
 function Banner() {
@@ -92,15 +92,15 @@ function Banner() {
       <section className="my-7 flex flex-col items-center justify-center gap-4 md:mx-16">
         <Chip value="MOVIE TICKET PURCHASES #1 IN INDONESIA" />
         <div className="px-7">
-          <p className="text-center text-5xl font-medium xl:text-6xl xl:leading-23 2xl:text-7xl/14 2xl:leading-25">
-            <GradientText>Experience the Magic of Cinema:{" "}</GradientText>
-            <span className="text-gray-200 block font-bold animate-pulse">
+          <div className="text-center text-5xl font-medium xl:text-6xl xl:leading-23 2xl:text-7xl/14 2xl:leading-25">
+            <GradientText>Experience the Magic of Cinema: </GradientText>
+            <p className="block animate-pulse font-bold text-gray-200">
               Book Your Tickets Today
-            </span>
-          </p>
+            </p>
+          </div>
         </div>
         <div>
-          <p className="text-center text-red-100 text-lg tracking-wider font-light">
+          <p className="text-center text-lg font-light tracking-wider text-red-100">
             Sign up and get the ticket with a lot of discount
           </p>
         </div>
@@ -117,12 +117,12 @@ function NowPlaying() {
 
   useEffect(() => {
     dispatch(getNowPlayingMoviesThunk(1));
-      dispatch(getGenresMovieThunk());
+    dispatch(getGenresMovieThunk());
   }, []);
   return (
     <>
       <section className="mx-10 md:mx-20 md:mt-16 md:pb-20">
-        <h2 className="text-center text-white text-2xl leading-11 font-semibold md:mb-9 md:text-4xl">
+        <h2 className="text-center text-2xl leading-11 font-semibold text-white md:mb-9 md:text-4xl">
           Now Showing in Cinemas
         </h2>
         <ul className="container-card custom-scrollbar relative flex gap-5 overflow-x-scroll">
@@ -205,7 +205,7 @@ function UpComingMovies() {
         <div className="mb-4 flex flex-col items-center justify-center gap-4">
           <Chip value="UPCOMING MOVIES" />
           <div className="flex flex-col items-center justify-center gap-5 md:flex-row md:items-start">
-            <h3 className="text-white flex-1 px-20 text-center text-3xl/9 font-extrabold lg:flex-4 lg:text-5xl">
+            <h3 className="flex-1 px-20 text-center text-3xl/9 font-extrabold text-white lg:flex-4 lg:text-5xl">
               Exciting Movie Coming Soon
             </h3>
             <ul className="custom-scrollbar mx-auto mb-3 flex w-fit flex-2 gap-2 pb-5">
@@ -248,7 +248,7 @@ function Genre(props: GenreProps) {
 
   return (
     <li
-      className={`${isActive ? "bg-orange border-orange text-white" : ""} min-w-fit cursor-pointer rounded-3xl border border-orange text-orange px-4 py-2 font-medium uppercase`}
+      className={`${isActive ? "bg-orange border-orange text-white" : ""} border-orange text-orange min-w-fit cursor-pointer rounded-3xl border px-4 py-2 font-medium uppercase`}
       onClick={() => setIsActive(!isActive)}
     >
       {props.title}

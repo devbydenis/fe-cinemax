@@ -8,6 +8,7 @@ const initialState: UserState = {
     createdAt: "",
     isLogin: false,
     history: [],
+    token: "",
   },
 };
 
@@ -24,6 +25,7 @@ const user = createSlice({
         email: "",
         password: "",
         createdAt: "",
+        token: "",
         isLogin: false,
       };
     },
