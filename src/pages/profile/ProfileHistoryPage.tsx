@@ -143,7 +143,7 @@ function CardHistory(props: CardHistoryProps) {
             showModal ? "block" : "hidden"
           }`}
         >
-          <h2 className="mt-3 mb-8 text-2xl font-semibold">
+          <h2 className="mt-3 mb-8 text-2xl font-semibold text-white">
             Ticket Information
           </h2>
           {isTicketPaid ? (
@@ -170,7 +170,7 @@ function TicketPaid({ date, time, title, seat, totalPrice }: TicketPaidProps) {
 
   return (
     <>
-      <section className="bg-white">
+      <section className="bg-white p-2">
         <img src={qrcode} alt="qrcode" />
         <div className="mt-5 grid w-full grid-cols-3 gap-y-3">
           <div>

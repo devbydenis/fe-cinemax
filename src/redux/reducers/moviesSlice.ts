@@ -13,7 +13,7 @@ const getNowPlayingMoviesThunk = createAsyncThunk(
       if (!response.ok) throw new Error(response.statusText);
 
       const json = await response.json();
-      const data = json.results;
+      const data = json.result;
       return data;
     } catch (error) {
       if (error instanceof Error) rejectWithValue(error);

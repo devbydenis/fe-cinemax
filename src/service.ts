@@ -10,14 +10,14 @@ const urlPopularMovies = `${BASE_URL}movie/popular?language=en-US&page=1`;
 const options = {
   method: 'GET',
   headers: {
-    accept: 'application/json',
+    Accept: 'application/json',
     Authorization: `${API_KEY}`
   }
 };
 
 
 export function getNowPlayingMovie(id: number) {
-  // console.log("id",id);
+  console.log("id",id);
   const response = fetch(`${BASE_URL}movie/now_playing?language=en-US&page=${id}`, options);
   return response
 }

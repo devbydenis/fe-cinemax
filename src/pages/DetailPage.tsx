@@ -24,19 +24,29 @@ function DetailPage() {
   }, []);
 
   useEffect(() => {
-    const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+    // const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+    // const options = {
+    //   method: "GET",
+    //   headers: {
+    //     accept: "application/json",
+    //     Authorization:
+    //       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
+    //   },
+    // };
+    const url = `http://localhost:8989/movies/${id}`;
     const options = {
       method: "GET",
       headers: {
         accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
       },
     };
 
     fetch(url, options)
       .then((res) => res.json())
-      .then((json) => setMovieDetail(json))
+      .then((json) => {
+        setMovieDetail(json.result);
+        console.log("DetailPage", json.result);
+      })
       .catch((err) => console.error(err));
   }, [id]);
 
@@ -65,45 +75,51 @@ function DetailPage() {
 
   function Banner() {
     const { movieDetail } = useContext(DetailContext);
-    const [movieCredits, setMovieCredits] = useState();
+    const [, setMovieCredits] = useState();
     const { id } = useParams();
     console.log("movie detail", movieDetail);
   
-    const getDuration = (duration: number) => {
-      const hours = Math.floor(duration / 60);
-      const minutes = duration % 60;
-      return `${hours}h ${minutes}m`;
-    };
+    // const getDuration = (duration: number) => {
+    //   const hours = Math.floor(duration / 60);
+    //   const minutes = duration % 60;
+    //   return `${hours}h ${minutes}m`;
+    // };
   
-    const getDirectors = (movieCredits: MovieCredits) => {
-      const result =
-        movieCredits.crew &&
-        movieCredits.crew.filter((credit) => credit.job == "Director")[0].name;
-      return result;
-    };
+    // const getDirectors = (movieCredits: MovieCredits) => {
+    //   const result =
+    //     movieCredits.crew &&
+    //     movieCredits.crew.filter((credit) => credit.job == "Director")[0].name;
+    //   return result;
+    // };
   
-    const getCasts = (movieCredits: MovieCredits) => {
-      const result = movieCredits.cast
-        ?.map((credit) => credit.name)
-        .slice(0, 5)
-        .join(", ");
-      // console.log("casts", result);
-      return result;
-    };
+    // const getCasts = (movieCredits: MovieCredits) => {
+    //   const result = movieCredits.cast
+    //     ?.map((credit) => credit.name)
+    //     .slice(0, 5)
+    //     .join(", ");
+    //   // console.log("casts", result);
+    //   return result;
+    // };
   
     useEffect(() => {
-      const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
+      // const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
+      // const options = {
+      //   method: "GET",
+      //   headers: {
+      //     accept: "application/json",
+      //     Authorization:
+      //       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
+      //   },
+      const url = `http://localhost:8989/movie/${id}`;
       const options = {
         method: "GET",
         headers: {
           accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
         },
       };
       fetch(url, options)
         .then((res) => res.json())
-        .then((json) => setMovieCredits(json))
+        .then((json) => setMovieCredits(json.result))
         .catch((err) => console.error(err));
     }, [id]);
     
@@ -112,7 +128,7 @@ function DetailPage() {
         <section
           className="h-160 bg-orange relative bg-cover bg-center bg-no-repeat"
           style={{
-                backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieDetail?.backdrop_path})`,
+                backgroundImage: `${movieDetail?.backdrop_img})`,
               }}
         >
           <div className="absolute inset-0 z-10 bg-black opacity-80"></div>
@@ -137,7 +153,7 @@ function DetailPage() {
           </ul>
           <div className="md:order-2 md:row-span-3 md:mt-10 w-full flex justify-center">
             <img
-              src={`https://image.tmdb.org/t/p/w500${movieDetail?.poster_path}`}
+              src={`${movieDetail?.poster_img}`}
               alt="movie-poster"
               className="rounded-2xl shadow-md w-80"
             />
@@ -149,7 +165,7 @@ function DetailPage() {
                   Release Date
                 </h2>
                 <p className="text-xl leading-7 font-semibold">
-                  {movieDetail?.release_date}
+                  {movieDetail?.release_date.split('T')[0]}
                 </p>
               </li>
               <li className="col-span-2 md:text-white">
@@ -158,7 +174,8 @@ function DetailPage() {
                 </h2>
                 {/* <p className="text-xl leading-7 font-semibold">{"yanto"}</p> */}
                 <p className="text-xl leading-7 font-semibold">
-                  {movieCredits && getDirectors(movieCredits)}
+                  {/* {movieCredits && getDirectors(movieCredits)} */}
+                  {movieDetail?.directors[0].name}
                 </p>
               </li>
               <li className="col-span-4 md:text-white">
@@ -166,13 +183,15 @@ function DetailPage() {
                   Duration
                 </h2>
                 <p className="text-xl leading-7 font-semibold">
-                  {movieDetail && getDuration(movieDetail.runtime)}
+                  {/* {movieDetail && getDuration(movieDetail.runtime)} */}
+                  {movieDetail?.duration + ' minutes'}
                 </p>
               </li>
               <li className="col-span-4 md:text-white">
                 <h2 className="text-lg font-light">Cast</h2>
                 <p className="text-xl leading-7 font-semibold">
-                  {movieCredits && getCasts(movieCredits)}
+                  {/* {movieCredits && getCasts(movieCredits)} */}
+                  {movieDetail?.casts.map((cast) => cast.actor_name).join(', ')}
                 </p>
                 {/* <p className="text-xl leading-7 font-semibold">{["yanti", "yanto"]}</p> */}
               </li>

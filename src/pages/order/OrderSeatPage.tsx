@@ -21,20 +21,36 @@ function OrderInfo() {
   const order = useSelector((state: RootStateOrder) => state.order);
   const { id } = useParams();
 
+  
+  // useEffect(() => {
+  //     const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+  //     const options = {
+  //       method: "GET",
+  //       headers: {
+  //         accept: "application/json",
+  //         Authorization:
+  //           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
+  //       },
+  //     };
+  
+  //     fetch(url, options)
+  //       .then((res) => res.json())
+  //       .then((json) => setMovieDetail(json))
+  //       .catch((err) => console.error(err));
+  //   }, [id]);
+
   useEffect(() => {
-      const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+      const url = `http://localhost:8989/movies/${id}`;
       const options = {
         method: "GET",
         headers: {
           accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
         },
       };
   
       fetch(url, options)
         .then((res) => res.json())
-        .then((json) => setMovieDetail(json))
+        .then((json) => setMovieDetail(json.result))
         .catch((err) => console.error(err));
     }, [id]);
 

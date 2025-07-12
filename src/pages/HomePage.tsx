@@ -5,13 +5,14 @@ import Chip from "../components/Chip";
 import affordable from "../assets/affordable.svg";
 import customerService from "../assets/customerService.svg";
 import guaranted from "../assets/guaranted.svg";
-import Card from "../components/Card";
+// import Card from "../components/Card";
+import Card from "../components/integration/Card";
 import Newslater from "../components/Newslater";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { moviesActions } from "../redux/reducers/moviesSlice";
-import type { AppDispatch } from "../redux/store";
-import Loader from "../components/Loader";
+// import { useDispatch, useSelector } from "react-redux";
+// import { moviesActions } from "../redux/reducers/moviesSlice";
+// import type { AppDispatch } from "../redux/store";
+// import Loader from "../components/Loader";
 
 function HomePage() {
   return (
@@ -109,16 +110,38 @@ function Banner() {
   );
 }
 function NowPlaying() {
-  const { nowPlayingMovies, genres, isLoading, isError } = useSelector(
-    (state: { movies: StateMovies }) => state.movies,
-  );
-  const { getNowPlayingMoviesThunk, getGenresMovieThunk } = moviesActions;
-  const dispatch: AppDispatch = useDispatch();
+  // const { nowPlayingMovies, genres, isLoading, isError } = useSelector(
+  //   (state: { movies: StateMovies }) => state.movies,
+  // );
+  // const { getNowPlayingMoviesThunk, getGenresMovieThunk } = moviesActions;
+  // const dispatch: AppDispatch = useDispatch();
 
+  // useEffect(() => {
+  //   dispatch(getNowPlayingMoviesThunk(1));
+  //   dispatch(getGenresMovieThunk());
+  // }, []);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+  
   useEffect(() => {
-    dispatch(getNowPlayingMoviesThunk(1));
-    dispatch(getGenresMovieThunk());
+    async function fetchData() {
+      const options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      try {
+        const response = await fetch("http://localhost:8989/movies/now-showing", options);
+        const data = await response.json();
+        setNowPlayingMovies(data.result);
+        console.log(data.result);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
   }, []);
+  
   return (
     <>
       <section className="mx-10 md:mx-20 md:mt-16 md:pb-20">
@@ -126,22 +149,32 @@ function NowPlaying() {
           Now Showing in Cinemas
         </h2>
         <ul className="container-card custom-scrollbar relative flex gap-5 overflow-x-scroll">
-          {isLoading && (
+          {/* {isLoading && (
             <div className="absolute top-50 left-1/2">
               <Loader overlay={false} />
             </div>
-          )}
-          {nowPlayingMovies &&
+          )} */}
+          {/* {nowPlayingMovies &&
             nowPlayingMovies.map((movie: movies) => {
               return (
                 <li key={`movie-id-${movie.id}`}>
                   <Card category="now playing" movie={movie} genres={genres} />
                 </li>
               );
-            })}
-          {isError && (
+            })} */}
+          {/* {isError && (
             <p className="text-center text-2xl text-red-500">Error</p>
-          )}
+          )} */}
+        
+          {
+            nowPlayingMovies && nowPlayingMovies.map((movie: MoviesIntegration) => {
+              return (
+                <li key={`movie-id-${movie.id}`}>
+                  <Card category="now playing" movie={movie} />
+                </li>
+              );
+            })
+          }
         </ul>
         <span className="flex justify-center">
           <Link
@@ -190,14 +223,32 @@ function WhyChooseUs() {
 }
 
 function UpComingMovies() {
-  const dispatch: AppDispatch = useDispatch();
-  const { getUpComingMoviesThunk } = moviesActions;
-  const { upComingMovies } = useSelector(
-    (state: { movies: StateMovies }) => state.movies,
-  );
+  // const dispatch: AppDispatch = useDispatch();
+  // const { getUpComingMoviesThunk } = moviesActions;
+  // const { upComingMovies } = useSelector(
+  //   (state: { movies: StateMovies }) => state.movies,
+  // );
+  const [upComingMovies, setUpComingMovies] = useState([]);
 
   useEffect(() => {
-    dispatch(getUpComingMoviesThunk());
+    // dispatch(getUpComingMoviesThunk());
+    async function fetchData() {
+      const options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      try {
+        const response = await fetch("http://localhost:8989/movies/up-coming", options);
+        const data = await response.json();
+        setUpComingMovies(data.result);
+        console.log(data.result);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
   }, []);
   return (
     <>

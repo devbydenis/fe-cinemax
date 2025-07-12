@@ -71,7 +71,7 @@ function LoginPage() {
         history: [], 
       };
       dispatch(
-        addInfoLoginAction(data),
+        addInfoLoginAction({...data, isLogin: true}),
       );
       setIsLoggedinRoute(true);
       setLoaderAuth(true);
