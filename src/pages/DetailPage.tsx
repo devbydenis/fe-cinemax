@@ -11,6 +11,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import Modal from "../components/Modal";
 import ModalContext from "../context/ModalContext";
 import DetailContext from "../context/DetailContext";
+import { BASE_URL_IMG } from "../service";
 
 function DetailPage() {
   const [movieDetail, setMovieDetail] = useState();
@@ -128,7 +129,7 @@ function DetailPage() {
         <section
           className="h-160 bg-orange relative bg-cover bg-center bg-no-repeat"
           style={{
-                backgroundImage: `${movieDetail?.backdrop_img})`,
+                backgroundImage: `url(${BASE_URL_IMG}${movieDetail?.backdrop_img})`,
               }}
         >
           <div className="absolute inset-0 z-10 bg-black opacity-80"></div>
@@ -138,7 +139,7 @@ function DetailPage() {
             {movieDetail?.title}
           </h1>
           <p className="md:col-span-1 md:order-3 mt-4 md:h-full md:place-content-end text-white text-medium leading-6 font-normal md:text-lg">
-            {movieDetail?.overview}
+            {movieDetail?.description}
           </p>
           <ul className="md:order-4 mt-5 flex flex-wrap gap-3 justify-center md:justify-start w-full h-full">
             {movieDetail &&
@@ -153,7 +154,7 @@ function DetailPage() {
           </ul>
           <div className="md:order-2 md:row-span-3 md:mt-10 w-full flex justify-center">
             <img
-              src={`${movieDetail?.poster_img}`}
+              src={`${BASE_URL_IMG}${movieDetail?.poster_img}`}
               alt="movie-poster"
               className="rounded-2xl shadow-md w-80"
             />

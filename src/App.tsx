@@ -22,6 +22,7 @@ import ListMoviePage from "./pages/admin/ListMoviePage.tsx";
 import DashboardPage from "./pages/admin/DashboardPage.tsx";
 import AdminLayout from "./layout/AdminLayout.tsx";
 import ExamplePage from "./pages/admin/ExamplePage.tsx";
+import MoviesIntegrationPage from "./pages/MoviesIntegrationPage.tsx";
 
 
 function App() {
@@ -48,7 +49,7 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="movies">
-            <Route index element={<MoviesPage />} />
+            <Route index element={<MoviesIntegrationPage />} />
             <Route path=":id" element={<DetailPage />} />
           </Route>
           <Route path="buy-ticket" element={<MoviesPage />} />

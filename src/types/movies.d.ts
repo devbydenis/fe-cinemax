@@ -47,6 +47,7 @@ type MovieDetail = {
   id: number;
   original_title: string;
   overview: string;
+  description: string;
   poster_path: string;
   poster_img: string;
   release_date: string;
@@ -91,7 +92,7 @@ type ShowModal = {
 
 type FilterChipType = {
   genre: string;
-  isChecked: boolean | undefined;
+  isChecked?: boolean | undefined;
   // handleSelectedGenres: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleSelectedGenres: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  handleSelectedGenres?: React.ChangeEventHandler<HTMLInputElement> | undefined;
 };
