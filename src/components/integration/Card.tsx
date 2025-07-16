@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { BASE_URL_IMG } from "../../service";
+import fallback from "../../assets/fallback.png";
 
 function Card(props: CardPRops) {
   const location = useLocation();
@@ -31,7 +32,7 @@ function Card(props: CardPRops) {
         <div
           className="mb-2.5 h-56 w-[9.5rem] rounded-2xl md:h-[27.75rem] md:w-[296px]"
           style={{
-            backgroundImage: `url(${BASE_URL_IMG}${props.movie?.poster_img})`,
+            backgroundImage: `${props.movie?.poster_img ? `url(${BASE_URL_IMG}${props.movie?.poster_img})` : `url(${fallback})`}`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

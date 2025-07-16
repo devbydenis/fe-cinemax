@@ -131,7 +131,7 @@ function NowPlaying() {
         },
       };
       try {
-        const response = await fetch("http://localhost:8989/movies/now-showing", options);
+        const response = await fetch("http://localhost:8800/movies/now-showing", options);
         const data = await response.json();
         setNowPlayingMovies(data.result);
         console.log(data.result);
@@ -165,7 +165,14 @@ function NowPlaying() {
           {/* {isError && (
             <p className="text-center text-2xl text-red-500">Error</p>
           )} */}
-        
+          {
+            nowPlayingMovies.length === 0 && (
+              <div className="text-center w-full ">
+                <p className="text-2xl text-red-400">No Movies Found</p>
+                <small className="text-white">Something went wrong</small>
+              </div>
+            )
+          }
           {
             nowPlayingMovies && nowPlayingMovies.map((movie: MoviesIntegration) => {
               return (
@@ -240,7 +247,7 @@ function UpComingMovies() {
         },
       };
       try {
-        const response = await fetch("http://localhost:8989/movies/up-coming", options);
+        const response = await fetch("http://localhost:8800/movies/up-coming", options);
         const data = await response.json();
         setUpComingMovies(data.result);
         console.log(data.result);
@@ -268,6 +275,14 @@ function UpComingMovies() {
           </div>
         </div>
         <ul className="container-card custom-scrollbar mx-3 flex gap-5 overflow-x-scroll">
+          {
+            upComingMovies.length === 0 && (
+              <div className="text-center w-full ">
+                <p className="text-2xl text-red-400">No Movies Found</p>
+                <small className="text-white">Something went wrong</small>
+              </div>
+            )
+          }
           {upComingMovies &&
             upComingMovies.map((movie: movies) => {
               return (
