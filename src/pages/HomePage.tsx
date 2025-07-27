@@ -9,6 +9,7 @@ import guaranted from "../assets/guaranted.svg";
 import Card from "../components/integration/Card";
 import Newslater from "../components/Newslater";
 import { useEffect, useState } from "react";
+import { BASE_URL } from "../service";
 // import { useDispatch, useSelector } from "react-redux";
 // import { moviesActions } from "../redux/reducers/moviesSlice";
 // import type { AppDispatch } from "../redux/store";
@@ -131,10 +132,10 @@ function NowPlaying() {
         },
       };
       try {
-        const response = await fetch("http://localhost:8800/movies/now-showing", options);
+        const response = await fetch(`${BASE_URL}/movies/now-showing`, options);
         const data = await response.json();
+        console.log("data result", data.result);
         setNowPlayingMovies(data.result);
-        console.log(data.result);
       } catch (error) {
         console.error(error);
       }
@@ -247,7 +248,7 @@ function UpComingMovies() {
         },
       };
       try {
-        const response = await fetch("http://localhost:8800/movies/up-coming", options);
+        const response = await fetch(`${BASE_URL}/movies/up-coming`, options);
         const data = await response.json();
         setUpComingMovies(data.result);
         console.log(data.result);

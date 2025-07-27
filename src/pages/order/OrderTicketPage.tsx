@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetOrder } from "../../redux/reducers/orderSlice";
 import { addHistoryAction } from "../../redux/reducers/history";
+import { BASE_URL, BASE_URL_IMG } from "../../service";
 
 function OrderTicketPage() {
   return (
@@ -26,7 +27,7 @@ function TicketBanner() {
   }, []);
 
   useEffect(() => {
-    const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+    const url = `${BASE_URL}/movies/${id}`;
     const options = {
       method: "GET",
       headers: {
@@ -44,7 +45,7 @@ function TicketBanner() {
   return (
     <section
       className="relative row-span-2 h-[600px] bg-cover bg-center md:h-full"
-      style={{ backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieDetail?.backdrop_path})` }}
+      style={{ backgroundImage: `url(${BASE_URL_IMG}${movieDetail?.backdrop_path})` }}
     >
       <div className="absolute inset-0 bg-black opacity-80"></div>
       <div className="relative z-10 mx-6 flex h-full flex-col items-center justify-center gap-5 px-10">
@@ -64,7 +65,7 @@ function TicketBanner() {
 }
 function TicketResult() {
   const order = useSelector((state: {order: {order: Order}}) => state.order.order);
-  const {title, seat, date, time } = order
+  const {title, seats, date_booking, time_booking } = order
   console.log("order", order);
   const subStrTitle = (str: string) => {
     return str.substring(0, 12) + "...";
@@ -88,7 +89,7 @@ function TicketResult() {
         <div className="col-span-2 mb-5">
           <p className="text-xs text-[#AAAAAA]">Seats</p>
           <p className="mt-1 text-sm font-semibold text-[#14142B]">
-            {seat.join(", ")}
+            {seats.join(", ")}
           </p>
         </div>
         <div className="">
@@ -97,19 +98,19 @@ function TicketResult() {
         </div>
         <div className="">
           <p className="text-xs text-[#AAAAAA]">Date</p>
-          <p className="mt-1 text-sm font-semibold text-[#14142B]">{date}</p>
+          <p className="mt-1 text-sm font-semibold text-[#14142B]">{date_booking}</p>
         </div>
         <div className="">
           <p className="text-xs text-[#AAAAAA]">Time</p>
-          <p className="mt-1 text-sm font-semibold text-[#14142B]">{time}</p>
+          <p className="mt-1 text-sm font-semibold text-[#14142B]">{time_booking}</p>
         </div>
         <div className="">
           <p className="text-xs text-[#AAAAAA]">Count</p>
-          <p className="mt-1 text-sm font-semibold text-[#14142B]">{seat.length} pcs</p>
+          <p className="mt-1 text-sm font-semibold text-[#14142B]">{seats.length} pcs</p>
         </div>
         <div className="col-span-2 mt-5 flex justify-center items-center border-t-4 border-orange py-5">
           <p className="text-xl font-bold text-black mr-20">Total Payment</p>
-          <p className="mt-1 text-lg font-semibold text-[#14142B]">${seat.length * 10}</p>
+          <p className="mt-1 text-lg font-semibold text-[#14142B]">${seats.length * 10}</p>
         </div>
       </div>
     </section>

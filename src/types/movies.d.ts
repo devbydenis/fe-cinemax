@@ -48,7 +48,7 @@ type MovieDetail = {
   original_title: string;
   overview: string;
   description: string;
-  poster_path: string;
+  // poster_path: string;
   poster_img: string;
   release_date: string;
   title: string;

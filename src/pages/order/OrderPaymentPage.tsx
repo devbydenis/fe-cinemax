@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import gpay from "../../assets/gpay.svg";
 import visa from "../../assets/visa.svg";
 import dana from "../../assets/dana.svg";
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm, type FieldValues } from "react-hook-form";
 import { addOrderAction } from "../../redux/reducers/orderSlice";
 import { addHistoryUserAction } from "../../redux/reducers/userSlice";
+import { BASE_URL } from "../../service";
 
 function OrderPaymentPage() {
   const [isModalShow, setIsModalShow] = useState(false);
@@ -48,31 +49,31 @@ function PaymentInfo() {
           <p className="text-secondary font-semibold uppercase text-white-primary">
             date &amp; time
           </p>
-          <p className="my-2 text-white-primary">
-            {order.date} & {order.time}
+          <p className="my-2 text-gray-300">
+            {order.date_booking} & {order.time_booking}
           </p>
         </div>
         <div className="border-orange/70 border-b-2 tracking-[.75px]">
           <p className="text-secondary font-semibold uppercase text-white-primary">movie title</p>
-          <p className="my-2 text-white-primary">{order.title}</p>
+          <p className="my-2 text-gray-300">{order.title}</p>
         </div>
         <div className="border-orange/70 border-b-2 tracking-[.75px]">
           <p className="text-secondary font-semibold uppercase text-white-primary">cinema name</p>
-          <p className="my-2 text-gray-400">{order.cinema}</p>
+          <p className="my-2 text-gray-300">{order.cinema}</p>
         </div>
         <div className="border-orange/70 border-b-2 tracking-[.75px]">
           <p className="text-secondary font-semibold uppercase text-white-primary">
             number of tickets
           </p>
-          <p className="my-2 text-gray-400">
-            {order.seat.length} pieces {`(${order.seat.join(", ")})`}
+          <p className="my-2 text-gray-300">
+            {order.seats.length} pieces {`(${order.seats.join(", ")})`}
           </p>
         </div>
         <div className="border-orange/70 border-b-2 tracking-[.75px]">
           <p className="text-secondary font-semibold uppercase text-white-primary">
             total payment
           </p>
-          <p className="my-2 text-gray-400">${order.seat.length * 10}</p>
+          <p className="my-2 text-gray-300">${order.seats.length * 10}</p>
         </div>
       </div>
     </div>
@@ -239,6 +240,42 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
   const dispatch = useDispatch();
   console.log("order after submit payment", order);
   console.log("user after submit payment", user);
+  
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [dataTransaction, setDataTransaction] = useState({
+    user_id: order.userId,
+    cinema: order.cinema,
+    movie_title: order.title,
+    payment_method: order.payment,    
+    date_booking: order.date_booking,
+    time_booking: order.time_booking,
+    total_price: order.totalPrice,
+    status: "pending",
+    location: order.location,
+    seats: order.seat,
+  });
+
+  useEffect(() => {
+    async function handleTransaction() {
+      try {
+        const response = await fetch(`${BASE_URL}/transactions/create`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+          },
+          body: JSON.stringify(dataTransaction),
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    handleTransaction();
+    console.log("handleTransaction executed")
+  }, [isConfirmed]);
 
   return (
     <section
@@ -267,7 +304,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
         </div>
         <p className="text-secondary text-sm leading-8 font-normal tracking-[.75px]">
           Pay this payment bill before it is due, on{" "}
-          <span className="text-red-500">June 23, 2025</span>. If the bill has
+          <span className="text-red-500">July 28, 2025</span>. If the bill has
           not been paid by the specified time, it will be forfeited
         </p>
         <div className="flex flex-col gap-3">
@@ -277,6 +314,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
             onClick={() => {
               dispatch(addOrderAction({ ...order, statusPayment: true }));
               dispatch(addHistoryUserAction({ ...order, statusPayment: true }));
+              setDataTransaction({ ...dataTransaction, status: "success" });
+              setIsConfirmed(true);
             }}
           >
             Check Payment
@@ -287,6 +326,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
             onClick={() => {
               dispatch(addOrderAction({ ...order, statusPayment: false }));
               dispatch(addHistoryUserAction({ ...order, statusPayment: false }));
+              setDataTransaction({ ...dataTransaction, status: "pending" });
+              setIsConfirmed(true);
             }}
           >
             Pay Later

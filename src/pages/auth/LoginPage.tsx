@@ -12,6 +12,7 @@ import ModalAuth from "../../components/ModalAuth";
 import { useDispatch } from "react-redux";
 import { addInfoLoginAction } from "../../redux/reducers/userSlice";
 import AuthContext from "./AuthContext";
+import { BASE_URL } from "../../service";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -57,7 +58,7 @@ function LoginPage() {
 
     try {
       const responseLogin = await requestLogin(
-        "http://localhost:8989/auth/login",
+        `${BASE_URL}/auth/login`,
         userData,
       );
       console.log(responseLogin);

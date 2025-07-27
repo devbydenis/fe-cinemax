@@ -4,21 +4,23 @@ import cineone21 from "../assets/cineone21-logo.svg";
 import { FiSearch } from "react-icons/fi";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useForm, type FieldValues } from "react-hook-form";
+import { Controller, useForm, type FieldValues } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { addOrderAction } from "../redux/reducers/orderSlice";
 import { nanoid } from "@reduxjs/toolkit";
 import Modal from "../components/Modal";
 import ModalContext from "../context/ModalContext";
 import DetailContext from "../context/DetailContext";
-import { BASE_URL_IMG } from "../service";
+import { BASE_URL, BASE_URL_IMG } from "../service";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function DetailPage() {
   const [movieDetail, setMovieDetail] = useState();
   const [showModal, setShowModal] = useState(false);
   const { id } = useParams();
 
-  console.log("showModal", showModal);
+  // console.log("showModal", showModal);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,7 +36,7 @@ function DetailPage() {
     //       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
     //   },
     // };
-    const url = `http://localhost:8989/movies/${id}`;
+    const url = `${BASE_URL}/movies/${id}`;
     const options = {
       method: "GET",
       headers: {
@@ -63,7 +65,7 @@ function DetailPage() {
           >
             <Modal
               message="You are not logged in, please login first"
-            color="orange"
+              color="orange"
             />
           </div>
           <Banner />
@@ -74,151 +76,98 @@ function DetailPage() {
   );
 }
 
-  function Banner() {
-    const { movieDetail } = useContext(DetailContext);
-    const [, setMovieCredits] = useState();
-    const { id } = useParams();
-    console.log("movie detail", movieDetail);
-  
-    // const getDuration = (duration: number) => {
-    //   const hours = Math.floor(duration / 60);
-    //   const minutes = duration % 60;
-    //   return `${hours}h ${minutes}m`;
-    // };
-  
-    // const getDirectors = (movieCredits: MovieCredits) => {
-    //   const result =
-    //     movieCredits.crew &&
-    //     movieCredits.crew.filter((credit) => credit.job == "Director")[0].name;
-    //   return result;
-    // };
-  
-    // const getCasts = (movieCredits: MovieCredits) => {
-    //   const result = movieCredits.cast
-    //     ?.map((credit) => credit.name)
-    //     .slice(0, 5)
-    //     .join(", ");
-    //   // console.log("casts", result);
-    //   return result;
-    // };
-  
-    useEffect(() => {
-      // const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
-      // const options = {
-      //   method: "GET",
-      //   headers: {
-      //     accept: "application/json",
-      //     Authorization:
-      //       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmM3ZWNhZjdjYjAzMTk3MmM4ODFhYzA5Y2MzNGE2YSIsIm5iZiI6MTc0MTMxMzM1OS45NjcsInN1YiI6IjY3Y2E1NTRmNzQ3OWQ4Yzg0OTJiM2Q2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GrBEVi__prOYL5AB5KMgbg0dvTc3I6Ar6cEfl29M5yE",
-      //   },
-      const url = `http://localhost:8989/movie/${id}`;
-      const options = {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
-      };
-      fetch(url, options)
-        .then((res) => res.json())
-        .then((json) => setMovieCredits(json.result))
-        .catch((err) => console.error(err));
-    }, [id]);
-    
-    return (
-      <>
-        <section
-          className="h-160 bg-orange relative bg-cover bg-center bg-no-repeat"
-          style={{
-                backgroundImage: `url(${BASE_URL_IMG}${movieDetail?.backdrop_img})`,
-              }}
-        >
-          <div className="absolute inset-0 z-10 bg-black opacity-80"></div>
-        </section>
-        <section className="absolute z-20 px-5 text-white-primary grid place-items-center gap-y-3 md:grid-cols-[350px_1fr] md:grid-rows-[50px_230px_100px_1fr] gap-10">
-          <h1 className="md:col-span-2 md:order-1 mt-10 md:mt-20 text-white text-4xl break-all min-w-50 md:text-4xl font-semibold md:text-[4rem]">
-            {movieDetail?.title}
-          </h1>
-          <p className="md:col-span-1 md:order-3 mt-4 md:h-full md:place-content-end text-white text-medium leading-6 font-normal md:text-lg">
-            {movieDetail?.description}
-          </p>
-          <ul className="md:order-4 mt-5 flex flex-wrap gap-3 justify-center md:justify-start w-full h-full">
-            {movieDetail &&
-              movieDetail.genres.map((genre) => (
-                <li
-                  key={"genre" + genre.id}
-                  className={`focus:border-orange tracking-wider min-w-fit cursor-pointer rounded-3xl border border-white px-4 py-2 font-medium text-white uppercase h-fit`}
-                >
-                  {genre.name}
-                </li>
+function Banner() {
+  const { movieDetail } = useContext(DetailContext);
+  console.log("movieDetail", movieDetail?.backdrop_img);
+  return (
+    <>
+      <section
+        className="bg-orange relative h-160 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${BASE_URL_IMG}${movieDetail?.backdrop_img})`,
+        }}
+      >
+        <div className="absolute inset-0 z-10 bg-black opacity-80"></div>
+      </section>
+      <section className="text-white-primary absolute z-20 grid place-items-center gap-10 gap-y-3 px-5 md:grid-cols-[350px_1fr] md:grid-rows-[50px_230px_100px_1fr]">
+        <h1 className="mt-10 min-w-50 text-4xl font-semibold break-all text-white md:order-1 md:col-span-2 md:mt-20 md:text-4xl md:text-[4rem]">
+          {movieDetail?.title}
+        </h1>
+        <p className="text-medium mt-4 leading-6 font-normal text-white md:order-3 md:col-span-1 md:h-full md:place-content-end md:text-lg">
+          {movieDetail?.description}
+        </p>
+        <ul className="mt-5 flex h-full w-full flex-wrap justify-center gap-3 md:order-4 md:justify-start">
+          {movieDetail &&
+            movieDetail.genres.map((genre) => (
+              <li
+                key={"genre" + genre.id}
+                className={`focus:border-orange h-fit min-w-fit cursor-pointer rounded-3xl border border-white px-4 py-2 font-medium tracking-wider text-white uppercase`}
+              >
+                {genre.name}
+              </li>
             ))}
+        </ul>
+        <div className="flex w-full justify-center md:order-2 md:row-span-3 md:mt-10">
+          <img
+            src={`${BASE_URL_IMG}${movieDetail?.poster_img}`}
+            alt="movie-poster"
+            className="w-80 rounded-2xl shadow-md"
+          />
+        </div>
+        <div className="h-60 w-full place-content-start md:order-5">
+          <ul className="grid-col-6 flex grid-flow-col grid-rows-[80px_1fr] flex-col items-start justify-start gap-x-10 gap-y-7 md:grid md:gap-y-0">
+            <li className="col-span-2 md:text-white">
+              <h2 className="text-lg font-light">Release Date</h2>
+              <p className="text-xl leading-7 font-semibold">
+                {movieDetail?.release_date.split("T")[0]}
+              </p>
+            </li>
+            <li className="col-span-2 md:text-white">
+              <h2 className="text-lg font-light">Directed By</h2>
+              {/* <p className="text-xl leading-7 font-semibold">{"yanto"}</p> */}
+              <p className="text-xl leading-7 font-semibold">
+                {/* {movieCredits && getDirectors(movieCredits)} */}
+                {movieDetail?.directors[0].name}
+              </p>
+            </li>
+            <li className="col-span-4 md:text-white">
+              <h2 className="text-lg font-light">Duration</h2>
+              <p className="text-xl leading-7 font-semibold">
+                {/* {movieDetail && getDuration(movieDetail.runtime)} */}
+                {movieDetail?.duration + " minutes"}
+              </p>
+            </li>
+            <li className="col-span-4 md:text-white">
+              <h2 className="text-lg font-light">Cast</h2>
+              <p className="text-xl leading-7 font-semibold">
+                {/* {movieCredits && getCasts(movieCredits)} */}
+                {movieDetail?.casts.map((cast) => cast.actor_name).join(", ")}
+              </p>
+              {/* <p className="text-xl leading-7 font-semibold">{["yanti", "yanto"]}</p> */}
+            </li>
           </ul>
-          <div className="md:order-2 md:row-span-3 md:mt-10 w-full flex justify-center">
-            <img
-              src={`${BASE_URL_IMG}${movieDetail?.poster_img}`}
-              alt="movie-poster"
-              className="rounded-2xl shadow-md w-80"
-            />
-          </div>
-          <div className="md:order-5 h-60 place-content-start w-full">
-            <ul className="grid-col-6 flex grid-flow-col grid-rows-[80px_1fr] flex-col items-start justify-start gap-x-10 gap-y-7 md:grid md:gap-y-0">
-              <li className="col-span-2 md:text-white">
-                <h2 className="text-lg font-light">
-                  Release Date
-                </h2>
-                <p className="text-xl leading-7 font-semibold">
-                  {movieDetail?.release_date.split('T')[0]}
-                </p>
-              </li>
-              <li className="col-span-2 md:text-white">
-                <h2 className="text-lg font-light">
-                  Directed By
-                </h2>
-                {/* <p className="text-xl leading-7 font-semibold">{"yanto"}</p> */}
-                <p className="text-xl leading-7 font-semibold">
-                  {/* {movieCredits && getDirectors(movieCredits)} */}
-                  {movieDetail?.directors[0].name}
-                </p>
-              </li>
-              <li className="col-span-4 md:text-white">
-                <h2 className="text-lg font-light">
-                  Duration
-                </h2>
-                <p className="text-xl leading-7 font-semibold">
-                  {/* {movieDetail && getDuration(movieDetail.runtime)} */}
-                  {movieDetail?.duration + ' minutes'}
-                </p>
-              </li>
-              <li className="col-span-4 md:text-white">
-                <h2 className="text-lg font-light">Cast</h2>
-                <p className="text-xl leading-7 font-semibold">
-                  {/* {movieCredits && getCasts(movieCredits)} */}
-                  {movieDetail?.casts.map((cast) => cast.actor_name).join(', ')}
-                </p>
-                {/* <p className="text-xl leading-7 font-semibold">{["yanti", "yanto"]}</p> */}
-              </li>
-            </ul>
-          </div>
-        </section>
-        
-      </>
-    )
-    
-  }
+        </div>
+      </section>
+    </>
+  );
+}
 
 function SetOrder() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, control } = useForm();
   const { movieDetail } = useContext(DetailContext);
   const { showModal, setShowModal } = useContext(ModalContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const param = useParams();
   const user = useSelector((state: RootState) => state.user);
-  console.log("user in detail", !user.user.isLogin);
+  // console.log("user in detail", !user.user.isLogin);
 
   const onSubmit = (data: FieldValues) => {
-    // console.log(data);
+    console.log("detail page data: ", data);
+    console.log("detail page date: ", data.date.toISOString().split("T")[0]);
+    console.log("detail page time: ", data.time.toLocaleString().split(",")[1]);
     if (!user.user.isLogin) {
-      console.log("belum login bro gabisa mesen");
+      // console.log("belum login bro gabisa mesen");
       setShowModal(!showModal);
       return;
     }
@@ -228,19 +177,22 @@ function SetOrder() {
         userId: user.user.id,
         orderId: nanoid(),
         title: movieDetail?.title,
-        ...data,
+        cinema: data.cinema,
+        date_booking: data.date.toISOString().split('T')[0],
+        time_booking: data.time.toLocaleString().split(",")[1],
+        location: data.location,
       }),
     );
     navigate(`/order/seat/${param.id}`);
   };
   return (
     <>
-      <section className="px-5 my-[5rem]">
+      <section className="my-[5rem] px-5">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3"
         >
-          <h2 className="col-span-3 text-4xl leading-7 font-bold text-white-primary">
+          <h2 className="text-white-primary col-span-3 text-4xl leading-7 font-bold">
             Book Tickets
           </h2>
           <div className="choose-date col-span-2 flex flex-col md:col-span-1">
@@ -250,15 +202,28 @@ function SetOrder() {
             >
               Choose Date
             </label>
-            <div className="flex items-center gap-4 rounded-full border-2 border-white-primary text-white px-5 py-3">
+            <div className="border-white-primary flex items-center gap-4 rounded-full border-2 px-5 py-3 text-white">
               <FiSearch />
               <label htmlFor="date"></label>
-              <input
-                className="datepicker-input w-full outline-none text-white cursor-pointer"
+              {/* <input
+                className="datepicker-input w-full cursor-pointer text-white outline-none"
                 {...register("date")}
                 type="date"
                 id="date"
                 placeholder="Select date"
+              /> */}
+              <Controller
+                name="date"
+                control={control}
+                render={({ field }) => (
+                  <DatePicker
+                    selected={field.value}
+                    className="datepicker-input w-full cursor-pointer text-white outline-none mr-5"
+                    onChange={(date) => field.onChange(date)}
+                    dateFormat={"dd/MM/yyyy"}
+                    placeholderText="Pilih Tanggal"
+                  />
+                )}
               />
             </div>
           </div>
@@ -266,37 +231,73 @@ function SetOrder() {
             <h2 className="text-white-primary mb-3 text-lg font-semibold">
               Choose Time
             </h2>
-            <div className="flex items-center gap-4 rounded-full border-2 border-white-primary text-white px-5 py-3">
+            <div className="border-white-primary flex items-center gap-4 rounded-full border-2 px-5 py-3 text-white">
               <FiSearch />
-              <select
-                className="w-full outline-none"
+              {/* <select
+                className="w-full cursor-pointer outline-none"
                 {...register("time")}
                 id="time"
               >
-                <option className="text-black" value="10.00">10.00-11.00</option>
-                <option className="text-black" value="12.00">12.00-13.00</option>
-                <option className="text-black" value="14.00">14.00-15.00</option>
-                <option className="text-black" value="16.00">16.00-17.00</option>
-                <option className="text-black" value="18.00">18.00-19.00</option>
-              </select>
+                <option className="text-black" value="10:00">
+                  10.00
+                </option>
+                <option className="text-black" value="12:00">
+                  12.00
+                </option>
+                <option className="text-black" value="14:00">
+                  14.00
+                </option>
+                <option className="text-black" value="16:00">
+                  16.00
+                </option>
+                <option className="text-black" value="18:00">
+                  18.00
+                </option>
+              </select> */}
+
+              <Controller
+                name="time"
+                control={control}
+                render={({ field }) => (
+                  <DatePicker
+                    className="datepicker-input mx-5 w-full cursor-pointer text-white outline-none"
+                    selected={field.value}
+                    dateFormat={"HH:mm"}
+                    onChange={(time) => field.onChange(time)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    placeholderText="Pilih Waktu"
+                  />
+                )}
+              />
             </div>
           </div>
           <div className="choose-location col-span-2 md:col-span-1">
             <h2 className="text-white-primary mb-3 text-lg font-semibold">
               Choose Location
             </h2>
-            <div className="flex items-center gap-4 rounded-full border-2 border-white-primary text-white px-5 py-3">
+            <div className="border-white-primary flex items-center gap-4 rounded-full border-2 px-5 py-3 text-white">
               <FiSearch />
               <select
-                className="w-full outline-none"
+                className="w-full cursor-pointer outline-none"
                 {...register("location")}
                 id="location"
               >
-                <option className="text-black" value="Jakarta">Jakarta</option>
-                <option className="text-black" value="Bogor">Bogor</option>
-                <option className="text-black" value="Depok">Depok</option>
-                <option className="text-black" value="Tangerang">Tangerang</option>
-                <option className="text-black" value="Bekasi">Bekasi</option>
+                <option className="text-black" value="Jakarta">
+                  Jakarta
+                </option>
+                <option className="text-black" value="Bogor">
+                  Bogor
+                </option>
+                <option className="text-black" value="Depok">
+                  Depok
+                </option>
+                <option className="text-black" value="Tangerang">
+                  Tangerang
+                </option>
+                <option className="text-black" value="Bekasi">
+                  Bekasi
+                </option>
               </select>
             </div>
           </div>
@@ -309,7 +310,7 @@ function SetOrder() {
             </h2>
             <div className="flex flex-col items-center gap-5 md:flex-row md:justify-center md:gap-10">
               <label
-                className="group has-checked:bg-orange flex h-35 w-3/4 items-center justify-center rounded bg-gray-300 p-3 opacity-50 transition-all has-checked:opacity-100 md:w-60"
+                className="group has-checked:bg-orange flex h-35 w-3/4 items-center justify-center rounded bg-gray-300 p-3 opacity-50 transition-all has-checked:opacity-100 md:w-60 cursor-pointer"
                 htmlFor="ebvid"
               >
                 <img className="aspect-auto" src={ebvid} alt="ebvid" />
@@ -322,7 +323,7 @@ function SetOrder() {
                 />
               </label>
               <label
-                className="group has-checked:bg-orange flex h-35 w-3/4 items-center justify-center rounded bg-gray-300 p-3 opacity-50 transition-all has-checked:opacity-100 md:w-60"
+                className="group has-checked:bg-orange flex h-35 w-3/4 items-center justify-center rounded bg-gray-300 p-3 opacity-50 transition-all has-checked:opacity-100 md:w-60 cursor-pointer"
                 htmlFor="hiflix"
               >
                 <img className="aspect-auto" src={hiflix} alt="hiflix" />
@@ -335,7 +336,7 @@ function SetOrder() {
                 />
               </label>
               <label
-                className="group has-checked:bg-orange flex h-35 w-3/4 items-center justify-center rounded bg-gray-300 p-3 opacity-50 transition-all has-checked:opacity-100 md:w-60"
+                className="group has-checked:bg-orange flex h-35 w-3/4 items-center justify-center rounded bg-gray-300 p-3 opacity-50 transition-all has-checked:opacity-100 md:w-60 cursor-pointer"
                 htmlFor="cineone21"
               >
                 <img className="aspect-auto" src={cineone21} alt="cineone21" />

@@ -5,6 +5,7 @@ import Newslater from "../components/Newslater";
 import { FiSearch } from "react-icons/fi";
 import Chip from "../components/Chip";
 import { FaArrowRight } from "react-icons/fa";
+import { BASE_URL } from "../service";
 
 type MenuProps = {
   setSearch: (value: string) => void;
@@ -24,7 +25,7 @@ function MoviesIntegrationPage() {
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await fetch(`http://localhost:8989/movies/explore?search=${search}&sortby=${sortby}&limit=${limit}&page=${page}`);
+        const response = await fetch(`${BASE_URL}/movies/explore?search=${search}&sortby=${sortby}&limit=${limit}&page=${page}`);
         const data = await response.json();
         setMovies(data.result);
       } catch (error) {
@@ -125,7 +126,11 @@ function Menu(props: MenuProps) {
               type="text"
               placeholder="Search Your Movie"
               name="query"
-              onChange={(e) => props.setSearch(e.target.value)}
+              onChange={(e) => 
+                setTimeout(() => {
+                  props.setSearch(e.target.value)
+                }, 2000)
+              }
             />
           </div>
         </div>

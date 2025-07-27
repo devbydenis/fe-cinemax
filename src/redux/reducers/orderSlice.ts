@@ -5,11 +5,11 @@ const initialState = {
       orderId: "",
       userId: "",
       title: "",
-      date: "",
-      time: "",
+      date_booking: "",
+      time_booking: "",
       location: "",
       cinema: "",
-      seat: [],
+      seats: [],
       totalPrice: 0,
       payment: '',
     },
@@ -24,18 +24,18 @@ const order = createSlice({
       state.order = {...state.order,...action.payload}
     },
     addSeatsAction: (state, action) => {
-      state.order.seat = action.payload
+      state.order.seats = action.payload
     },
     resetOrder: (state) => {
       state.order = {
         orderId: "",
         userId: "",
         title: "",
-        date: "",
-        time: "",
+        date_booking: "",
+        time_booking: "",
         location: "",
         cinema: "",
-        seat: [],
+        seats: [],
         totalPrice: 0,
         payment: '',
       }
