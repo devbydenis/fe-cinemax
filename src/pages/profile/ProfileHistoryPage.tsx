@@ -3,8 +3,9 @@ import cineone from "../../assets/cineone21-logo.svg";
 import hiflix from "../../assets/hiflix-logo.svg";
 import ebvid from "../../assets/ebvid-logo.svg";
 import qrcode from "../../assets/qrcode.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
+import { BASE_URL } from "../../service";
 
 // Redux State Types
 interface User {
@@ -14,6 +15,7 @@ interface User {
   lastName?: string;
   email?: string;
   phoneNumber?: string;
+  token?: string;
 }
 
 interface UserState {
@@ -27,13 +29,20 @@ interface RootState {
 
 // History Types
 interface History {
-  cinema: CinemaType;
-  date: string;
-  time: string;
-  seat: string[];
-  totalPrice: number;
-  title: string;
-  statusPayment: boolean;
+  cinema?: CinemaType;
+  cinema_name: CinemaType;
+  date?: string;
+  date_booking: string;
+  time?: string;
+  time_booking: string;
+  seat?: string[];
+  seats: string[];
+  totalPrice?: number;
+  total_price: number;
+  title?: string;
+  movie_name: string;
+  statusPayment?: boolean;
+  status: string;
 }
 
 type CinemaType = "cineone" | "hiflix" | "ebvid";
@@ -43,7 +52,7 @@ interface CardHistoryProps {
   cinema: CinemaType;
   date: string;
   title: string;
-  isTicketPaid: boolean;
+  isTicketPaid: string;
   time: string;
   seat: string[];
   totalPrice: number;
@@ -58,8 +67,36 @@ interface TicketPaidProps {
 }
 
 function ProfileHistoryPage() {
-  const userHistories = useSelector((state: RootState) => state.user.user.history);
-  console.log("user di history", userHistories);
+  // const userHistories = useSelector((state: RootState) => state.user.user.history);
+  const [userHistories, setUserHistories] = useState<History[] | null>(null)
+  const user = useSelector(
+      (state: { user: { user: User } }) => state.user.user,
+    );
+  // console.log("user di history", userHistories);
+
+  useEffect(() => {
+    // FETCH FROM DATABASE
+    async function fetchHistory() {
+      try {
+        const response = await fetch(`${BASE_URL}/profile/history`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        const data = await response.json()
+        const histories = data.result
+        // console.log(histories)
+        setUserHistories(histories)
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    fetchHistory()
+  }, []);
   
   return (
     <>
@@ -69,13 +106,13 @@ function ProfileHistoryPage() {
             return (
               <CardHistory
                 key={index}
-                cinema={history.cinema}
-                date={history.date}
-                time={history.time}
-                seat={history.seat}
-                totalPrice={history.totalPrice}
-                title={history.title}
-                isTicketPaid={history.statusPayment}
+                cinema={history.cinema_name}
+                date={history.date_booking}
+                time={history.time_booking}
+                seat={history.seats}
+                totalPrice={history.total_price}
+                title={history.movie_name}
+                isTicketPaid={history.status}
               />
             );
           })}
@@ -113,7 +150,7 @@ function CardHistory(props: CardHistoryProps) {
           <div className="flex flex-col gap-5 md:grow md:flex-row">
             <span
               className={`${
-                isTicketPaid
+                isTicketPaid === "success"
                   ? "bg-[#00BA8833] text-[#00BA88]"
                   : "bg-gray/30 text-gray/50"
               } w-full rounded-lg py-3 text-center font-bold tracking-wider`}
@@ -122,7 +159,7 @@ function CardHistory(props: CardHistoryProps) {
             </span>
             <span
               className={`${
-                isTicketPaid
+                isTicketPaid === "failed"
                   ? "bg-gray/30 text-gray/50"
                   : "bg-[#E82C2C33] text-[#E82C2C]"
               } w-full rounded-lg py-3 text-center font-bold tracking-wider`}

@@ -3,11 +3,14 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 type History = {
   id?:string;
   title: string;
-  date: string;
-  time: string;
+  // date: string;
+  // time: string;
+  date_booking: string;
+  time_booking: string;
   location: string;
   cinema: string;
-  seat: string[];
+  seat?: string[];
+  seats: string[];
   totalPrice: number;
   type?: string;
 }
