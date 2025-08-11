@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+const initialState: OrderProps = {
     order: {
       orderId: "",
       userId: "",
@@ -12,6 +12,7 @@ const initialState = {
       seats: [],
       totalPrice: 0,
       payment: '',
+      statusPayment: false,
     },
     orders: []
   }
@@ -38,6 +39,7 @@ const order = createSlice({
         seats: [],
         totalPrice: 0,
         payment: '',
+        statusPayment: false,
       }
     }
   },

@@ -8,7 +8,7 @@ type Order = {
   time_booking: string;
   location: string;
   cinema: string;
-  seat: string[];
+  // seat: string[];
   seats: string[];
   totalPrice: number;
   payment: string;
