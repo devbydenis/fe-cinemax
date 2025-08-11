@@ -23,6 +23,7 @@ interface MoviesIntegration {
   vote_average: number;
   genres: string[];
   release_date: string;
+  poster_path: string;
   genre_ids: number[];
   vote_count: number;
 }
