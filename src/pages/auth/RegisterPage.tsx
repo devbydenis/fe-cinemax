@@ -26,7 +26,6 @@ function RegisterPage() {
   const navigate = useNavigate();
   // const date = new Date();
   // const users = useSelector((state: { users: { users: User[] } }) => state.users.users);
-  // console.log("selector", users);
   const {
     register,
     handleSubmit,
@@ -37,7 +36,6 @@ function RegisterPage() {
   });
 
   const onSubmit = (data: FieldValues) => {
-    // console.log(data);
 
     // if (users.length === 0) {
     //   dispatch(
@@ -48,7 +46,6 @@ function RegisterPage() {
     //       createdAt: date.toLocaleString(),
     //     }),
     //   );
-    //   console.log("register berhasil");
     //   setLoaderAuth(true);
     //   setTimeout(() => {
     //     navigate("/auth/login");
@@ -59,7 +56,6 @@ function RegisterPage() {
     // const isEmailExists = users.filter(
     //   (user: User) => user.email === data.email,
     // );
-    // console.log("ISEMAIL", isEmailExists);
 
     // if (isEmailExists.length > 0) {
     //   setShowModalAuth(true);
@@ -91,14 +87,12 @@ function RegisterPage() {
           },
           body: JSON.stringify(registerData),
         });
-        console.log(response);
         if (!response.ok) {
           console.error('Failed to register user');
         }
           
         const result = await response.json();
-        console.log('User registered successfully', result);
-        
+        console.log(result);
         
       } catch (error) {
         console.error('Error: ', error);

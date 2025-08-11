@@ -9,7 +9,6 @@ function InfoAccountProfile() {
   const user = useSelector(
     (state: { user: { user: User } }) => state.user.user,
   );
-  console.log("user name di profile", user);
 
   return (
     <>

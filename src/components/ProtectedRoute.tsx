@@ -7,7 +7,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   // const { isLoggedinRoute } = useContext(AuthContext);
   const user = useSelector((state: { user: UserState }) => state.user.user);
   const { isLogin } = user
-  console.log("ProtectedRoute", isLogin)
 
   if (isLogin) {
     // kalo udh login tampilin halaman yang diminta (children)

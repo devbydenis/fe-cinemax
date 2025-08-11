@@ -54,7 +54,6 @@ function OrderInfo() {
     fetch(url, options)
       .then((res) => res.json())
       .then((json) => {
-        console.log("movieDetail", json.result);
         setMovieDetail(json.result)
       })
       .catch((err) => console.error(err));
@@ -111,8 +110,6 @@ function OrderSeatsSelector({ setShowModal }: OrderSeatsSelectorType) {
   const dispatch = useDispatch();
   // const order = useSelector((state: {order: RootStateOrder}) => state.order.order);
   const [selectedSeats, setSelectedSeats] = useState<SeatId[]>([]);
-  // console.log("order in seat", order);
-  // console.log("selectedSeats", selectedSeats);
 
   const rows: number = 10;
   const cols: number = 10;
@@ -258,7 +255,6 @@ function OrderModal({ showModal, setShowModal }: ShowModal) {
   const navigate = useNavigate();
   const order = useSelector((state: RootStateOrder) => state.order.order);
   const dispatch = useDispatch();
-  console.log("order modal", order.seats);
 
   const handleConfirmButton = () => {
     dispatch(addOrderAction({ totalPrice: order.seats.length * 10 }));

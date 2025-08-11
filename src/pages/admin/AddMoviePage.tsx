@@ -20,7 +20,6 @@ function AddMoviePage() {
   const { register, handleSubmit } = useForm<FormData>();
   const dispatch = useDispatch();
   const onSubmit = (data: FormData) => {
-    console.log(data);
     dispatch(addMovie(data));
   }
   return (

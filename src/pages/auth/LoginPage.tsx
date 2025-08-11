@@ -40,7 +40,6 @@ function LoginPage() {
         body: JSON.stringify(userData),
       });
       const responseData = await response.json();
-      console.log(responseData);
       return responseData;
     } catch (error) {
       console.error(error);
@@ -61,7 +60,6 @@ function LoginPage() {
         `${BASE_URL}/auth/login`,
         userData,
       );
-      console.log(responseLogin);
       
       const data = {
         id: responseLogin.result.id,

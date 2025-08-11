@@ -88,7 +88,6 @@ function PaymentMethod({ setIsModalShow }: PaymentMethodProps) {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
 
     dispatch(addOrderAction(data));
     setIsModalShow(true);
@@ -238,8 +237,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
     (state: RootStateOrder) => state.order.order,
   );
   const dispatch = useDispatch();
-  console.log("order after submit payment", order);
-  console.log("user after submit payment", user);
   
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [dataTransaction, setDataTransaction] = useState({
@@ -252,7 +249,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
     total_price: order.totalPrice,
     status: "pending",
     location: order.location,
-    seats: order.seat,
+    seats: order.seats,
   });
 
   useEffect(() => {
@@ -274,7 +271,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isModalShow }) => {
     }
 
     handleTransaction();
-    console.log("handleTransaction executed")
   }, [isConfirmed]);
 
   return (

@@ -12,7 +12,6 @@ function ProfileAccountPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const user = useSelector((state: RootState) => state.user.user);
-  // console.log("user di profile", user);
   const dispatch = useDispatch();
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(schemaEditProfile),

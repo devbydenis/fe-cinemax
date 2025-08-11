@@ -16,7 +16,7 @@ const ForgetPasswordPage = () => {
   });
 
   const onSubmit = (data: { email: string }) => {
-    console.log(data);
+    console.log(data)
   };
   return (
     <div className="dark relative z-10 flex h-screen w-3/4 flex-col items-center justify-center">

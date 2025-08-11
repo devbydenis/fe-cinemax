@@ -134,7 +134,6 @@ function NowPlaying() {
       try {
         const response = await fetch(`${BASE_URL}/movies/now-showing`, options);
         const data = await response.json();
-        console.log("data result", data.result);
         setNowPlayingMovies(data.result);
       } catch (error) {
         console.error(error);
@@ -251,7 +250,6 @@ function UpComingMovies() {
         const response = await fetch(`${BASE_URL}/movies/up-coming`, options);
         const data = await response.json();
         setUpComingMovies(data.result);
-        console.log(data.result);
       } catch (error) {
         console.error(error);
       }

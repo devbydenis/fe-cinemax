@@ -66,7 +66,6 @@ function TicketBanner() {
 function TicketResult() {
   const order = useSelector((state: {order: {order: Order}}) => state.order.order);
   const {title, seats, date_booking, time_booking } = order
-  console.log("order", order);
   const subStrTitle = (str: string) => {
     return str.substring(0, 12) + "...";
   };

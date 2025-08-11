@@ -63,9 +63,6 @@ function Movies() {
       ? true
       : movie.genre_ids.some((genreId) => selectedGenre.includes(String(genreId)))
   );
-  console.log("filtered movies:", filteredMovies);
-  console.log("selected genres:", selectedGenre);
-  console.log("listGenres", listGenres)
   
   
   const handleSelectedGenres = (e: React.ChangeEvent<HTMLInputElement>) => {

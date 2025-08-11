@@ -20,8 +20,6 @@ function DetailPage() {
   const [showModal, setShowModal] = useState(false);
   const { id } = useParams();
 
-  // console.log("showModal", showModal);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -48,7 +46,6 @@ function DetailPage() {
       .then((res) => res.json())
       .then((json) => {
         setMovieDetail(json.result);
-        console.log("DetailPage", json.result);
       })
       .catch((err) => console.error(err));
   }, [id]);
@@ -78,7 +75,6 @@ function DetailPage() {
 
 function Banner() {
   const { movieDetail } = useContext(DetailContext);
-  console.log("movieDetail", movieDetail?.backdrop_img);
   return (
     <>
       <section
@@ -160,12 +156,8 @@ function SetOrder() {
   const navigate = useNavigate();
   const param = useParams();
   const user = useSelector((state: RootState) => state.user);
-  // console.log("user in detail", !user.user.isLogin);
 
   const onSubmit = (data: FieldValues) => {
-    console.log("detail page data: ", data);
-    console.log("detail page date: ", data.date.toISOString().split("T")[0]);
-    console.log("detail page time: ", data.time.toLocaleString().split(",")[1]);
     if (!user.user.isLogin) {
       // console.log("belum login bro gabisa mesen");
       setShowModal(!showModal);

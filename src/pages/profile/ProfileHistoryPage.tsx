@@ -72,7 +72,6 @@ function ProfileHistoryPage() {
   const user = useSelector(
       (state: { user: { user: User } }) => state.user.user,
     );
-  // console.log("user di history", userHistories);
 
   useEffect(() => {
     // FETCH FROM DATABASE
@@ -87,7 +86,6 @@ function ProfileHistoryPage() {
         })
         const data = await response.json()
         const histories = data.result
-        // console.log(histories)
         setUserHistories(histories)
 
       } catch (error) {
@@ -260,7 +258,6 @@ function TicketPaid({ date, time, title, seat, totalPrice }: TicketPaidProps) {
 
 function TicketNotPaid() {
   const userHistories = useSelector((state: RootState) => state.user.user.history);
-  console.log("user history not paid", userHistories);
   
   // Lebih aman dengan optional chaining dan nullish coalescing
   const unpaidHistory = userHistories?.find((item: History) => !item.statusPayment);
