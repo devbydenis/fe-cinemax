@@ -14,7 +14,7 @@ interface User {
   id: string;
   token: string;
   email: string;
-  password: string;
+  password?: string;
   createdAt?: string;
   isLogin?: boolean;
   history?: History[];

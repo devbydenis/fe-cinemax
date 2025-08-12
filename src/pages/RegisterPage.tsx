@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
-import ModalAuth from "../components/ModalAuth";
+import ModalAuth from "../features/auth/components/ModalAuth";
 import Loader from "../components/Loader";
 
 type RegisterData = {
