@@ -1,7 +1,7 @@
 
 import { FaAngleLeft, FaAngleRight, FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import {Link} from "react-router";
-// import { BASE_URL_IMG } from "../../service";
+// import { BASE_URL_IMG } from "../services/service";
 // import { useSelector } from "react-redux";
 
 

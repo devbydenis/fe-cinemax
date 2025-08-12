@@ -5,7 +5,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { CgClose } from "react-icons/cg";
 import avatarDefault from "../assets/avatar_default.png";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUserAction } from "../redux/reducers/userSlice";
+import { logoutUserAction } from "../store/reducers/userSlice";
 
 function Navbar() {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);

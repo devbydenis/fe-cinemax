@@ -1,11 +1,11 @@
-import Card from "../components/integration/Card";
+import Card from "../components/CardIntegration";
 import background_img from "../assets/background_img.png";
 import { useEffect, useState } from "react";
 import Newslater from "../components/Newslater";
 import { FiSearch } from "react-icons/fi";
 import Chip from "../components/Chip";
 import { FaArrowRight } from "react-icons/fa";
-import { BASE_URL } from "../service";
+import { BASE_URL } from "../services/service";
 
 type MenuProps = {
   setSearch: (value: string) => void;

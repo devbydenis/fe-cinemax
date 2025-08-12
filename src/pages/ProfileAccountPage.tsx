@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import ThemeContext from "../../context/EditProfileContext";
+import ThemeContext from "../context/EditProfileContext";
 import { useForm, type FieldErrors, type FieldValues, type UseFormRegister } from "react-hook-form";
-import { schemaEditProfile } from "./schema";
+import { schemaEditProfile } from "../features/profile/types/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { addInfoLoginAction } from "../../redux/reducers/userSlice";
-import ModalProfile from "../../components/profile/ModalProfile";
+import { addInfoLoginAction } from "../store/reducers/userSlice";
+import ModalProfile from "../features/profile/components/ModalProfile.tsx";
 
 function ProfileAccountPage() {
   const { showEditProfile, setShowEditProfile } = useContext(ThemeContext);

@@ -1,5 +1,5 @@
 import { useForm, type FieldValues } from "react-hook-form";
-import tickitzLogo from "../../assets/cinemax-logo-transparent.png";
+import tickitzLogo from "../assets/cinemax-logo-transparent.png";
 import { schemaRegister } from "../features/auth/types/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";

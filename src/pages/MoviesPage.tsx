@@ -5,9 +5,9 @@ import { FaArrowRight } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import Card from "../components/Card";
-import { moviesActions } from "../redux/reducers/moviesSlice";
+import { moviesActions } from "../store/reducers/moviesSlice";
 import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch } from "../redux/store";
+import type { AppDispatch } from "../store/store";
 import MoviesContext from "../context/MoviesContext";
 import { useSearchParams } from "react-router-dom";
 

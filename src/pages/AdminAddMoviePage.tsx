@@ -1,6 +1,6 @@
 import { useForm, type UseFormRegister } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addMovie } from "../../redux/reducers/adminSlice";
+import { addMovie } from "../store/reducers/adminSlice";
 
 interface FormData {
   title: string;

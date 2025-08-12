@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
-import cineone from "../../assets/cineone21-logo.svg";
-import hiflix from "../../assets/hiflix-logo.svg";
-import ebvid from "../../assets/ebvid-logo.svg";
-import qrcode from "../../assets/qrcode.svg";
+import cineone from "../assets/cineone21-logo.svg";
+import hiflix from "../assets/hiflix-logo.svg";
+import ebvid from "../assets/ebvid-logo.svg";
+import qrcode from "../assets/qrcode.svg";
 import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
-import { BASE_URL } from "../../service";
+import { BASE_URL } from "../services/service";
 
 // Redux State Types
 interface User {

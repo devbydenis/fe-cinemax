@@ -1,9 +1,9 @@
-import Navbar from '../components/Navbar'
+import Navbar from '../../components/Navbar'
 import { Outlet } from 'react-router-dom'
-import InfoAccountProfile from '../components/profile/InfoAccountProfile'
-import ThemeContext from "../context/EditProfileContext";
+import InfoAccountProfile from '../../features/profile/components/InfoAccountProfile'
+import ThemeContext from "../../context/EditProfileContext";
 import { useState } from 'react';
-import NavProfile from '../components/profile/NavProfile';
+import NavProfile from '../../features/profile/components/NavProfile.tsx';
 
 function ProfileLayout() {
   const [showEditProfile, setShowEditProfile] = useState(false);

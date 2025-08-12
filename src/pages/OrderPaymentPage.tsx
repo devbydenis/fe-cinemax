@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import gpay from "../../assets/gpay.svg";
-import visa from "../../assets/visa.svg";
-import dana from "../../assets/dana.svg";
-import bca from "../../assets/bca.svg";
-import bri from "../../assets/bri.svg";
-import ovo from "../../assets/ovo.svg";
-import paypal from "../../assets/paypal.svg";
-import gopay from "../../assets/gopay.svg";
+import gpay from "../assets/gpay.svg";
+import visa from "../assets/visa.svg";
+import dana from "../assets/dana.svg";
+import bca from "../assets/bca.svg";
+import bri from "../assets/bri.svg";
+import ovo from "../assets/ovo.svg";
+import paypal from "../assets/paypal.svg";
+import gopay from "../assets/gopay.svg";
 import { Link, useParams } from "react-router-dom";
-import TimelineProcess from "../../components/TimelineProcess";
+import TimelineProcess from "../components/TimelineProcess";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, type FieldValues } from "react-hook-form";
-import { addOrderAction } from "../../redux/reducers/orderSlice";
-import { addHistoryUserAction } from "../../redux/reducers/userSlice";
-import { BASE_URL } from "../../service";
+import { addOrderAction } from "../store/reducers/orderSlice";
+import { addHistoryUserAction } from "../store/reducers/userSlice";
+import { BASE_URL } from "../services/service";
 
 function OrderPaymentPage() {
   const [isModalShow, setIsModalShow] = useState(false);

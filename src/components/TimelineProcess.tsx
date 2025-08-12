@@ -1,4 +1,3 @@
-
 function TimelineProcess() {
   return (
     <section className="flex items-center justify-center gap-8 px-5">

@@ -1,18 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
-import tickitzLogo from "../../assets/cinemax-logo-transparent.png";
+import tickitzLogo from "../assets/cinemax-logo-transparent.png";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import { useForm, type FieldValues } from "react-hook-form";
-import { schemaLogin } from "./schema";
+import { schemaLogin } from "../features/auth/types/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import Loader from "../../components/Loader";
-import ModalAuth from "../../components/ModalAuth";
+import Loader from "../components/Loader";
+import ModalAuth from "../components/ModalAuth";
 // import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { addInfoLoginAction } from "../../redux/reducers/userSlice";
-import AuthContext from "./AuthContext";
-import { BASE_URL } from "../../service";
+import { addInfoLoginAction } from "../store/reducers/userSlice";
+import AuthContext from "../features/auth/context/AuthContext";
+import { BASE_URL } from "../services/service";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);

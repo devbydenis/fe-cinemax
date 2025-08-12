@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import avatar from "../../assets/avatar_default.png";
-import star from "../../assets/star.svg";
-import ThemeContext from "../../context/EditProfileContext";
+import avatar from "../../../assets/avatar_default.png";
+import star from "../../../assets/star.svg";
+import ThemeContext from "../../../context/EditProfileContext.ts";
 import { useSelector } from "react-redux";
 
 function InfoAccountProfile() {

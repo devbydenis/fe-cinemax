@@ -1,12 +1,12 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import qrcode from "../../assets/qrcode.svg";
-import tickitzLogo from "../../assets/cinemax-logo-transparent.png"
+import qrcode from "../assets/qrcode.svg";
+import tickitzLogo from "../assets/cinemax-logo-transparent.png"
 import { BiDownload } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetOrder } from "../../redux/reducers/orderSlice";
-import { addHistoryAction } from "../../redux/reducers/history";
-import { BASE_URL, BASE_URL_IMG } from "../../service";
+import { resetOrder } from "../store/reducers/orderSlice";
+import { addHistoryAction } from "../store/reducers/history";
+import { BASE_URL, BASE_URL_IMG } from "../services/service";
 
 function OrderTicketPage() {
   return (

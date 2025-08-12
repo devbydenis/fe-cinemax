@@ -3,7 +3,7 @@ import {
   getGenres,
   getNowPlayingMovie,
   getUpComingMovies,
-} from "../../service";
+} from "../../services/service";
 
 const getNowPlayingMoviesThunk = createAsyncThunk(
   "movies/nowPlayingMovies",

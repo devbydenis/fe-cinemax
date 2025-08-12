@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useForm, type FieldValues } from "react-hook-form";
-import logo from "../../assets/cineone21-logo.svg";
+import logo from "../assets/cineone21-logo.svg";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addOrderAction,
   addSeatsAction,
-} from "../../redux/reducers/orderSlice";
-import { BASE_URL, BASE_URL_IMG } from "../../service";
+} from "../store/reducers/orderSlice";
+import { BASE_URL, BASE_URL_IMG } from "../services/service";
 
 function OrderSeatPage() {
   const [showModal, setShowModal] = useState(false);
