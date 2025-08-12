@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { BASE_URL_IMG } from "../../service";
+import { BASE_URL_IMG } from "../services/service";
 import fallback from "../../assets/fallback.png";
 
 function Card(props: CardPRops) {

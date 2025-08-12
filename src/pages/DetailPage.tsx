@@ -6,12 +6,12 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Controller, useForm, type FieldValues } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { addOrderAction } from "../redux/reducers/orderSlice";
+import { addOrderAction } from "../store/reducers/orderSlice";
 import { nanoid } from "@reduxjs/toolkit";
 import Modal from "../components/Modal";
 import ModalContext from "../context/ModalContext";
 import DetailContext from "../context/DetailContext";
-import { BASE_URL, BASE_URL_IMG } from "../service";
+import { BASE_URL, BASE_URL_IMG } from "../services/service";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 

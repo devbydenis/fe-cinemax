@@ -1,15 +1,12 @@
 import { useForm, type FieldValues } from "react-hook-form";
 import tickitzLogo from "../../assets/cinemax-logo-transparent.png";
-import { schemaRegister } from "./schema";
+import { schemaRegister } from "../features/auth/types/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
-import ModalAuth from "../../components/ModalAuth";
-// import { useDispatch, useSelector } from "react-redux";
-// import { addRegisteredUsersAction } from "../../redux/reducers/usersSlice";
-// import { nanoid } from "@reduxjs/toolkit";
-import Loader from "../../components/Loader";
+import ModalAuth from "../components/ModalAuth";
+import Loader from "../components/Loader";
 
 type RegisterData = {
   email: string;
@@ -22,10 +19,8 @@ function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showModalAuth, setShowModalAuth] = useState(false);
   const [loaderAuth, setLoaderAuth] = useState(false);
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const date = new Date();
-  // const users = useSelector((state: { users: { users: User[] } }) => state.users.users);
+
   const {
     register,
     handleSubmit,
@@ -36,42 +31,7 @@ function RegisterPage() {
   });
 
   const onSubmit = (data: FieldValues) => {
-
-    // if (users.length === 0) {
-    //   dispatch(
-    //     addRegisteredUsersAction({
-    //       id: nanoid(),
-    //       email: data.email,
-    //       password: data.password,
-    //       createdAt: date.toLocaleString(),
-    //     }),
-    //   );
-    //   setLoaderAuth(true);
-    //   setTimeout(() => {
-    //     navigate("/auth/login");
-    //   }, 2000);
-    //   return;
-    // }
-
-    // const isEmailExists = users.filter(
-    //   (user: User) => user.email === data.email,
-    // );
-
-    // if (isEmailExists.length > 0) {
-    //   setShowModalAuth(true);
-    //   return;
-    // }
-
-    // dispatch(
-    //   addRegisteredUsersAction({
-    //     id: nanoid(),
-    //     email: data.email,
-    //     password: data.password,
-    //     createdAt: date.toLocaleString(),
-    //   }),
-    // );
-    
-    // Implementasi integrasi FE-BE: register
+    // Implementasi integrasi register dengan backend (LOCAL)
     const registerData = {
       email: data.email,
       password: data.password,

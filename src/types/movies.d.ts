@@ -17,15 +17,15 @@ interface MoviesIntegration {
   id: number;
   title: string;
   overview: string;
+  poster_path: string;
   poster_img: string;
   backdrop_path: string;
   backdrop_img: string;
   vote_average: number;
-  genres: string[];
   release_date: string;
-  poster_path: string;
   genre_ids: number[];
   vote_count: number;
+  genres: string[];
 }
 
 interface StateMovies {
