@@ -20,7 +20,7 @@ const ForgetPasswordPage = () => {
   };
   return (
     <div className="dark relative z-10 flex h-screen w-3/4 flex-col items-center justify-center">
-      <div className="border-orange/50 w-full max-w-md rounded-lg border-2 bg-black p-6 shadow-md">
+      <div className="w-full max-w-md rounded-lg border-2 bg-white/10 p-6 shadow-md">
         <h2 className="mb-4 text-2xl font-bold text-gray-200">
           Enter Your Registered Email
         </h2>
@@ -28,12 +28,14 @@ const ForgetPasswordPage = () => {
           <input
             {...register("email")}
             placeholder="example@gmail.com"
-            className="focus:ring-orange mb-4 rounded-md border-0 bg-gray-700 p-2 text-gray-200 transition duration-150 ease-in-out focus:bg-gray-600 focus:ring-1 focus:outline-none"
+            className="text-white focus:border-orange w-full my-2 border-b-2 duration-300 focus:border-b-2 focus:transition-colors focus:duration-300 focus:outline-none"
             type="email"
+            required
+            autoComplete="off"
           />
-          <small className="text-red-500">{errors.email?.message}</small>
+          <small className="text-red-500 min-h-[20px]">{errors.email?.message}</small>
           <button
-            className="mt-4 rounded-md bg-gradient-to-r from-orange-400 to-orange-600 px-4 py-2 font-bold text-white transition duration-150 ease-in-out hover:bg-green-600 hover:to-orange-600"
+            className="mt-4 rounded-md bg-gradient-to-r from-orange-500 to-orange-700 active:scale-99 px-4 py-2 font-bold text-white transition duration-150 ease-in-out "
             type="submit"
           >
             Send

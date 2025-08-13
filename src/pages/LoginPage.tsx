@@ -97,7 +97,7 @@ function LoginPage() {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="relative z-10 flex flex-col gap-7 rounded-xl bg-white/10 p-16 text-white md:mx-auto md:w-xl"
+        className="relative z-10 flex flex-col gap-5 rounded-xl bg-white/10 p-16 text-white md:mx-auto md:w-xl"
       >
         <div className="flex flex-col items-start justify-center">
           <img
@@ -128,6 +128,12 @@ function LoginPage() {
           register={register("password")}
           errors={errors}
         />
+        
+        <div className=" flex justify-end">
+          <Link className="text-sm tracking-wider text-gray-300 font-semibold" to="/auth/forgot-password">
+            Forgot Password?
+          </Link>
+        </div>
 
         <Button type="submit">Login</Button>
 
@@ -142,9 +148,9 @@ function LoginPage() {
           </div>
 
           <section className="flex w-full items-center justify-center">
-            <div className="w-full border border-gray-200"></div>
-            <p className="text-secondary mx-3 my-5">Or</p>
-            <div className="w-full border border-gray-200"></div>
+            <div className="w-full border border-gray-200 opacity-20"></div>
+            <p className="text-secondary mx-3 my-5 opacity-50">Or</p>
+            <div className="w-full border border-gray-200 opacity-20"></div>
           </section>
 
           <section className="flex justify-around">

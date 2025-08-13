@@ -27,7 +27,7 @@ function InputField<T extends FieldValues>({
         
         <div className="relative mt-4">
           <input
-            className="focus:border-orange w-full border-b-2 px-3 py-1 duration-300 focus:border-b-2 focus:transition-colors focus:duration-300 focus:outline-none"
+            className="focus:border-orange w-full border-b-2 duration-300 focus:border-b-2 focus:transition-colors focus:duration-300 focus:outline-none"
             type={inputType}
             {...register}
             id={htmlFor}

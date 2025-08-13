@@ -13,7 +13,7 @@ import ProfileAccountPage from "./pages/ProfileAccountPage.tsx";
 import ProfileHistoryPage from "./pages/ProfileHistoryPage.tsx";
 import DetailPage from "./pages/DetailPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
-import ForgetPasswordPage from "./pages/ForgetPasswordPage.tsx";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage.tsx";
 import { useState } from "react";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import AdminLayout from "./components/layout/AdminLayout.tsx";
@@ -23,6 +23,7 @@ import ListMoviePage from "./pages/AdminListMoviePage.tsx";
 import DashboardPage from "./pages/AdminDashboardPage.tsx";
 import ExamplePage from "./pages/AdminExamplePage.tsx";
 import MoviesIntegrationPage from "./pages/MoviesIntegrationPage.tsx";
+import ResetPasswordPage from "./pages/ResetPassword.tsx";
 
 
 function App() {
@@ -34,7 +35,8 @@ function App() {
         <Route path="auth" element={<AuthLayout />}>
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
-          <Route path="forget-password" element={<ForgetPasswordPage />} />
+          <Route path="forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="reset-password" element={<ResetPasswordPage />} />
         </Route>
         
         <Route element={<AdminLayout />}>

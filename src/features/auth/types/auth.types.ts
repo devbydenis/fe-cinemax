@@ -14,7 +14,7 @@ export interface ButtonProps {
 export interface InputFieldsProps<T extends FieldValues> {
   htmlFor: string;
   type?: string;
-  name: keyof T;
+  name?: keyof T;
   placeholder: string;
   register: UseFormRegisterReturn
   errors: FieldErrors<T> 
@@ -40,3 +40,8 @@ export interface ModalAuthProps {
   message: string;
   setShowModalAuth: (key: boolean) => void;
 };
+
+export interface ResetPasswordFormValues {
+  newPassword: string;
+  newConfirmPassword: string;
+}

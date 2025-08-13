@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import backgroundAuth from "../../assets/background_auth.png";
+
 function AuthLayout() {
   return (
     <main

@@ -4,9 +4,9 @@ import { schemaRegister } from "../features/auth/types/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import ModalAuth from "../features/auth/components/ModalAuth";
 import Loader from "../components/Loader";
 // import { MESSAGES } from "../features/auth/constants/messages";
+// import ModalAuth from "../features/auth/components/ModalAuth";
 import InputField from "../features/auth/components/InputField";
 import Button from "../features/auth/components/Button";
 import type { RegisterFormValues } from "../features/auth/types/auth.types";
@@ -24,6 +24,7 @@ function RegisterPage() {
     resolver: yupResolver(schemaRegister), // validasi form pake yup schema
     mode: "onChange",
   });
+  
   const onSubmit: SubmitHandler<RegisterFormValues> = async (data) => {
     // Implementasi integrasi register dengan backend (LOCAL)
     setLoaderAuth(true); // aktifkan loader
@@ -125,6 +126,12 @@ function RegisterPage() {
           errors={errors}
         />
 
+        <Button 
+          type="submit" 
+          disabled={loaderAuth}>
+            {loaderAuth ? 'Loading...' : 'Register'}
+          </Button>
+
         <section className="flex justify-center">
           <p className="text-title-info-first">
             Already have an account?{" "}
@@ -133,12 +140,6 @@ function RegisterPage() {
             </Link>
           </p>
         </section>
-
-        <Button 
-          type="submit" 
-          disabled={loaderAuth}>
-            {loaderAuth ? 'Loading...' : 'Register'}
-          </Button>
       </form>
       {loaderAuth && <Loader overlay={true} />}
       {/*{showModalAuth && (
