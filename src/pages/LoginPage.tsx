@@ -23,6 +23,10 @@ function LoginPage() {
   const controllerRef = useRef<AbortController | null>(null); // // Menyimpan AbortController agar bisa membatalkan request jika user pindah halaman sebelum selesai
   const loaderTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null); // Menyimpan ID timeout loader agar bisa di-clear ketika unmount. biar loader nggak nyangkut kalau halaman di-close sebelum timeout selesai.
   
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+  
   const {
     register,
     handleSubmit,
@@ -93,17 +97,19 @@ function LoginPage() {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="relative z-10 flex flex-col gap-7 rounded-xl bg-white/10 px-16 py-5 text-white md:mx-auto md:w-xl"
+        className="relative z-10 flex flex-col gap-7 rounded-xl bg-white/10 p-16 text-white md:mx-auto md:w-xl"
       >
-        <img
-          className="tickitz relative z-10 mx-auto w-32 md:w-60"
-          src={tickitzLogo}
-          alt="tickitz-logo"
-        />
-        <h1 className="text-2xl font-bold md:text-4xl">Welcome Back 👋</h1>
-        <p className="text-sm font-normal text-gray-300">
-          {MESSAGES.LOGIN_INFO}
-        </p>
+        <div className="flex flex-col items-start justify-center">
+          <img
+            className="tickitz relative z-10 mx-auto w-32 md:w-80"
+            src={tickitzLogo}
+            alt="tickitz-logo"
+          />
+          {/*<h1 className="text-3xl font-bold mt-10">Welcome 👋</h1>
+          <p className="font-normal text-gray-300">
+            Entered your valid data. make sure your data is correct
+          </p>*/}
+        </div>
 
         <InputField
           type="email"
@@ -157,6 +163,7 @@ function LoginPage() {
               <p className="text-title-info-second hidden md:block">Facebook</p>
             </Link>
           </section>
+          
         </section>
       </form>
       {showModalAuth && (

@@ -8,7 +8,8 @@ export const schemaRegister = yup.object().shape({
       .required("Password cannot be empty!"),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref("password"), undefined], "Passwords should be match!"),
+      .oneOf([yup.ref("password"), undefined], "Passwords must match")
+      .required("Confirm password is required"),
   })
 
 export const schemaLogin = yup.object().shape({

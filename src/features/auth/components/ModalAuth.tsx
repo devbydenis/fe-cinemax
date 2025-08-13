@@ -1,7 +1,5 @@
-type ModalAuthProps = {
-  message: string;
-  setShowModalAuth: (key: boolean) => void;
-};
+import type { ModalAuthProps } from "../types/auth.types";
+
 function ModalAuth(props: ModalAuthProps) {
   return (
     <>

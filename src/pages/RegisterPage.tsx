@@ -1,188 +1,130 @@
-import { useForm, type FieldValues } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import tickitzLogo from "../assets/cinemax-logo-transparent.png";
 import { schemaRegister } from "../features/auth/types/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
-import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import ModalAuth from "../features/auth/components/ModalAuth";
+// import ModalAuth from "../features/auth/components/ModalAuth";
 import Loader from "../components/Loader";
-
-type RegisterData = {
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
+// import { MESSAGES } from "../features/auth/constants/messages";
+import InputField from "../features/auth/components/InputField";
+import Button from "../features/auth/components/Button";
+import type { RegisterFormValues } from "../features/auth/types/auth.types";
 
 function RegisterPage() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showModalAuth, setShowModalAuth] = useState(false);
-  const [loaderAuth, setLoaderAuth] = useState(false);
   const navigate = useNavigate();
-
+  const [loaderAuth, setLoaderAuth] = useState(false); // state buat kontrol loader
+  const loaderTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null); // simpan id timeout biar bisa di clear
+  const controllerRef = useRef<AbortController | null>(null); // simpan AbortController buat simpen request
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schemaRegister),
+  } = useForm<RegisterFormValues>({
+    resolver: yupResolver(schemaRegister), // validasi form pake yup schema
     mode: "onChange",
   });
-
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit: SubmitHandler<RegisterFormValues> = async (data) => {
     // Implementasi integrasi register dengan backend (LOCAL)
-    const registerData = {
-      email: data.email,
-      password: data.password,
-      confirmPassword: data.confirmPassword,
-    }
-    
-    async function registerUser(url: string, registerData: RegisterData) {
-      try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(registerData),
-        });
-        if (!response.ok) {
-          console.error('Failed to register user');
+    setLoaderAuth(true); // aktifkan loader
+    const startTime = Date.now(); // simpan waktu mulai untuk hitung minimal loader request
+    controllerRef.current = new AbortController(); // bikin abort controller baru untuk request ini
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      signal: controllerRef.current.signal, // hubungkan fetch dengan AbortController
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:8989/auth/register",
+        options,
+      );
+
+      // hitung sisa waktu supaya loader tampil minimal 2 detik
+      const elapsedTime = Date.now() - startTime;
+      const minDuration = 2000;
+      const remainingTime = elapsedTime < minDuration ? minDuration - elapsedTime : 0;
+
+      // Set timeout buat matiin loadernya + navigate setelah durasi terpenuhi
+      loaderTimeoutRef.current = setTimeout(() => {
+        setLoaderAuth(false); // matiin loadernya
+        if (response.ok) {
+        // if (true) { // for testing ux
+          navigate("/auth/login", { replace: true }); // kalau sukses, pindah ke login
+        } else {
+          console.error("Register Failed"); // kalo gagal, log error atau ga modal
         }
-          
-        const result = await response.json();
-        console.log(result);
-        
-      } catch (error) {
-        console.error('Error: ', error);
+      }, remainingTime);
+    } catch (err) {
+      // cek kalo error bukan karna request di cancel
+      if ((err as Error).name !== "AbortError") {
+        console.error(err);
       }
     }
-    
-    registerUser('http://localhost:8989/auth/register', registerData);
-    
-    setLoaderAuth(true);
-    setTimeout(() => {
-      navigate("/auth/login");
-    }, 2000);
-  };
+  }
+  
+  useEffect(() => {
+    return () => {
+      controllerRef.current?.abort(); // cancel request yang masih jalan
+      if (loaderTimeoutRef.current) {
+        clearTimeout(loaderTimeoutRef.current);
+      }
+    };
+  }, []);
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="relative z-10 flex flex-col gap-7 rounded-xl bg-white/10 px-16 text-white md:mx-auto md:w-xl"
+        className="relative z-10 flex flex-col gap-7 rounded-xl bg-white/10 p-16 text-white md:mx-auto md:w-xl"
       >
-        <img
-          className="tickitz relative z-10 mx-auto w-32 md:w-60"
-          src={tickitzLogo}
-          alt="tickitz-logo"
+        <div className="flex flex-col items-start justify-center">
+          <img
+            className="tickitz relative z-10 mx-auto w-32 md:w-80"
+            src={tickitzLogo}
+            alt="tickitz-logo"
+          />
+          <h1 className="mt-10 text-3xl font-bold">Welcome 👋</h1>
+          <p className="font-normal text-gray-300">
+            Entered your valid data. make sure your data is correct
+          </p>
+        </div>
+
+        <InputField
+          type="email"
+          htmlFor="email"
+          name="email"
+          placeholder="example@gmail.com"
+          register={register("email")} // konek ke react hook form
+          errors={errors}
         />
 
-        <h1 className="text-4xl font-bold">Welcome 👋</h1>
-        <p className="font-normal text-gray-300">
-          Entered your valid data. make sure your data is correct
-        </p>
-        <section className="mt-6">
-          <label className="text-2xl font-semibold text-white" htmlFor="email">
-            Email
-          </label>
-          <div className="mt-4">
-            <input
-              className="focus:border-orange w-full border-b-2 duration-300 focus:border-b-2 focus:transition-colors focus:duration-300 focus:outline-none"
-              type="email"
-              {...register("email")}
-              id="email"
-              placeholder="example@gmail.com"
-            />
-            {!errors.email && (
-              <small className="invisible">this is just invisible text</small>
-            )}
-            {errors.email && (
-              <small className="font-semibold text-red-600 transition-all duration-300">
-                {errors.email.message}
-              </small>
-            )}
-          </div>
-        </section>
-        <section className="relative mt-6">
-          <label className="text-2xl font-semibold text-white" htmlFor="email">
-            Password
-          </label>
-          <div className="mt-4">
-            <input
-              className="focus:border-orange w-full border-b-2 duration-300 focus:border-b-2 focus:transition-colors focus:duration-300 focus:outline-none"
-              type={showPassword ? "text" : "password"}
-              {...register("password")}
-              id="password"
-              placeholder="Enter Your Password"
-            />
-            {showPassword ? (
-              <button
-                type="button"
-                className="absolute right-2 cursor-pointer text-xl"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                <IoMdEye />
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="absolute right-2 cursor-pointer text-xl"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                <IoMdEyeOff />
-              </button>
-            )}
-          </div>
-          {!errors.password && (
-            <small className="invisible">this is just invisible text</small>
-          )}
-          {errors.password && (
-            <small className="font-semibold text-red-600 transition duration-300">
-              {errors.password.message}
-            </small>
-          )}
-        </section>
-        <section className="mt-6">
-          <label className="text-2xl font-semibold text-white" htmlFor="email">
-            Confirm Password
-          </label>
-          <div className="relative mt-4">
-            <input
-              className="focus:border-orange w-full border-b-2 duration-300 focus:border-b-2 focus:transition-colors focus:duration-300 focus:outline-none"
-              type={showConfirmPassword ? "text" : "password"}
-              {...register("confirmPassword")}
-              id="confirm-password"
-              placeholder="Enter Your Confirm Password"
-            />
-            {showConfirmPassword ? (
-              <button
-                type="button"
-                className="absolute right-2 cursor-pointer text-xl"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              >
-                <IoMdEye />
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="absolute right-2 cursor-pointer text-xl"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              >
-                <IoMdEyeOff />
-              </button>
-            )}
-          </div>
-          {!errors.confirmPassword && (
-            <small className="invisible">this is just invisible text</small>
-          )}
-          {errors.confirmPassword && (
-            <small className="font-semibold text-red-600 transition duration-300">
-              {errors.confirmPassword.message}
-            </small>
-          )}
-        </section>
+        <InputField
+          type="password"
+          htmlFor="password"
+          name="password"
+          placeholder="Enter Your Password"
+          register={register("password")}
+          errors={errors}
+        />
+
+        <InputField
+          type="password"
+          htmlFor="confirm-password"
+          name="confirmPassword"
+          placeholder="Confirm Your Password"
+          register={register("confirmPassword")}
+          errors={errors}
+        />
+
         <section className="flex justify-center">
           <p className="text-title-info-first">
             Already have an account?{" "}
@@ -191,22 +133,22 @@ function RegisterPage() {
             </Link>
           </p>
         </section>
-        <button
-          className="bg-primary text-background bg-orange active:text-orange active:border-orange mb-10 h-12 cursor-pointer rounded-full font-bold hover:opacity-90 active:scale-99 active:border-2 active:bg-transparent active:duration-100"
-          type="submit"
-        >
-          Register
-        </button>
+
+        <Button 
+          type="submit" 
+          disabled={loaderAuth}>
+            {loaderAuth ? 'Loading...' : 'Register'}
+          </Button>
       </form>
       {loaderAuth && <Loader overlay={true} />}
-      {showModalAuth && (
+      {/*{showModalAuth && (
         <ModalAuth
           setShowModalAuth={() => setShowModalAuth(false)}
-          message={"Email is already exist"}
+          message={MESSAGES.EMAIL_ALREADY_EXISTS}
         />
-      )}
+      )}*/}
     </>
   );
 }
-
+  
 export default RegisterPage;
