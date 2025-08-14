@@ -1,26 +1,16 @@
-import { useForm, type UseFormRegister } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { addMovie } from "../store/reducers/adminSlice";
+import { useForm } from "react-hook-form";
+// import { useDispatch } from "react-redux";
+// import { addMovie } from "../store/reducers/adminSlice";
+import type { FormAddMovie } from "../features/admin/types/admin.types";
+import InputField from "../features/admin/components/InputField";
 
-interface FormData {
-  title: string;
-  category: string;
-  releaseDate: string;
-  date: string;
-  time: string;
-  durationHour: number;
-  durationMinute: number;
-  directorName: string;
-  genres: string[];
-  cast: string[];
-  synopsis: string;
-}
 
 function AddMoviePage() {
-  const { register, handleSubmit } = useForm<FormData>();
-  const dispatch = useDispatch();
-  const onSubmit = (data: FormData) => {
-    dispatch(addMovie(data));
+  const { register, handleSubmit } = useForm<FormAddMovie>();
+  // const dispatch = useDispatch();
+  const onSubmit = (data: FormAddMovie) => {
+    console.log(data)
+    // dispatch(addMovie(data));
   }
   return (
     <>
@@ -39,21 +29,21 @@ function AddMoviePage() {
         <InputField 
           label="Title" 
           name="title"
-          register={register}
+          register={register("title")}
           type="text" 
           id="title" 
         />
         <InputField 
           label="Category" 
           name="category"
-          register={register}
+          register={register("category")}
           type="text" 
           id="category" 
         />
         <InputField 
           label="Release Date" 
           name="releaseDate" 
-          register={register}
+          register={register("releaseDate")}
           type="date" 
           id="releaseDate" 
         />
@@ -61,14 +51,14 @@ function AddMoviePage() {
           <InputField 
             label="Duration Hour" 
             name="durationHour" 
-            register={register}
+            register={register("durationHour")}
             type="number" 
             id="durationHour" 
           />
           <InputField 
             label="Duration Minute" 
             name="durationMinute" 
-            register={register}
+            register={register("durationMinute")}
             type="number" 
             id="durationMinute" 
           />
@@ -76,98 +66,58 @@ function AddMoviePage() {
         <InputField 
           label="Director Name" 
           name="directorName" 
-          register={register}
+          register={register("directorName")}
           type="text" 
           id="directorName" 
         />
         <InputField 
           label="Cast" 
           name="cast" 
-          register={register}
+          register={register("cast")}
           type="text" 
           id="cast" 
         />
         <InputField 
           label="Genre" 
           name="genres" 
-          register={register}
+          register={register("genres")}
           type="text" 
           id="genre" 
         />
         <InputField 
           label="Synopsis" 
           name="synopsis" 
-          register={register}
+          register={register("synopsis")}
           type="text" 
           id="synopsis" 
         />
-        <InputField 
-          label="Date" 
-          name="date" 
-          register={register}
-          type="date" 
-          id="date" 
-        />
-        <InputField 
-          label="Time" 
-          name="time" 
-          register={register}
-          type="time" 
-          id="time" 
-        />
+        <div>
+          <label className="text-title-info-first font-normal text-base">Time</label>
+          <div className="flex gap-3">
+            <InputField 
+              label="" 
+              name="time" 
+              register={register("time_start")}
+              type="time" 
+              id="time" 
+              customStyle="cursor-pointer"
+            />
+            <div className="w-2 flex items-center font-bold">_</div>
+            <InputField 
+              label="" 
+              name="time" 
+              register={register("time_end")}
+              type="time" 
+              id="time" 
+              customStyle="cursor-pointer"
+            />
+          </div>
+        </div>
+        
         <button className="bg-orange text-white py-2 rounded font-bold active:scale-95 transition-all" type="submit">Add Movie</button>
       </form>
     </>
   );
 }
-
-
-type InputFieldProps = {
-  label: string;
-  name: keyof FormData;
-  id: string;
-  type: string;
-  register: UseFormRegister<FormData>
-};
-
-function InputField({ label, name, id, type, register }: InputFieldProps) {
-  
-  return (
-    <div className="flex flex-col gap-2">
-      <label className="text-title-info-first font-normal text-base" htmlFor={id}>{label}</label>
-      <input
-        className="focus:outline-orange border-1 border-gray-300 h-14 rounded px-3"
-        type={type}
-        {...register(name)}
-        id={id}
-      />
-    </div>
-  )
-}
-
-// function InputFieldDuration({ label, name, id }: InputFieldProps) {
-  
-//   return (
-//     <div className="flex flex-col gap-2">
-//       <label className="text-title-info-first font-normal text-base" htmlFor={id}>{label}</label>
-//       <div className="flex gap-3">
-//         <input
-//           className="focus:outline-orange max-w-20 border-1 border-gray-300 h-14 rounded px-3"
-//           type="number"
-//           name={`${name}Hour`}
-//           id={`${id}Hour`}
-//           min={0}
-//         />
-//         <input
-//           className="focus:outline-orange max-w-20 border-1 border-gray-300 h-14 rounded px-3"
-//           type="number"
-//           name={`${name}Minute`}
-//           id={`${id}Minute`}
-//           min={0}
-//         />
-//       </div>
-//     </div>
-//   )
-// }
 
 export default AddMoviePage;
